@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, OrariProcida2011Activity!</string>
+    <string name="app_name">OrariProcida2011</string>
+    <string-array name="strMezzi">
+        <item>Tutti</item>
+        <item>Traghetto Caremar</item>
+        <item>Aliscafo Caremar</item>
+        <item>Aliscafo SNAV</item>
+        <item>Procida Lines</item>
+        <item>Gestur</item>
+        <item>Medmar</item>
+    </string-array>
+    <string-array name="strPorti">
+        <item>Tutti</item>
+        <item>Procida</item>
+        <item>Napoli Beverello</item>
+        <item>Napoli Porta di Massa</item>
+        <item>Pozzuoli</item>
+        <item>Napoli Mergellina</item>
+    </string-array>
+        <string name="mezzo">Mezzo : </string>
+        <string name="portoPartenza">Da : </string>
+        <string name="portoArrivo">A : </string>
+        <string name="minusminus">--</string>
+        <string name="minus">-</string>
+        <string name="plus">+</string>
+        <string name="plusplus">++</string>
+</resources>
