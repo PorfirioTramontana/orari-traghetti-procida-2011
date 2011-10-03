@@ -18,12 +18,13 @@
         <item>Napoli Porta di Massa</item>
         <item>Pozzuoli</item>
         <item>Napoli Mergellina</item>
+        <item>Napoli</item>
     </string-array>
         <string name="mezzo">Mezzo : </string>
         <string name="portoPartenza">Da : </string>
         <string name="portoArrivo">A : </string>
-        <string name="minusminus">--</string>
-        <string name="minus">-</string>
-        <string name="plus">+</string>
-        <string name="plusplus">++</string>
+        <string name="minusminus">&lt;&lt;</string>
+        <string name="minus">&lt;</string>
+        <string name="plus">&gt;</string>
+        <string name="plusplus">&gt;&gt;</string>
 </resources>

@@ -5,24 +5,24 @@
     android:layout_height="fill_parent"
     >
     <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/linearLayout1">
-        <TextView android:layout_height="wrap_content" android:id="@+id/textView1" android:text="@string/mezzo" android:layout_width="wrap_content"></TextView>
+        <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/textView1" android:text="@string/mezzo" android:layout_width="wrap_content"></TextView>
         <Spinner android:layout_weight="1" android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/spnNave"></Spinner>
     </LinearLayout>
     <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/linearLayout2">
-        <TextView android:layout_height="wrap_content" android:id="@+id/textView2" android:text="@string/portoPartenza" android:layout_width="wrap_content"></TextView>
+        <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/textView2" android:text="@string/portoPartenza" android:layout_width="wrap_content"></TextView>
         <Spinner android:layout_weight="1" android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/spnPortoPartenza"></Spinner>
     </LinearLayout>
     <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/linearLayout3">
-        <TextView android:layout_height="wrap_content" android:id="@+id/textView3" android:text="@string/portoArrivo" android:layout_width="wrap_content"></TextView>
+        <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/textView3" android:text="@string/portoArrivo" android:layout_width="wrap_content"></TextView>
         <Spinner android:layout_weight="1" android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/spnPortoArrivo"></Spinner>
     </LinearLayout>
     <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/linearLayout4">
     <Button android:layout_height="wrap_content" android:id="@+id/button1" android:layout_width="wrap_content" android:text="@string/minusminus"></Button>
     <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/button2" android:text="@string/minus"></Button>
-    <TextView android:layout_height="wrap_content" android:id="@+id/txtOrario" android:text="TextView" android:layout_width="wrap_content"></TextView>
+    <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/txtOrario" android:text="TextView" android:layout_width="wrap_content"></TextView>
     <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/button3" android:text="@string/plus"></Button>
     <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/button4" android:text="@string/plusplus"></Button>
-    
+        
     </LinearLayout>
     <ListView android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/listMezzi"></ListView>
 </LinearLayout>
