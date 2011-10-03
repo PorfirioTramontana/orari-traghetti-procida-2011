@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:enabled="true" android:orderInCategory="1" android:title="@string/about" android:visible="true" android:id="@+id/about"></item>
+<item android:enabled="true" android:id="@+id/esci" android:orderInCategory="2" android:title="@string/esci" android:visible="true"></item>
+</menu>

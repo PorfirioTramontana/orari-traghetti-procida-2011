@@ -1,17 +1,24 @@
 package com.porfirio.orariprocida2011;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.format.Time;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,7 +29,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 public class OrariProcida2011Activity extends Activity {
-    protected static final int TIME_DIALOG_ID = 0;
 	/** Called when the activity is first created. */
     
 
@@ -39,23 +45,58 @@ public class OrariProcida2011Activity extends Activity {
 	public Button buttonPlusPlus;
 	public Button buttonPlus;
 	public TextView txtOrario;
+	private AlertDialog aboutDialog;
 	
-	
+    static final int ABOUT_DIALOG_ID = 0;
+
 	private ArrayList<Mezzo> listMezzi;
     
+    //Menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+        case R.id.about:
+            showDialog(ABOUT_DIALOG_ID);
+            return true;
+        case R.id.esci:
+        	OrariProcida2011Activity.this.finish();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Gli orari sono quelli resi noti dalle compagnie di navigazione alle biglietterie o sui loro siti web. L'autore non e' in alcun modo responsabile di ogni eventuale loro cambiamento. Orari aggiornati al 3 ottobre 2011. By Porfirio Tramontana 2011. In licenza GPL3. http://code.google.com/p/orari-traghetti-procida-2011/")
+               .setCancelable(false)
+               .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                   }
+               });
+        aboutDialog = builder.create();
+
         // get the current time
-        final Calendar c = Calendar.getInstance();
-        mHour = c.get(Calendar.HOUR_OF_DAY);
-        mMinute = c.get(Calendar.MINUTE);
-        orario=new Date();
+        
+        final Calendar c = Calendar.getInstance(TimeZone.getDefault());
+        
+        orario=c.getTime();
         
         txtOrario = (TextView)findViewById(R.id.txtOrario);
-        orario.setHours(orario.getHours()-1);
+        
 		String s=new String("Dalle ");
 		if (orario.getHours()<10)
 			s+="0";
@@ -250,8 +291,8 @@ public class OrariProcida2011Activity extends Activity {
 	@Override
     protected Dialog onCreateDialog(int id) {
         switch (id) {
-        case TIME_DIALOG_ID:
-			return new TimePickerDialog(this, mTimeSetListener, mHour, mMinute, false);
+        case ABOUT_DIALOG_ID:
+			return aboutDialog;
         }
         return null;
     }

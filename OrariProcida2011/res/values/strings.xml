@@ -27,4 +27,6 @@
         <string name="minus">&lt;</string>
         <string name="plus">&gt;</string>
         <string name="plusplus">&gt;&gt;</string>
+        <string name="about">About</string>
+        <string name="esci">Esci</string>
 </resources>
