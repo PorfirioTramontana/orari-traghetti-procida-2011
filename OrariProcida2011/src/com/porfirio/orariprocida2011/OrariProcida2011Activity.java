@@ -55,14 +55,29 @@ public class OrariProcida2011Activity extends Activity {
         orario=new Date();
         
         txtOrario = (TextView)findViewById(R.id.txtOrario);
-        txtOrario.setText("Dalle "+orario.getHours()+":"+orario.getMinutes());
+        orario.setHours(orario.getHours()-1);
+		String s=new String("Dalle ");
+		if (orario.getHours()<10)
+			s+="0";
+		s+=orario.getHours()+":";
+		if (orario.getMinutes()<10)
+			s+="0";
+		s+=orario.getMinutes()+" ";        		
+		txtOrario.setText(s);
         
         buttonMinusMinus = (Button)findViewById(R.id.button1);    
         buttonMinusMinus.setOnClickListener(new View.OnClickListener(){
         	@Override
         	public void onClick(View v) {
         		orario.setHours(orario.getHours()-1);
-        		txtOrario.setText("Dalle "+orario.getHours()+":"+orario.getMinutes());
+        		String s=new String("Dalle ");
+        		if (orario.getHours()<10)
+        			s+="0";
+        		s+=orario.getHours()+":";
+        		if (orario.getMinutes()<10)
+        			s+="0";
+        		s+=orario.getMinutes()+" ";        		
+        		txtOrario.setText(s);
         		aggiornaLista();
         	}
         });
@@ -72,7 +87,14 @@ public class OrariProcida2011Activity extends Activity {
         	@Override
         	public void onClick(View v) {
         		orario.setMinutes(orario.getMinutes()-15);
-        		txtOrario.setText("Dalle "+orario.getHours()+":"+orario.getMinutes());
+        		String s=new String("Dalle ");
+        		if (orario.getHours()<10)
+        			s+="0";
+        		s+=orario.getHours()+":";
+        		if (orario.getMinutes()<10)
+        			s+="0";
+        		s+=orario.getMinutes()+" ";        		
+        		txtOrario.setText(s);
         		aggiornaLista();
         	}
         });
@@ -82,7 +104,14 @@ public class OrariProcida2011Activity extends Activity {
         	@Override
         	public void onClick(View v) {
         		orario.setMinutes(orario.getMinutes()+15);
-        		txtOrario.setText("Dalle "+orario.getHours()+":"+orario.getMinutes());
+        		String s=new String("Dalle ");
+        		if (orario.getHours()<10)
+        			s+="0";
+        		s+=orario.getHours()+":";
+        		if (orario.getMinutes()<10)
+        			s+="0";
+        		s+=orario.getMinutes()+" ";        		
+        		txtOrario.setText(s);
         		aggiornaLista();
         	}
         });
@@ -92,7 +121,14 @@ public class OrariProcida2011Activity extends Activity {
         	@Override
         	public void onClick(View v) {
         		orario.setHours(orario.getHours()+1);
-        		txtOrario.setText("Dalle "+orario.getHours()+":"+orario.getMinutes());
+        		String s=new String("Dalle ");
+        		if (orario.getHours()<10)
+        			s+="0";
+        		s+=orario.getHours()+":";
+        		if (orario.getMinutes()<10)
+        			s+="0";
+        		s+=orario.getMinutes()+" ";        		
+        		txtOrario.setText(s);
         		aggiornaLista();
         	}
         });
@@ -266,7 +302,15 @@ public class OrariProcida2011Activity extends Activity {
     	}
     	Collections.sort(selectMezzi,comparator);
 		for (int i=0;i<selectMezzi.size();i++){
-			aalvMezzi.add(selectMezzi.get(i).nave+" - "+selectMezzi.get(i).portoPartenza+" - "+selectMezzi.get(i).portoArrivo+" - "+selectMezzi.get(i).oraPartenza.getHours()+":"+selectMezzi.get(i).oraPartenza.getMinutes());
+    		String s=new String(selectMezzi.get(i).nave+" - "+selectMezzi.get(i).portoPartenza+" - "+selectMezzi.get(i).portoArrivo+" - ");
+    		if (selectMezzi.get(i).oraPartenza.getHours()<10)
+    			s+="0";
+    		s+=selectMezzi.get(i).oraPartenza.getHours()+":";
+    		if (selectMezzi.get(i).oraPartenza.getMinutes()<10)
+    			s+="0";
+    		s+=selectMezzi.get(i).oraPartenza.getMinutes()+" ";        		
+		
+			aalvMezzi.add(s);
 		}
 
 	}
