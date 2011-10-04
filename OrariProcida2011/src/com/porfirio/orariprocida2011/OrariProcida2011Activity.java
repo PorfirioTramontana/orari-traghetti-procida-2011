@@ -103,7 +103,9 @@ public class OrariProcida2011Activity extends Activity {
 		s+=orario.getHours()+":";
 		if (orario.getMinutes()<10)
 			s+="0";
-		s+=orario.getMinutes()+" ";        		
+		s+=orario.getMinutes()+" del ";
+		s+=orario.getDate()+"/";
+		s+=(orario.getMonth()+1)+"";
 		txtOrario.setText(s);
         
         buttonMinusMinus = (Button)findViewById(R.id.button1);    
@@ -118,8 +120,8 @@ public class OrariProcida2011Activity extends Activity {
         		if (orario.getMinutes()<10)
         			s+="0";
         		s+=orario.getMinutes()+" del ";
-        		s+=orario.getDay()+"/";
-        		s+=orario.getMonth()+"";
+        		s+=orario.getDate()+"/";
+        		s+=(orario.getMonth()+1)+"";
         		txtOrario.setText(s);
         		aggiornaLista();
         	}
@@ -136,9 +138,9 @@ public class OrariProcida2011Activity extends Activity {
         		s+=orario.getHours()+":";
         		if (orario.getMinutes()<10)
         			s+="0";
-        		s+=orario.getMinutes()+" ";        		
-        		s+=orario.getDay()+"/";
-        		s+=orario.getMonth()+"";
+        		s+=orario.getMinutes()+" del ";        		
+        		s+=orario.getDate()+"/";
+        		s+=(orario.getMonth()+1)+"";
         		txtOrario.setText(s);
         		aggiornaLista();
         	}
@@ -155,9 +157,9 @@ public class OrariProcida2011Activity extends Activity {
         		s+=orario.getHours()+":";
         		if (orario.getMinutes()<10)
         			s+="0";
-        		s+=orario.getMinutes()+" ";        		
-        		s+=orario.getDay()+"/";
-        		s+=orario.getMonth()+"";
+        		s+=orario.getMinutes()+" del ";        		
+        		s+=orario.getDate()+"/";
+        		s+=(orario.getMonth()+1)+"";
         		txtOrario.setText(s);
         		aggiornaLista();
         	}
@@ -174,9 +176,9 @@ public class OrariProcida2011Activity extends Activity {
         		s+=orario.getHours()+":";
         		if (orario.getMinutes()<10)
         			s+="0";
-        		s+=orario.getMinutes()+" ";        		        		
-        		s+=orario.getDay()+"/";
-        		s+=orario.getMonth()+"";
+        		s+=orario.getMinutes()+" del ";        		        		
+        		s+=orario.getDate()+"/";
+        		s+=(orario.getMonth()+1)+"";
         		txtOrario.setText(s);
         		aggiornaLista();
         	}
