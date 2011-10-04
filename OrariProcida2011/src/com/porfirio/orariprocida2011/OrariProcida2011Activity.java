@@ -117,7 +117,9 @@ public class OrariProcida2011Activity extends Activity {
         		s+=orario.getHours()+":";
         		if (orario.getMinutes()<10)
         			s+="0";
-        		s+=orario.getMinutes()+" ";        		
+        		s+=orario.getMinutes()+" del ";
+        		s+=orario.getDay()+"/";
+        		s+=orario.getMonth()+"";
         		txtOrario.setText(s);
         		aggiornaLista();
         	}
@@ -135,6 +137,8 @@ public class OrariProcida2011Activity extends Activity {
         		if (orario.getMinutes()<10)
         			s+="0";
         		s+=orario.getMinutes()+" ";        		
+        		s+=orario.getDay()+"/";
+        		s+=orario.getMonth()+"";
         		txtOrario.setText(s);
         		aggiornaLista();
         	}
@@ -152,6 +156,8 @@ public class OrariProcida2011Activity extends Activity {
         		if (orario.getMinutes()<10)
         			s+="0";
         		s+=orario.getMinutes()+" ";        		
+        		s+=orario.getDay()+"/";
+        		s+=orario.getMonth()+"";
         		txtOrario.setText(s);
         		aggiornaLista();
         	}
@@ -168,7 +174,9 @@ public class OrariProcida2011Activity extends Activity {
         		s+=orario.getHours()+":";
         		if (orario.getMinutes()<10)
         			s+="0";
-        		s+=orario.getMinutes()+" ";        		
+        		s+=orario.getMinutes()+" ";        		        		
+        		s+=orario.getDay()+"/";
+        		s+=orario.getMonth()+"";
         		txtOrario.setText(s);
         		aggiornaLista();
         	}
@@ -301,8 +309,6 @@ public class OrariProcida2011Activity extends Activity {
     private TimePickerDialog.OnTimeSetListener mTimeSetListener =
         new TimePickerDialog.OnTimeSetListener() {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                mHour = hourOfDay;
-                mMinute = minute;
                 orario.setHours(hourOfDay);
                 orario.setMinutes(minute);
             }
@@ -332,7 +338,10 @@ public class OrariProcida2011Activity extends Activity {
     		if (listMezzi.get(i).nave.equals(nave) || nave.equals("Tutti")){
     			if (listMezzi.get(i).portoPartenza.contains((portoPartenza))  || portoPartenza.equals("Tutti")){
     				if (listMezzi.get(i).portoArrivo.contains(portoArrivo)  || portoArrivo.equals("Tutti")){
-    					if (listMezzi.get(i).oraPartenza.after(orario)){
+    					if (	(listMezzi.get(i).oraPartenza.getHours()>orario.getHours())
+    							||
+    							((listMezzi.get(i).oraPartenza.getHours()==orario.getHours())
+    									&&(listMezzi.get(i).oraPartenza.getMinutes()>orario.getMinutes()))){
     							selectMezzi.add(listMezzi.get(i));
     						}
         				}
