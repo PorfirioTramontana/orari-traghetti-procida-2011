@@ -1,12 +1,10 @@
 package com.porfirio.orariprocida2011;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import android.app.Activity;
@@ -15,7 +13,6 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.format.Time;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -35,9 +32,8 @@ public class OrariProcida2011Activity extends Activity {
     public String nave;
     public String portoPartenza;
     public String portoArrivo;
-    public Date orario;
-	private int mHour;
-	private int mMinute;
+//    public Date orario;
+    public Calendar c;
 	public ArrayAdapter<String> aalvMezzi;
 	public ListView lvMezzi;
 	public Button buttonMinusMinus;
@@ -46,6 +42,7 @@ public class OrariProcida2011Activity extends Activity {
 	public Button buttonPlus;
 	public TextView txtOrario;
 	private AlertDialog aboutDialog;
+	public int finestraTemporale=24;
 	
     static final int ABOUT_DIALOG_ID = 0;
 
@@ -91,37 +88,40 @@ public class OrariProcida2011Activity extends Activity {
 
         // get the current time
         
-        final Calendar c = Calendar.getInstance(TimeZone.getDefault());
+        c = Calendar.getInstance(TimeZone.getDefault());
         
-        orario=c.getTime();
+//        orario=c.getTime();
+        
         
         txtOrario = (TextView)findViewById(R.id.txtOrario);
         
 		String s=new String("Dalle ");
-		if (orario.getHours()<10)
+		if (c.get(Calendar.HOUR_OF_DAY)<10)
 			s+="0";
-		s+=orario.getHours()+":";
-		if (orario.getMinutes()<10)
+		s+=c.get(Calendar.HOUR_OF_DAY)+":";
+		if (c.get(Calendar.MINUTE)<10)
 			s+="0";
-		s+=orario.getMinutes()+" del ";
-		s+=orario.getDate()+"/";
-		s+=(orario.getMonth()+1)+"";
+		s+=c.get(Calendar.MINUTE)+" del ";
+		s+=c.get(Calendar.DAY_OF_MONTH)+"/";
+		s+=(c.get(Calendar.MONTH)+1)+"";
 		txtOrario.setText(s);
         
         buttonMinusMinus = (Button)findViewById(R.id.button1);    
         buttonMinusMinus.setOnClickListener(new View.OnClickListener(){
         	@Override
         	public void onClick(View v) {
-        		orario.setHours(orario.getHours()-1);
+        		
+//        		orario.setHours(orario.getHours()-1);
+        		c.add(Calendar.HOUR, -1);
         		String s=new String("Dalle ");
-        		if (orario.getHours()<10)
+        		if (c.get(Calendar.HOUR_OF_DAY)<10)
         			s+="0";
-        		s+=orario.getHours()+":";
-        		if (orario.getMinutes()<10)
+        		s+=c.get(Calendar.HOUR_OF_DAY)+":";
+        		if (c.get(Calendar.MINUTE)<10)
         			s+="0";
-        		s+=orario.getMinutes()+" del ";
-        		s+=orario.getDate()+"/";
-        		s+=(orario.getMonth()+1)+"";
+        		s+=c.get(Calendar.MINUTE)+" del ";
+        		s+=c.get(Calendar.DAY_OF_MONTH)+"/";
+        		s+=(c.get(Calendar.MONTH)+1)+"";
         		txtOrario.setText(s);
         		aggiornaLista();
         	}
@@ -131,16 +131,17 @@ public class OrariProcida2011Activity extends Activity {
         buttonMinus.setOnClickListener(new View.OnClickListener(){
         	@Override
         	public void onClick(View v) {
-        		orario.setMinutes(orario.getMinutes()-15);
+//        		orario.setMinutes(orario.getMinutes()-15);
+        		c.add(Calendar.MINUTE, -15);
         		String s=new String("Dalle ");
-        		if (orario.getHours()<10)
+        		if (c.get(Calendar.HOUR_OF_DAY)<10)
         			s+="0";
-        		s+=orario.getHours()+":";
-        		if (orario.getMinutes()<10)
+        		s+=c.get(Calendar.HOUR_OF_DAY)+":";
+        		if (c.get(Calendar.MINUTE)<10)
         			s+="0";
-        		s+=orario.getMinutes()+" del ";        		
-        		s+=orario.getDate()+"/";
-        		s+=(orario.getMonth()+1)+"";
+        		s+=c.get(Calendar.MINUTE)+" del ";
+        		s+=c.get(Calendar.DAY_OF_MONTH)+"/";
+        		s+=(c.get(Calendar.MONTH)+1)+"";
         		txtOrario.setText(s);
         		aggiornaLista();
         	}
@@ -150,16 +151,17 @@ public class OrariProcida2011Activity extends Activity {
         buttonPlus.setOnClickListener(new View.OnClickListener(){
         	@Override
         	public void onClick(View v) {
-        		orario.setMinutes(orario.getMinutes()+15);
+//        		orario.setMinutes(orario.getMinutes()+15);
+        		c.add(Calendar.MINUTE, 15);
         		String s=new String("Dalle ");
-        		if (orario.getHours()<10)
+        		if (c.get(Calendar.HOUR_OF_DAY)<10)
         			s+="0";
-        		s+=orario.getHours()+":";
-        		if (orario.getMinutes()<10)
+        		s+=c.get(Calendar.HOUR_OF_DAY)+":";
+        		if (c.get(Calendar.MINUTE)<10)
         			s+="0";
-        		s+=orario.getMinutes()+" del ";        		
-        		s+=orario.getDate()+"/";
-        		s+=(orario.getMonth()+1)+"";
+        		s+=c.get(Calendar.MINUTE)+" del ";
+        		s+=c.get(Calendar.DAY_OF_MONTH)+"/";
+        		s+=(c.get(Calendar.MONTH)+1)+"";
         		txtOrario.setText(s);
         		aggiornaLista();
         	}
@@ -169,16 +171,17 @@ public class OrariProcida2011Activity extends Activity {
         buttonPlusPlus.setOnClickListener(new View.OnClickListener(){
         	@Override
         	public void onClick(View v) {
-        		orario.setHours(orario.getHours()+1);
+//        		orario.setHours(orario.getHours()+1);
+        		c.add(Calendar.HOUR, 1);
         		String s=new String("Dalle ");
-        		if (orario.getHours()<10)
+        		if (c.get(Calendar.HOUR_OF_DAY)<10)
         			s+="0";
-        		s+=orario.getHours()+":";
-        		if (orario.getMinutes()<10)
+        		s+=c.get(Calendar.HOUR_OF_DAY)+":";
+        		if (c.get(Calendar.MINUTE)<10)
         			s+="0";
-        		s+=orario.getMinutes()+" del ";        		        		
-        		s+=orario.getDate()+"/";
-        		s+=(orario.getMonth()+1)+"";
+        		s+=c.get(Calendar.MINUTE)+" del ";
+        		s+=c.get(Calendar.DAY_OF_MONTH)+"/";
+        		s+=(c.get(Calendar.MONTH)+1)+"";
         		txtOrario.setText(s);
         		aggiornaLista();
         	}
@@ -197,104 +200,113 @@ public class OrariProcida2011Activity extends Activity {
     }
     
     private void riempiLista() {
-		listMezzi.add(new Mezzo("Aliscafo Caremar",8,10,8,25,"Procida","Pozzuoli"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",9,10,9,45,"Procida","Pozzuoli"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",12,10,12,40,"Procida","Pozzuoli"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",18,35,19,00,"Procida","Pozzuoli"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",10,20,10,55,"Pozzuoli","Procida"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",13,50,14,20,"Pozzuoli","Procida"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",19,15,19,45,"Pozzuoli","Procida"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",8,55,9,15,"Pozzuoli","Procida"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",7,30,8,10,"Napoli Beverello","Procida"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",8,50,9,30,"Napoli Beverello","Procida"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",11,45,12,25,"Napoli Beverello","Procida"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",13,10,13,50,"Napoli Beverello","Procida"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",15,10,15,50,"Napoli Beverello","Procida"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",17,30,18,10,"Napoli Beverello","Procida"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",18,15,18,55,"Napoli Beverello","Procida"));
-		//listMezzi.add(new Mezzo("Traghetto Caremar",0,15,1,15,"Napoli Porta di Massa","Procida"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",6,25,7,25,"Napoli Porta di Massa","Procida"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",9,10,10,10,"Napoli Porta di Massa","Procida"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",10,45,11,45,"Napoli Porta di Massa","Procida"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",15,15,16,15,"Napoli Porta di Massa","Procida"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",17,45,18,45,"Napoli Porta di Massa","Procida"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",19,30,20,30,"Napoli Porta di Massa","Procida"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",22,15,23,15,"Napoli Porta di Massa","Procida"));
-		//listMezzi.add(new Mezzo("Traghetto Caremar",2,20,3,20,"Procida","Napoli Porta di Massa"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",7,40,8,40,"Procida","Napoli Porta di Massa"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",13,35,14,35,"Procida","Napoli Porta di Massa"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",14,35,15,35,"Procida","Napoli Porta di Massa"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",16,15,17,15,"Procida","Napoli Porta di Massa"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",18,5,19,0,"Procida","Napoli Porta di Massa"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",20,30,21,30,"Procida","Napoli Porta di Massa"));
-		//listMezzi.add(new Mezzo("Traghetto Caremar",22,55,23,55,"Procida","Napoli Porta di Massa"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",6,35,7,15,"Procida","Napoli Beverello"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",7,55,8,35,"Procida","Napoli Beverello"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",9,25,10,5,"Procida","Napoli Beverello"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",10,35,11,15,"Procida","Napoli Beverello"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",13,30,14,10,"Procida","Napoli Beverello"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",14,55,15,35,"Procida","Napoli Beverello"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",16,55,17,35,"Procida","Napoli Beverello"));
-		listMezzi.add(new Mezzo("Gestur",6,50,7,30,"Procida","Pozzuoli"));
-		listMezzi.add(new Mezzo("Gestur",9,40,10,20,"Procida","Pozzuoli"));
-		listMezzi.add(new Mezzo("Gestur",11,30,12,10,"Procida","Pozzuoli"));
-		listMezzi.add(new Mezzo("Gestur",14,5,14,45,"Procida","Pozzuoli"));
-		listMezzi.add(new Mezzo("Gestur",17,5,17,45,"Procida","Pozzuoli"));
-		listMezzi.add(new Mezzo("Gestur",8,25,9,5,"Pozzuoli","Procida"));
-		listMezzi.add(new Mezzo("Gestur",10,40,11,20,"Pozzuoli","Procida"));
-		listMezzi.add(new Mezzo("Gestur",13,0,13,40,"Pozzuoli","Procida"));
-		listMezzi.add(new Mezzo("Gestur",15,30,16,10,"Pozzuoli","Procida"));
-		listMezzi.add(new Mezzo("Gestur",17,55,18,35,"Pozzuoli","Procida"));
-		listMezzi.add(new Mezzo("Aliscafo SNAV",8,25,9,0,"Napoli Beverello","Procida"));
-		listMezzi.add(new Mezzo("Aliscafo SNAV",12,20,12,55,"Napoli Beverello","Procida"));
-		listMezzi.add(new Mezzo("Aliscafo SNAV",16,20,16,55,"Napoli Beverello","Procida"));
-		listMezzi.add(new Mezzo("Aliscafo SNAV",19,0,19,35,"Napoli Beverello","Procida"));
-		listMezzi.add(new Mezzo("Aliscafo SNAV",7,30,8,5,"Procida","Napoli Beverello"));
-		listMezzi.add(new Mezzo("Aliscafo SNAV",10,10,10,45,"Procida","Napoli Beverello"));
-		listMezzi.add(new Mezzo("Aliscafo SNAV",14,15,14,50,"Procida","Napoli Beverello"));
-		listMezzi.add(new Mezzo("Aliscafo SNAV",18,5,18,40,"Procida","Napoli Beverello"));
-		listMezzi.add(new Mezzo("Medmar",4,10,4,50,"Pozzuoli","Procida"));
-		listMezzi.add(new Mezzo("Medmar",20,30,21,10,"Pozzuoli","Procida"));
-		listMezzi.add(new Mezzo("Medmar",3,10,3,50,"Procida","Pozzuoli"));
-		listMezzi.add(new Mezzo("Medmar",19,40,20,20,"Procida","Pozzuoli"));
+   	// convenzione giorni settimana:
+	// DOMENICA =1 LUNEDI=2 MARTEDI=3 MERCOLEDI=4 GIOVEDI=5 VENERDI=6 SABATO=7
+    	
+//    	listMezzi.add(new Mezzo("Prova",0,20,8,25,"Prova","Prova",2,10,2011,6,10,2011,"1234567"));
+//    	listMezzi.add(new Mezzo("Prova-",0,20,8,25,"Prova","Prova",6,10,2011,7,10,2011,"1234567"));
+//    	listMezzi.add(new Mezzo("Prova1",0,40,8,25,"Prova","Prova",0,0,0,0,0,0,"12345"));
+//    	listMezzi.add(new Mezzo("Prova2",0,50,8,25,"Prova","Prova",0,0,0,0,0,0,"5"));
+//    	listMezzi.add(new Mezzo("Prova3",0,55,8,25,"Prova","Prova",0,0,0,0,0,0,"67"));
+    	
+    	listMezzi.add(new Mezzo("Aliscafo Caremar",8,10,8,25,"Procida","Pozzuoli",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",9,10,9,45,"Procida","Pozzuoli",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",12,10,12,40,"Procida","Pozzuoli",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",18,35,19,00,"Procida","Pozzuoli",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",10,20,10,55,"Pozzuoli","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",13,50,14,20,"Pozzuoli","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",19,15,19,45,"Pozzuoli","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",8,55,9,15,"Pozzuoli","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",7,30,8,10,"Napoli Beverello","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",8,50,9,30,"Napoli Beverello","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",11,45,12,25,"Napoli Beverello","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",13,10,13,50,"Napoli Beverello","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",15,10,15,50,"Napoli Beverello","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",17,30,18,10,"Napoli Beverello","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",18,15,18,55,"Napoli Beverello","Procida",0,0,0,0,0,0,"1234567"));
+		//listMezzi.add(new Mezzo("Traghetto Caremar",0,15,1,15,"Napoli Porta di Massa","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",6,25,7,25,"Napoli Porta di Massa","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",9,10,10,10,"Napoli Porta di Massa","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",10,45,11,45,"Napoli Porta di Massa","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",15,15,16,15,"Napoli Porta di Massa","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",17,45,18,45,"Napoli Porta di Massa","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",19,30,20,30,"Napoli Porta di Massa","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",22,15,23,15,"Napoli Porta di Massa","Procida",0,0,0,0,0,0,"1234567"));
+		//listMezzi.add(new Mezzo("Traghetto Caremar",2,20,3,20,"Procida","Napoli Porta di Massa",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",7,40,8,40,"Procida","Napoli Porta di Massa",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",13,35,14,35,"Procida","Napoli Porta di Massa",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",14,35,15,35,"Procida","Napoli Porta di Massa",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",16,15,17,15,"Procida","Napoli Porta di Massa",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",18,5,19,0,"Procida","Napoli Porta di Massa",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",20,30,21,30,"Procida","Napoli Porta di Massa",0,0,0,0,0,0,"1234567"));
+		//listMezzi.add(new Mezzo("Traghetto Caremar",22,55,23,55,"Procida","Napoli Porta di Massa",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",6,35,7,15,"Procida","Napoli Beverello",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",7,55,8,35,"Procida","Napoli Beverello",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",9,25,10,5,"Procida","Napoli Beverello",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",10,35,11,15,"Procida","Napoli Beverello",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",13,30,14,10,"Procida","Napoli Beverello",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",14,55,15,35,"Procida","Napoli Beverello",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",16,55,17,35,"Procida","Napoli Beverello",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Gestur",6,50,7,30,"Procida","Pozzuoli",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Gestur",9,40,10,20,"Procida","Pozzuoli",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Gestur",11,30,12,10,"Procida","Pozzuoli",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Gestur",14,5,14,45,"Procida","Pozzuoli",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Gestur",17,5,17,45,"Procida","Pozzuoli",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Gestur",8,25,9,5,"Pozzuoli","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Gestur",10,40,11,20,"Pozzuoli","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Gestur",13,0,13,40,"Pozzuoli","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Gestur",15,30,16,10,"Pozzuoli","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Gestur",17,55,18,35,"Pozzuoli","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo SNAV",8,25,9,0,"Napoli Beverello","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo SNAV",12,20,12,55,"Napoli Beverello","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo SNAV",16,20,16,55,"Napoli Beverello","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo SNAV",19,0,19,35,"Napoli Beverello","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo SNAV",7,30,8,5,"Procida","Napoli Beverello",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo SNAV",10,10,10,45,"Procida","Napoli Beverello",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo SNAV",14,15,14,50,"Procida","Napoli Beverello",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo SNAV",18,5,18,40,"Procida","Napoli Beverello",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Medmar",4,10,4,50,"Pozzuoli","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Medmar",20,30,21,10,"Pozzuoli","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Medmar",3,10,3,50,"Procida","Pozzuoli",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Medmar",19,40,20,20,"Procida","Pozzuoli",0,0,0,0,0,0,"1234567"));
 		
-		listMezzi.add(new Mezzo("Traghetto Caremar",7,35,7,55,"Procida","Ischia"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",10,20,10,40,"Procida","Ischia"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",11,5,11,25,"Procida","Ischia"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",11,55,12,15,"Procida","Ischia"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",14,30,14,50,"Procida","Ischia"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",16,25,18,45,"Procida","Ischia"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",18,55,19,15,"Procida","Ischia"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",19,50,20,10,"Procida","Ischia"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",20,35,20,55,"Procida","Ischia"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",23,20,23,40,"Procida","Ischia"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",7,35,7,55,"Procida","Ischia",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",10,20,10,40,"Procida","Ischia",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",11,5,11,25,"Procida","Ischia",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",11,55,12,15,"Procida","Ischia",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",14,30,14,50,"Procida","Ischia",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",16,25,18,45,"Procida","Ischia",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",18,55,19,15,"Procida","Ischia",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",19,50,20,10,"Procida","Ischia",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",20,35,20,55,"Procida","Ischia",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",23,20,23,40,"Procida","Ischia",0,0,0,0,0,0,"1234567"));
 		
-		listMezzi.add(new Mezzo("Traghetto Caremar",7,0,7,20,"Ischia","Procida"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",8,30,8,50,"Ischia","Procida"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",11,30,11,50,"Ischia","Procida"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",12,55,13,15,"Ischia","Procida"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",13,55,14,15,"Ischia","Procida"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",15,30,15,50,"Ischia","Procida"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",17,25,17,45,"Ischia","Procida"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",18,0,18,20,"Ischia","Procida"));
-		listMezzi.add(new Mezzo("Traghetto Caremar",19,55,20,15,"Ischia","Procida"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",7,0,7,20,"Ischia","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",8,30,8,50,"Ischia","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",11,30,11,50,"Ischia","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",12,55,13,15,"Ischia","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",13,55,14,15,"Ischia","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",15,30,15,50,"Ischia","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",17,25,17,45,"Ischia","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",18,0,18,20,"Ischia","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Traghetto Caremar",19,55,20,15,"Ischia","Procida",0,0,0,0,0,0,"1234567"));
 		
-		listMezzi.add(new Mezzo("Aliscafo Caremar",9,35,9,50,"Procida","Ischia"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",12,30,12,45,"Procida","Ischia"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",13,55,14,10,"Procida","Ischia"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",15,55,16,10,"Procida","Ischia"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",19,0,19,15,"Procida","Ischia"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",9,35,9,50,"Procida","Ischia",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",12,30,12,45,"Procida","Ischia",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",13,55,14,10,"Procida","Ischia",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",15,55,16,10,"Procida","Ischia",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",19,0,19,15,"Procida","Ischia",0,0,0,0,0,0,"1234567"));
 		
-		listMezzi.add(new Mezzo("Aliscafo Caremar",7,30,7,45,"Ischia","Procida"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",10,10,10,25,"Ischia","Procida"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",13,5,13,20,"Ischia","Procida"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",14,30,14,45,"Ischia","Procida"));
-		listMezzi.add(new Mezzo("Aliscafo Caremar",16,30,16,45,"Ischia","Procida"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",7,30,7,45,"Ischia","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",10,10,10,25,"Ischia","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",13,5,13,20,"Ischia","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",14,30,14,45,"Ischia","Procida",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo Caremar",16,30,16,45,"Ischia","Procida",0,0,0,0,0,0,"1234567"));
 		
-		listMezzi.add(new Mezzo("Aliscafo SNAV",7,10,7,25,"Procida","Casamicciola"));
-		listMezzi.add(new Mezzo("Aliscafo SNAV",9,45,10,0,"Procida","Casamicciola"));
-		listMezzi.add(new Mezzo("Aliscafo SNAV",13,50,14,10,"Procida","Casamicciola"));
-		listMezzi.add(new Mezzo("Aliscafo SNAV",17,40,17,55,"Procida","Casamicciola"));		
+		listMezzi.add(new Mezzo("Aliscafo SNAV",7,10,7,25,"Procida","Casamicciola",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo SNAV",9,45,10,0,"Procida","Casamicciola",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo SNAV",13,50,14,10,"Procida","Casamicciola",0,0,0,0,0,0,"1234567"));
+		listMezzi.add(new Mezzo("Aliscafo SNAV",17,40,17,55,"Procida","Casamicciola",0,0,0,0,0,0,"1234567"));		
 		
 	}
 
@@ -303,18 +315,17 @@ public class OrariProcida2011Activity extends Activity {
         switch (id) {
         case ABOUT_DIALOG_ID:
 			return aboutDialog;
-        }
+        }        
         return null;
     }
     
-    // the callback received when the user "sets" the time in the dialog
-    private TimePickerDialog.OnTimeSetListener mTimeSetListener =
-        new TimePickerDialog.OnTimeSetListener() {
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                orario.setHours(hourOfDay);
-                orario.setMinutes(minute);
-            }
-        };
+//    // the callback received when the user "sets" the time in the dialog
+//    private TimePickerDialog.OnTimeSetListener mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+//            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {                
+//            	orario.setHours(hourOfDay);
+//                orario.setMinutes(minute);
+//            }
+//        };
         
         
     public void aggiornaLista() {
@@ -324,28 +335,51 @@ public class OrariProcida2011Activity extends Activity {
         Comparator<Mezzo> comparator = new Comparator<Mezzo>() {
     		@Override
     		public int compare(Mezzo m1, Mezzo m2) {
-    			if(m1.oraPartenza.before(m2.oraPartenza))
-    				return -1;
-    			else if (m1.oraPartenza.after(m2.oraPartenza))
+    			if (m1.getGiornoSeguente()==m2.getGiornoSeguente()){
+	    			if(m1.oraPartenza.before(m2.oraPartenza))
+	    				return -1;
+	    			else if (m1.oraPartenza.after(m2.oraPartenza))
+	    				return 1;
+	    			else
+	    				return 0;
+    			}
+    			else if (m1.getGiornoSeguente()){
     				return 1;
-    			else
-    				return 0;
+    				}
+    			else if (m2.getGiornoSeguente()){
+    				return -1;
+    			}
+				return 0;
     		}
     		};
     	
     	aalvMezzi.clear();
+
+		Calendar oraLimite=(Calendar) c.clone();
+		oraLimite.add(Calendar.HOUR_OF_DAY, finestraTemporale);
+
     	//qui riempio aalvMezzi in base agli input e ai dati di listMezzi
     	for (int i=0;i<listMezzi.size();i++){
     		//per ogni mezzo valuta se ci interessa
+    		Calendar oraNave=(Calendar) listMezzi.get(i).oraPartenza.clone();
+    		oraNave.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH));
+    		oraNave.set(Calendar.MONTH, c.get(Calendar.MONTH));
+    		oraNave.set(Calendar.YEAR, c.get(Calendar.YEAR));
+    		if ((oraNave.get(Calendar.HOUR_OF_DAY)<c.get(Calendar.HOUR_OF_DAY))||(oraNave.get(Calendar.HOUR_OF_DAY)==c.get(Calendar.HOUR_OF_DAY))&&(oraNave.get(Calendar.MINUTE)<c.get(Calendar.MINUTE)))
+    			oraNave.add(Calendar.DAY_OF_MONTH, 1);
+
     		if (listMezzi.get(i).nave.equals(nave) || nave.equals("Tutti")){
     			if (listMezzi.get(i).portoPartenza.contains((portoPartenza))  || portoPartenza.equals("Tutti")){
     				if (listMezzi.get(i).portoArrivo.contains(portoArrivo)  || portoArrivo.equals("Tutti")){
-    					if (	(listMezzi.get(i).oraPartenza.getHours()>orario.getHours())
-    							||
-    							((listMezzi.get(i).oraPartenza.getHours()==orario.getHours())
-    									&&(listMezzi.get(i).oraPartenza.getMinutes()>orario.getMinutes()))){
-    							selectMezzi.add(listMezzi.get(i));
-    						}
+    					if (listMezzi.get(i).inizioEsclusione.after(oraNave) || listMezzi.get(i).fineEsclusione.before(oraNave))
+    						if (listMezzi.get(i).giorniSettimana.contains(String.valueOf(oraNave.get(Calendar.DAY_OF_WEEK))))
+		    					if (oraNave.before(oraLimite))	{
+		    						if (oraNave.get(Calendar.DAY_OF_MONTH)!=c.get(Calendar.DAY_OF_MONTH))
+		    							listMezzi.get(i).setGiornoSeguente(true);
+		    						else
+		    							listMezzi.get(i).setGiornoSeguente(false);
+		    						selectMezzi.add(listMezzi.get(i));	    								    								
+		    						}
         				}
     			}
     		}
@@ -355,13 +389,13 @@ public class OrariProcida2011Activity extends Activity {
     	Collections.sort(selectMezzi,comparator);
 		for (int i=0;i<selectMezzi.size();i++){
     		String s=new String(selectMezzi.get(i).nave+" - "+selectMezzi.get(i).portoPartenza+" - "+selectMezzi.get(i).portoArrivo+" - ");
-    		if (selectMezzi.get(i).oraPartenza.getHours()<10)
+    		if (selectMezzi.get(i).oraPartenza.get(Calendar.HOUR_OF_DAY)<10)
     			s+="0";
-    		s+=selectMezzi.get(i).oraPartenza.getHours()+":";
-    		if (selectMezzi.get(i).oraPartenza.getMinutes()<10)
+    		s+=selectMezzi.get(i).oraPartenza.get(Calendar.HOUR_OF_DAY)+":";
+    		if (selectMezzi.get(i).oraPartenza.get(Calendar.MINUTE)<10)
     			s+="0";
-    		s+=selectMezzi.get(i).oraPartenza.getMinutes()+" ";        		
-		
+    		s+=selectMezzi.get(i).oraPartenza.get(Calendar.MINUTE)+" ";
+//    		s+=selectMezzi.get(i).getGiornoSeguente()+" ";
 			aalvMezzi.add(s);
 		}
 
