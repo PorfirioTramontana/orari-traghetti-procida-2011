@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.TimeZone;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,7 +21,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 public class OrariProcida2011Activity extends Activity {
 	/** Called when the activity is first created. */
@@ -43,10 +40,13 @@ public class OrariProcida2011Activity extends Activity {
 	public TextView txtOrario;
 	private AlertDialog aboutDialog;
 	public int finestraTemporale=24;
+	private DettagliMezzoDialog dettagliMezzoDialog;
+	private ArrayList <Mezzo> selectMezzi;
 	
     static final int ABOUT_DIALOG_ID = 0;
 
 	private ArrayList<Mezzo> listMezzi;
+	private ArrayList<Compagnia> listCompagnia;
     
     //Menu
     @Override
@@ -194,21 +194,72 @@ public class OrariProcida2011Activity extends Activity {
         aalvMezzi = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);       
         lvMezzi.setAdapter(aalvMezzi);
         
+        dettagliMezzoDialog = new DettagliMezzoDialog(this);
+        lvMezzi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        	//listener sul click di un item della lista
+        	
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+
+				int position=arg2;
+				for (int i=0;i<aalvMezzi.getCount();i++){
+					if (selectMezzi.get(i).getOrderInList()==position)
+						dettagliMezzoDialog.setMezzo(selectMezzi.get(i));
+				}
+					
+				
+//				problema: clicco sulla lista ma ho solo la stringa, non il mezzo corrispondente
+//				soluzione: mantenere una variabile ordine che abbini lvMezzi con Mezzi
+//				altra soluzione: trovare il mezzo dalla stringa
+				dettagliMezzoDialog.fill(listCompagnia);
+				dettagliMezzoDialog.show();
+			}
+
+        	
+		});
+        
         riempiLista();
         aggiornaLista();
 
     }
     
     private void riempiLista() {
+    	listCompagnia=new ArrayList<Compagnia>();
+    	
+    	Compagnia c=new Compagnia("Caremar");
+    	c.addTelefono("Napoli (Molo Beverello)", "0815513882");
+    	c.addTelefono("Pozzuoli", "0815262711");
+    	c.addTelefono("Pozzuoli", "0815261335");
+    	c.addTelefono("Ischia", "081984818");
+    	c.addTelefono("Ischia", "081991953");
+    	c.addTelefono("Procida", "0818967280");
+    	listCompagnia.add(c);
+    	
+    	c=new Compagnia("Gestur");
+    	c.addTelefono("Procida", "0818531405");
+    	listCompagnia.add(c);
+    	
+    	c=new Compagnia("SNAV");
+    	c.addTelefono("Napoli", "0814285111");
+    	c.addTelefono("Ischia", "081984818");
+    	c.addTelefono("Procida", "0818969975");  	
+    	listCompagnia.add(c);
+    	
+    	c=new Compagnia("Medmar");
+    	c.addTelefono("Napoli", "0813334411");
+    	listCompagnia.add(c);
+    	
+    	
    	// convenzione giorni settimana:
 	// DOMENICA =1 LUNEDI=2 MARTEDI=3 MERCOLEDI=4 GIOVEDI=5 VENERDI=6 SABATO=7
     	
-//    	listMezzi.add(new Mezzo("Prova",0,20,8,25,"Prova","Prova",2,10,2011,6,10,2011,"1234567"));
-//    	listMezzi.add(new Mezzo("Prova-",0,20,8,25,"Prova","Prova",6,10,2011,7,10,2011,"1234567"));
-//    	listMezzi.add(new Mezzo("Prova1",0,40,8,25,"Prova","Prova",0,0,0,0,0,0,"12345"));
-//    	listMezzi.add(new Mezzo("Prova2",0,50,8,25,"Prova","Prova",0,0,0,0,0,0,"5"));
-//    	listMezzi.add(new Mezzo("Prova3",0,55,8,25,"Prova","Prova",0,0,0,0,0,0,"67"));
-    	
+    	listMezzi.add(new Mezzo("Prova",0,20,8,25,"Prova","Prova",2,10,2011,6,10,2011,"1234567"));
+    	listMezzi.add(new Mezzo("Prova-",0,20,8,25,"Prova","Prova",6,10,2011,7,10,2011,"1234567"));
+    	listMezzi.add(new Mezzo("Prova1",0,40,8,25,"Prova","Prova",0,0,0,0,0,0,"12345"));
+    	listMezzi.add(new Mezzo("Prova2",0,50,8,25,"Prova","Prova",0,0,0,0,0,0,"5"));
+    	listMezzi.add(new Mezzo("Prova3",0,55,8,25,"Prova","Prova",0,0,0,0,0,0,"67"));
+//    	
     	listMezzi.add(new Mezzo("Aliscafo Caremar",8,10,8,25,"Procida","Pozzuoli",0,0,0,0,0,0,"1234567"));
 		listMezzi.add(new Mezzo("Traghetto Caremar",9,10,9,45,"Procida","Pozzuoli",0,0,0,0,0,0,"1234567"));
 		listMezzi.add(new Mezzo("Traghetto Caremar",12,10,12,40,"Procida","Pozzuoli",0,0,0,0,0,0,"1234567"));
@@ -328,10 +379,8 @@ public class OrariProcida2011Activity extends Activity {
 //        };
         
         
-    public void aggiornaLista() {
-		// TODO Qui tutto l'algoritmo
-    	ArrayList <Mezzo> selectMezzi= new ArrayList <Mezzo>();
-    	
+    public void aggiornaLista() {    	
+    	selectMezzi= new ArrayList <Mezzo>();
         Comparator<Mezzo> comparator = new Comparator<Mezzo>() {
     		@Override
     		public int compare(Mezzo m1, Mezzo m2) {
@@ -378,6 +427,7 @@ public class OrariProcida2011Activity extends Activity {
 		    							listMezzi.get(i).setGiornoSeguente(true);
 		    						else
 		    							listMezzi.get(i).setGiornoSeguente(false);
+		    						listMezzi.get(i).setId(i);
 		    						selectMezzi.add(listMezzi.get(i));	    								    								
 		    						}
         				}
@@ -388,7 +438,9 @@ public class OrariProcida2011Activity extends Activity {
     	}
     	Collections.sort(selectMezzi,comparator);
 		for (int i=0;i<selectMezzi.size();i++){
+			selectMezzi.get(i).setOrderInList(i); 
     		String s=new String(selectMezzi.get(i).nave+" - "+selectMezzi.get(i).portoPartenza+" - "+selectMezzi.get(i).portoArrivo+" - ");
+//    		s += selectMezzi.get(i).getOrderInList()+" - ";
     		if (selectMezzi.get(i).oraPartenza.get(Calendar.HOUR_OF_DAY)<10)
     			s+="0";
     		s+=selectMezzi.get(i).oraPartenza.get(Calendar.HOUR_OF_DAY)+":";

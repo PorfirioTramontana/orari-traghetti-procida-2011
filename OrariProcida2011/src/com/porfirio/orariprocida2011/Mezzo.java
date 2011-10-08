@@ -12,6 +12,9 @@ public class Mezzo {
 	public Calendar fineEsclusione;
 	public String giorniSettimana;
 	private boolean giornoSeguente;
+	private boolean esclusione;
+	private int orderInList;
+	private int id;
 	
 	public Mezzo(String n,int op, int mp, int oa, int ma, String pp, String pa,int gie,int mie,int aie,int gfe,int mfe,int afe,String gs){
 		nave=n;	
@@ -24,10 +27,10 @@ public class Mezzo {
 		portoPartenza=pp;
 		portoArrivo=pa;
 		inizioEsclusione=Calendar.getInstance();
-		inizioEsclusione.set(0, 1, 1);
 		fineEsclusione=Calendar.getInstance();
-		fineEsclusione.set(0, 1, 1);
+		esclusione=false;
 		if (gie!=0){
+			esclusione=true;
 			inizioEsclusione.set(Calendar.DAY_OF_MONTH, gie);
 			inizioEsclusione.set(Calendar.MONTH, mie-1); //i mesi sono contati da 0=gennaio
 			inizioEsclusione.set(Calendar.YEAR, aie); //gli anni sono contati da 0=1900
@@ -52,6 +55,30 @@ public class Mezzo {
 	public boolean getGiornoSeguente() {
 		// TODO Auto-generated method stub
 		return giornoSeguente;
+	}
+
+	public void setOrderInList(int orderInList) {
+		this.orderInList = orderInList;
+	}
+
+	public int getOrderInList() {
+		return orderInList;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setEsclusione(boolean esclusione) {
+		this.esclusione = esclusione;
+	}
+
+	public boolean isEsclusione() {
+		return esclusione;
 	}
 
 }
