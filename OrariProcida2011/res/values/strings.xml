@@ -14,12 +14,14 @@
     <string-array name="strPorti">
         <item>Tutti</item>
         <item>Procida</item>
-        <item>Napoli Beverello</item>
-        <item>Napoli Porta di Massa</item>
-        <item>Pozzuoli</item>
-        <item>Napoli Mergellina</item>
         <item>Napoli</item>
+        <item>Pozzuoli</item>
         <item>Ischia</item>
+        <item>Napoli o Pozzuoli</item>
+        <item>Napoli Beverello</item>
+        <item>Napoli Porta di Massa</item>        
+        <item>Napoli Mergellina</item>        
+		<item>Ischia Porto</item>                
         <item>Casamicciola</item>
     </string-array>
         <string name="mezzo">Mezzo : </string>
