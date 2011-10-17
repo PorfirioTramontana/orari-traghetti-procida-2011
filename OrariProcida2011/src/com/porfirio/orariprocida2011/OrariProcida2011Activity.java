@@ -10,7 +10,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,7 +34,6 @@ public class OrariProcida2011Activity extends Activity {
     public String nave;
     public String portoPartenza;
     public String portoArrivo;
-//    public Date orario;
     public Calendar c;
 	public ArrayAdapter<String> aalvMezzi;
 	public ListView lvMezzi;
@@ -39,7 +43,7 @@ public class OrariProcida2011Activity extends Activity {
 	public Button buttonPlus;
 	public TextView txtOrario;
 	private AlertDialog aboutDialog;
-	public int finestraTemporale=24;
+	public ConfigData configData; 
 	private DettagliMezzoDialog dettagliMezzoDialog;
 	private ArrayList <Mezzo> selectMezzi;
 	
@@ -47,6 +51,10 @@ public class OrariProcida2011Activity extends Activity {
 
 	private ArrayList<Mezzo> listMezzi;
 	private ArrayList<Compagnia> listCompagnia;
+	private LocationManager myManager;
+	private Criteria criteria;
+	private String BestProvider;
+
     
     //Menu
     @Override
@@ -63,6 +71,16 @@ public class OrariProcida2011Activity extends Activity {
         case R.id.about:
             showDialog(ABOUT_DIALOG_ID);
             return true;
+        case R.id.finTemp:
+            FinestraDialog finestraDialog = new FinestraDialog(this,configData);
+    		finestraDialog.setOnDismissListener(new OnDismissListener() {
+                public void onDismiss(DialogInterface dialog) {
+                        aggiornaLista();
+                        return;
+                }
+    		});        
+        	finestraDialog.show();
+        	return true;
         case R.id.esci:
         	OrariProcida2011Activity.this.finish();
             return true;
@@ -74,8 +92,15 @@ public class OrariProcida2011Activity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("ACTIVITY","create");
         setContentView(R.layout.main);
 
+        myManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        criteria = new Criteria();
+        criteria.setPowerRequirement(Criteria.POWER_LOW);
+        criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+        BestProvider = myManager.getBestProvider(criteria, true);        
+        
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Gli orari sono quelli resi noti dalle compagnie di navigazione alle biglietterie o sui loro siti web. L'autore non e' in alcun modo responsabile di ogni eventuale loro cambiamento. Orari aggiornati al 3 ottobre 2011. By Porfirio Tramontana 2011. In licenza GPL3. http://code.google.com/p/orari-traghetti-procida-2011/")
                .setCancelable(false)
@@ -85,26 +110,17 @@ public class OrariProcida2011Activity extends Activity {
                    }
                });
         aboutDialog = builder.create();
-
+               
+        configData=new ConfigData();
+        configData.setFinestraTemporale(24);
+        
         // get the current time
         
         c = Calendar.getInstance(TimeZone.getDefault());
         
-//        orario=c.getTime();
-        
-        
         txtOrario = (TextView)findViewById(R.id.txtOrario);
         
-		String s=new String("Dalle ");
-		if (c.get(Calendar.HOUR_OF_DAY)<10)
-			s+="0";
-		s+=c.get(Calendar.HOUR_OF_DAY)+":";
-		if (c.get(Calendar.MINUTE)<10)
-			s+="0";
-		s+=c.get(Calendar.MINUTE)+" del ";
-		s+=c.get(Calendar.DAY_OF_MONTH)+"/";
-		s+=(c.get(Calendar.MONTH)+1)+"";
-		txtOrario.setText(s);
+		setTxtOrario(c);
         
         buttonMinusMinus = (Button)findViewById(R.id.button1);    
         buttonMinusMinus.setOnClickListener(new View.OnClickListener(){
@@ -113,16 +129,7 @@ public class OrariProcida2011Activity extends Activity {
         		
 //        		orario.setHours(orario.getHours()-1);
         		c.add(Calendar.HOUR, -1);
-        		String s=new String("Dalle ");
-        		if (c.get(Calendar.HOUR_OF_DAY)<10)
-        			s+="0";
-        		s+=c.get(Calendar.HOUR_OF_DAY)+":";
-        		if (c.get(Calendar.MINUTE)<10)
-        			s+="0";
-        		s+=c.get(Calendar.MINUTE)+" del ";
-        		s+=c.get(Calendar.DAY_OF_MONTH)+"/";
-        		s+=(c.get(Calendar.MONTH)+1)+"";
-        		txtOrario.setText(s);
+        		setTxtOrario(c);
         		aggiornaLista();
         	}
         });
@@ -133,16 +140,7 @@ public class OrariProcida2011Activity extends Activity {
         	public void onClick(View v) {
 //        		orario.setMinutes(orario.getMinutes()-15);
         		c.add(Calendar.MINUTE, -15);
-        		String s=new String("Dalle ");
-        		if (c.get(Calendar.HOUR_OF_DAY)<10)
-        			s+="0";
-        		s+=c.get(Calendar.HOUR_OF_DAY)+":";
-        		if (c.get(Calendar.MINUTE)<10)
-        			s+="0";
-        		s+=c.get(Calendar.MINUTE)+" del ";
-        		s+=c.get(Calendar.DAY_OF_MONTH)+"/";
-        		s+=(c.get(Calendar.MONTH)+1)+"";
-        		txtOrario.setText(s);
+        		setTxtOrario(c);
         		aggiornaLista();
         	}
         });
@@ -153,16 +151,7 @@ public class OrariProcida2011Activity extends Activity {
         	public void onClick(View v) {
 //        		orario.setMinutes(orario.getMinutes()+15);
         		c.add(Calendar.MINUTE, 15);
-        		String s=new String("Dalle ");
-        		if (c.get(Calendar.HOUR_OF_DAY)<10)
-        			s+="0";
-        		s+=c.get(Calendar.HOUR_OF_DAY)+":";
-        		if (c.get(Calendar.MINUTE)<10)
-        			s+="0";
-        		s+=c.get(Calendar.MINUTE)+" del ";
-        		s+=c.get(Calendar.DAY_OF_MONTH)+"/";
-        		s+=(c.get(Calendar.MONTH)+1)+"";
-        		txtOrario.setText(s);
+        		setTxtOrario(c);
         		aggiornaLista();
         	}
         });
@@ -173,16 +162,7 @@ public class OrariProcida2011Activity extends Activity {
         	public void onClick(View v) {
 //        		orario.setHours(orario.getHours()+1);
         		c.add(Calendar.HOUR, 1);
-        		String s=new String("Dalle ");
-        		if (c.get(Calendar.HOUR_OF_DAY)<10)
-        			s+="0";
-        		s+=c.get(Calendar.HOUR_OF_DAY)+":";
-        		if (c.get(Calendar.MINUTE)<10)
-        			s+="0";
-        		s+=c.get(Calendar.MINUTE)+" del ";
-        		s+=c.get(Calendar.DAY_OF_MONTH)+"/";
-        		s+=(c.get(Calendar.MONTH)+1)+"";
-        		txtOrario.setText(s);
+        		setTxtOrario(c);
         		aggiornaLista();
         	}
         });
@@ -223,6 +203,19 @@ public class OrariProcida2011Activity extends Activity {
         aggiornaLista();
 
     }
+
+	private void setTxtOrario(Calendar c) {
+		String s=new String("Dalle ");
+		if (c.get(Calendar.HOUR_OF_DAY)<10)
+			s+="0";
+		s+=c.get(Calendar.HOUR_OF_DAY)+":";
+		if (c.get(Calendar.MINUTE)<10)
+			s+="0";
+		s+=c.get(Calendar.MINUTE)+" del ";
+		s+=c.get(Calendar.DAY_OF_MONTH)+"/";
+		s+=(c.get(Calendar.MONTH)+1)+"";
+		txtOrario.setText(s);
+	}
     
     private void riempiLista() {
     	listCompagnia=new ArrayList<Compagnia>();
@@ -249,8 +242,8 @@ public class OrariProcida2011Activity extends Activity {
     	c=new Compagnia("Medmar");
     	c.addTelefono("Napoli", "0813334411");
     	listCompagnia.add(c);
-    	
-    	
+
+
    	// convenzione giorni settimana:
 	// DOMENICA =1 LUNEDI=2 MARTEDI=3 MERCOLEDI=4 GIOVEDI=5 VENERDI=6 SABATO=7
     	
@@ -405,7 +398,7 @@ public class OrariProcida2011Activity extends Activity {
     	aalvMezzi.clear();
 
 		Calendar oraLimite=(Calendar) c.clone();
-		oraLimite.add(Calendar.HOUR_OF_DAY, finestraTemporale);
+		oraLimite.add(Calendar.HOUR_OF_DAY, configData.getFinestraTemporale());
 
     	//qui riempio aalvMezzi in base agli input e ai dati di listMezzi
     	for (int i=0;i<listMezzi.size();i++){
@@ -478,7 +471,15 @@ public class OrariProcida2011Activity extends Activity {
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnPortoPartenza.setAdapter(adapter2);
         
-        portoPartenza=new String(adapter2.getItem(0).toString());
+        //portoPartenza=new String(adapter2.getItem(0).toString());
+        portoPartenza=setPortoPartenza();
+        //trova il valore corretto nello spinner
+        for (int i=0;i<spnPortoPartenza.getCount();i++){
+        	if (adapter2.getItem(i).equals(portoPartenza)){
+        		spnPortoPartenza.setSelection(i);
+        	}
+        }
+        	
         
         spnPortoPartenza.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -505,13 +506,95 @@ public class OrariProcida2011Activity extends Activity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });        
-        
-        
-
-        
-
-
-
 
 	}
+    
+	private String setPortoPartenza() {
+		// Trova il porto più vicino a quello di partenza
+		Location l=null;
+		try {
+			l = myManager.getLastKnownLocation(BestProvider);
+			Log.d("ACTIVITY", "Posizione:"+l.getLongitude()+","+l.getLatitude());
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.d("ACTIVITY", "Problema con GPS");
+		}
+        if (l==null)
+        	return new String("Tutti");
+        //TODO Inserire coordinate angoli Procida
+        if ((l.getLongitude()>14)&&(l.getLongitude()<15)&&(l.getLongitude()>40)&&(l.getLongitude()<41))
+        	return new String ("Procida");
+        //TODO Inserire coordinate angoli Isola d'Ischia
+        if ((l.getLongitude()>14)&&(l.getLongitude()<15)&&(l.getLongitude()>40)&&(l.getLongitude()<41)){
+        	//Isola d'Ischia
+        	if (calcolaDistanza(l,14,40)<calcolaDistanza(l,15,41))
+        		return new String ("Ischia");
+        	else
+        		return new String ("Casamicciola");
+        }
+      //Inserire coordinate Napoli (media porti) e Pozzuoli
+      double distNapoli=calcolaDistanza(l,15,41);
+      double distPozzuoli=calcolaDistanza(l,15,41);
+      if (distPozzuoli<distNapoli){
+    	  if (distPozzuoli<30000)
+      		return new String ("Pozzuoli");
+    	  else
+    		return new String ("Tutti");
+      }
+      else { //TODO Inserire coordinate Porti Napoli
+    	  if (distNapoli<30000){
+    		  if (distNapoli>1000)
+    			  return new String ("Napoli");
+    		  else{
+    	        	if (calcolaDistanza(l,14,40)<calcolaDistanza(l,15,41))
+    	        		return new String ("Napoli Beverello");
+    	        	else
+    	        		return new String ("Napoli Porta di Massa");
+    		  }    			  
+    	  }        		
+      	  else
+      		return new String ("Tutti");    	  
+      }
+	}
+
+	public double calcolaDistanza(Location location, double lon, double lat) {
+		//calcola distanza da obiettivo
+		double deltaLong=Math.abs(lon-location.getLongitude());
+		double deltaLat=Math.abs(lat-location.getLatitude());
+		double delta=(Math.sqrt(deltaLong*deltaLong+deltaLat*deltaLat));
+		delta=delta*60*1852;		
+		return Math.ceil(delta);
+	}
+	protected void onStart(){
+		super.onStart();
+		Log.d("ACTIVITY","start");
+		
+	}
+    
+    protected void onRestart(){
+    	super.onRestart();
+    	Log.d("ACTIVITY","restart");
+    }
+
+    protected void onResume(){
+    	super.onResume();
+    	Log.d("ACTIVITY","resume");
+    }
+
+    protected void onPause(){
+    	super.onPause();
+    	Log.d("ACTIVITY","pause");
+    }
+
+    protected void onStop(){
+    	super.onStop();
+    	Log.d("ACTIVITY","stop");
+    }
+
+
+    protected void onDestroy(){
+    	super.onDestroy();
+    	Log.d("ACTIVITY","destroy");
+    }
+
 }

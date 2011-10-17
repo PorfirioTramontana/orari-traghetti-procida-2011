@@ -11,6 +11,7 @@ import android.text.util.Linkify;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 	public ArrayAdapter<String> aalvNumeri;
 	public ListView lvNumeri;
 	public ArrayList <String> listNumeri;
+	public BiglietterieDialog biglietterieDialog;
 	
 
 	public DettagliMezzoDialog(Context context) {
@@ -50,7 +52,21 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 //		txtNomeCompagnia = (TextView) findViewById(R.id.txtNomeCompagnia);
 //		txtTelefonoCompagnia = (TextView) findViewById(R.id.txtTelefonoCompagnia);
 		
-		
+	    Button btnReturnToHome = (Button)findViewById(R.id.btnReturnToHome);    
+	    btnReturnToHome.setOnClickListener(new View.OnClickListener(){
+	    	@Override
+	    	public void onClick(View v) {
+	    		dismiss();
+	    	}
+	    });
+
+	    Button btnBiglietterie = (Button)findViewById(R.id.btnBiglietterie);    
+	    btnBiglietterie.setOnClickListener(new View.OnClickListener(){
+	    	@Override
+	    	public void onClick(View v) {
+	            biglietterieDialog.show();
+	    	}
+	    });
 	}
 
 	public void setMezzo(Mezzo m){
@@ -62,8 +78,10 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 		this.dismiss();		
 	}
 
+
+	
 	public void fill(ArrayList<Compagnia> listCompagnia) {
-		txtMezzo.setText(mezzo.nave);
+		txtMezzo.setText("    "+mezzo.nave+"    ");
 		String s=new String();
 		s+="Parte alle "+mezzo.oraPartenza.get(Calendar.HOUR_OF_DAY)+":"+mezzo.oraPartenza.get(Calendar.MINUTE);
 		s+=" del "+mezzo.oraPartenza.get(Calendar.DAY_OF_MONTH)+"/"+(mezzo.oraPartenza.get(Calendar.MONTH)+1)+"/"+mezzo.oraPartenza.get(Calendar.YEAR);
@@ -79,22 +97,26 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 //			txtPeriodo.setText(mezzo.inizioEsclusione.get(Calendar.DAY_OF_MONTH));
 //		txtGiorniSettimana.setText(mezzo.giorniSettimana);
 
-        listNumeri = new ArrayList <String>();
-        lvNumeri=(ListView)findViewById(R.id.listViewNumeri);
-        aalvNumeri = new ArrayAdapter<String>(this.getContext(),android.R.layout.simple_list_item_1);       
-        lvNumeri.setAdapter(aalvNumeri);
-		
+//        listNumeri = new ArrayList <String>();
+//        lvNumeri=(ListView)findViewById(R.id.listViewNumeri);
+//        aalvNumeri = new ArrayAdapter<String>(this.getContext(),android.R.layout.simple_list_item_1);       
+//        lvNumeri.setAdapter(aalvNumeri);
+//		
         //trova compagnia c
         Compagnia c=null;
         for (int i=0;i<listCompagnia.size();i++){
         	if (mezzo.nave.contains(listCompagnia.get(i).nome))
         		c=listCompagnia.get(i);
-        }        
+        } 
         
-        for (int i=0;i<c.nomeNumeroTelefono.size();i++){        	
-        	aalvNumeri.add(c.nomeNumeroTelefono.get(i)+" : "+c.numeroTelefono.get(i));
-//        	Linkify.addLinks((Spannable) lvNumeri, Linkify.PHONE_NUMBERS);
-        }
+        biglietterieDialog = new BiglietterieDialog(this.getContext());
+        biglietterieDialog.fill(c);
+        
+//        
+//        for (int i=0;i<c.nomeNumeroTelefono.size();i++){        	
+//        	aalvNumeri.add(c.nomeNumeroTelefono.get(i)+" : "+c.numeroTelefono.get(i));
+////        	Linkify.addLinks( (TextView) lvNumeri.getChildAt(i), Linkify.PHONE_NUMBERS);
+//        }
 	}
 
 }

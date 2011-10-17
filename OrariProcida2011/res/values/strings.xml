@@ -19,6 +19,8 @@
         <item>Pozzuoli</item>
         <item>Napoli Mergellina</item>
         <item>Napoli</item>
+        <item>Ischia</item>
+        <item>Casamicciola</item>
     </string-array>
         <string name="mezzo">Mezzo : </string>
         <string name="portoPartenza">Da : </string>
@@ -29,6 +31,11 @@
         <string name="plusplus">&gt;&gt;</string>
         <string name="about">About</string>
         <string name="esci">Esci</string>
-        <string name="numeriUtili">Numeri utili</string>
+        <string name="numeriUtili">Chiama per informazioni</string>
         <string name="tampone">1234567890123456789012345</string>
+        <string name="labelBackground">labelBackground</string>
+        <string name="back">Indietro</string>
+        <string name="inserisciFinestra">Dimensione della finestra temporale da mostrare (max=24 ore)</string>
+        <string name="ok">OK</string>
+        <string name="ventiquattro">24</string>
 </resources>
