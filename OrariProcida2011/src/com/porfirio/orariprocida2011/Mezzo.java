@@ -47,6 +47,36 @@ public class Mezzo {
 	
 	}
 
+	public Mezzo(String n,String op, String mp, String oa, String ma, String pp, String pa,String gie,String mie,String aie,String gfe,String mfe,String afe,String gs){
+		nave=n;	
+		oraPartenza=Calendar.getInstance();
+		oraPartenza.set(Calendar.HOUR_OF_DAY, Integer.parseInt(op));
+		oraPartenza.set(Calendar.MINUTE, Integer.parseInt(mp));
+		oraArrivo=Calendar.getInstance();
+		oraArrivo.set(Calendar.HOUR_OF_DAY, Integer.parseInt(oa));
+		oraArrivo.set(Calendar.MINUTE, Integer.parseInt(ma));
+		portoPartenza=pp;
+		portoArrivo=pa;
+		inizioEsclusione=Calendar.getInstance();
+		fineEsclusione=Calendar.getInstance();
+		esclusione=false;
+		if (Integer.parseInt(gie)!=0){
+			esclusione=true;
+			inizioEsclusione.set(Calendar.DAY_OF_MONTH, Integer.parseInt(gie));
+			inizioEsclusione.set(Calendar.MONTH, Integer.parseInt(mie)-1); //i mesi sono contati da 0=gennaio
+			inizioEsclusione.set(Calendar.YEAR, Integer.parseInt(aie)); //gli anni sono contati da 0=1900
+			inizioEsclusione.set(Calendar.HOUR_OF_DAY,0);
+			inizioEsclusione.set(Calendar.MINUTE,0);
+			fineEsclusione.set(Calendar.DAY_OF_MONTH, Integer.parseInt(gfe));
+			fineEsclusione.set(Calendar.MONTH, Integer.parseInt(mfe)-1); //i mesi sono contati da 0=gennaio
+			fineEsclusione.set(Calendar.YEAR, Integer.parseInt(afe)); //gli anni sono contati da 0=1900
+			fineEsclusione.set(Calendar.HOUR_OF_DAY,23);
+			fineEsclusione.set(Calendar.MINUTE,59);
+		}
+		giorniSettimana=gs;
+	
+	
+	}
 	public void setGiornoSeguente(boolean b) {
 		// TODO Auto-generated method stub
 		giornoSeguente=b;

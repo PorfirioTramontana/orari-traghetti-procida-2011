@@ -1,9 +1,17 @@
 package com.porfirio.orariprocida2011;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.StringTokenizer;
 import java.util.TimeZone;
 
 import android.app.Activity;
@@ -218,6 +226,38 @@ public class OrariProcida2011Activity extends Activity {
 		txtOrario.setText(s);
 	}
     
+	private void riempiMezzi(){
+		String url="http://wpage.unina.it/ptramont/orari.csv";
+		HttpURLConnection conn = null;
+		InputStream in=null;
+		try {
+			conn = (HttpURLConnection) new URL(url).openConnection();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			in = conn.getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		BufferedReader r = new BufferedReader(new InputStreamReader(in));
+		try {
+			for (String line = r.readLine(); line != null; line = r.readLine())
+			{
+				//esamino la riga e creo un mezzo
+				StringTokenizer st = new StringTokenizer( line, "," );
+				listMezzi.add(new Mezzo(st.nextToken(),st.nextToken(),st.nextToken(),st.nextToken(),st.nextToken(),st.nextToken(),st.nextToken(),st.nextToken(),st.nextToken(),st.nextToken(),st.nextToken(),st.nextToken(),st.nextToken(),st.nextToken()));
+			}
+			r.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
     private void riempiLista() {
     	listCompagnia=new ArrayList<Compagnia>();
     	
@@ -244,7 +284,9 @@ public class OrariProcida2011Activity extends Activity {
     	c.addTelefono("Napoli", "0813334411");
     	listCompagnia.add(c);
 
-
+    	if (true)
+    		riempiMezzi();
+    	else {
    	// convenzione giorni settimana:
 	// DOMENICA =1 LUNEDI=2 MARTEDI=3 MERCOLEDI=4 GIOVEDI=5 VENERDI=6 SABATO=7
     	
@@ -362,7 +404,7 @@ public class OrariProcida2011Activity extends Activity {
 		listMezzi.add(new Mezzo("Aliscafo SNAV",13,15,13,30,"Casamicciola","Procida",0,0,0,0,0,0,"1234567"));
 		listMezzi.add(new Mezzo("Aliscafo SNAV",17,5,17,20,"Casamicciola","Procida",0,0,0,0,0,0,"1234567"));
 		listMezzi.add(new Mezzo("Aliscafo SNAV",19,45,10,0,"Casamicciola","Procida",0,0,0,0,0,0,"1234567"));		
-
+    	}
 	}
 
 	@Override
@@ -562,26 +604,18 @@ public class OrariProcida2011Activity extends Activity {
       //Inserire coordinate Napoli (media porti) e Pozzuoli
       double distNapoli=calcolaDistanza(l,14.2575,40.84); Log.d("OrariProcida","d(Napoli)="+distNapoli);
       double distPozzuoli=calcolaDistanza(l,14.1179,40.8239); Log.d("OrariProcida","d(Pozzuoli)="+distPozzuoli);
-      if (distPozzuoli<distNapoli){
-    	  if (distPozzuoli<15000)
+      if (distPozzuoli>5000 && distNapoli>5000)
+    	  return new String ("Napoli o Pozzuoli");
+      if (distPozzuoli<distNapoli)
       		return new String ("Pozzuoli");
-    	  else
-    		return new String ("Tutti");
-      }
-      else { //TODO Inserire coordinate Porti Napoli
-    	  if (distNapoli<15000){
-    		  if (distNapoli>1000)
-    			  return new String ("Napoli");
-    		  else{
-    	        	if (calcolaDistanza(l,14.2548,40.8376)<calcolaDistanza(l,14.2602,40.8424))
-    	        		return new String ("Napoli Beverello");
-    	        	else
-    	        		return new String ("Napoli Porta di Massa");
-    		  }    			  
-    	  }        		
-      	  else
-      		return new String ("Tutti");    	  
-      }
+	  if (distNapoli>1000)
+		  return new String ("Napoli");
+	  else{
+        	if (calcolaDistanza(l,14.2548,40.8376)<calcolaDistanza(l,14.2602,40.8424))
+	        		return new String ("Napoli Beverello");
+        	else
+   	        		return new String ("Napoli Porta di Massa");   			  
+    	  }        	
 	}
 
 	public double calcolaDistanza(Location location, double lon, double lat) {
