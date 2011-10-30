@@ -23,6 +23,8 @@
         <item>Napoli Mergellina</item>        
 		<item>Ischia Porto</item>                
         <item>Casamicciola</item>
+        <item>Ischia</item>
+        <item>Casamicciola</item>
     </string-array>
         <string name="mezzo">Mezzo : </string>
         <string name="portoPartenza">Da : </string>
