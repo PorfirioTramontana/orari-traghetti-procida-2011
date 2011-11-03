@@ -118,7 +118,7 @@ public class OrariProcida2011Activity extends Activity {
         BestProvider = myManager.getBestProvider(criteria, true);        
         
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Gli orari sono quelli resi noti dalle compagnie di navigazione alle biglietterie o sui loro siti web. L'autore non e' in alcun modo responsabile di ogni eventuale loro cambiamento. Orari aggiornati al 3 ottobre 2011. By Porfirio Tramontana 2011. In licenza GPL3. http://code.google.com/p/orari-traghetti-procida-2011/")
+        builder.setMessage("Gli orari sono quelli resi noti dalle compagnie di navigazione alle biglietterie o sui loro siti web. L'autore non e' in alcun modo responsabile di ogni eventuale loro cambiamento. Orari aggiornati al 3 ottobre 2011. By Porfirio Tramontana 2011. In licenza GPL3. http://code.google.com/p/orari-traghetti-procida-2011/ Per aggiornare cliccare su http://orari-traghetti-procida-2011.googlecode.com/svn/OrariProcida2011/bin/OrariProcida2011.apk")
                .setCancelable(false)
                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
@@ -345,7 +345,7 @@ public class OrariProcida2011Activity extends Activity {
     	c.addTelefono("Napoli", "0813334411");
     	listCompagnia.add(c);
 
-    	if (true){
+    	if (false){
     		riempiMezzidaInternalStorage();
     		riempiMezzidaWeb();
     	}
