@@ -24,7 +24,6 @@
 		<item>Ischia Porto</item>                
         <item>Casamicciola</item>
         <item>Ischia</item>
-        <item>Casamicciola</item>
     </string-array>
         <string name="mezzo">Mezzo : </string>
         <string name="portoPartenza">Da : </string>
@@ -42,4 +41,5 @@
         <string name="inserisciFinestra">Dimensione della finestra temporale da mostrare (max=24 ore)</string>
         <string name="ok">OK</string>
         <string name="ventiquattro">24</string>
+        <string name="updateWeb">Aggiorna orari da Web</string>
 </resources>
