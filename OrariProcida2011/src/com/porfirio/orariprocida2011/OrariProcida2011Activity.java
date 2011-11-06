@@ -100,7 +100,10 @@ public class OrariProcida2011Activity extends Activity {
         	finestraDialog.show();
         	return true;
         case R.id.updateWeb:
-        	riempiMezzidaWeb();
+    		if (isOnline())
+    			riempiMezzidaWeb();
+    		else
+    			Log.d("ORARI", "Non c'è connessione: non carico orari da Web");
         	return true;
         case R.id.esci:
         	OrariProcida2011Activity.this.finish();
@@ -295,7 +298,7 @@ public class OrariProcida2011Activity extends Activity {
 		try {
 			String rigaAggiornamento=r.readLine();
 			StringTokenizer st0 = new StringTokenizer( rigaAggiornamento, "," );			
-			aggiornamentoOrariWeb=Calendar.getInstance(TimeZone.getDefault());
+			aggiornamentoOrariWeb=aggiornamentoOrariIS;
 			aggiornamentoOrariWeb.set(Calendar.DAY_OF_MONTH, Integer.parseInt(st0.nextToken()));
 			aggiornamentoOrariWeb.set(Calendar.MONTH, Integer.parseInt(st0.nextToken()));
 			aggiornamentoOrariWeb.set(Calendar.YEAR, Integer.parseInt(st0.nextToken()));
@@ -494,10 +497,11 @@ public class OrariProcida2011Activity extends Activity {
 				listMezzi.add(new Mezzo("Aliscafo SNAV",19,45,10,0,"Casamicciola","Procida",0,0,0,0,0,0,"1234567"));		
 		}
 
-		if (isOnline())
-			riempiMezzidaWeb();
-		else
-			Log.d("ORARI", "Non c'è connessione: non carico orari da Web");
+//		Tolgo l'automatismo del caricamento da Web per non avere problemi relativi a connessioni particolarmente lente
+//		if (isOnline())
+//			riempiMezzidaWeb();
+//		else
+//			Log.d("ORARI", "Non c'è connessione: non carico orari da Web");
 
 	}
 
