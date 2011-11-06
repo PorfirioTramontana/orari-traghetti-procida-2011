@@ -126,7 +126,7 @@ public class OrariProcida2011Activity extends Activity {
         BestProvider = myManager.getBestProvider(criteria, true);        
         
         AlertDialog.Builder builder = new AlertDialog.Builder(this);      
-        builder.setMessage("Gli orari sono quelli resi noti dalle compagnie di navigazione alle biglietterie o sui loro siti web. L'autore non e' in alcun modo responsabile di ogni eventuale loro cambiamento. By Porfirio Tramontana 2011. In licenza GPL3. http://code.google.com/p/orari-traghetti-procida-2011/")
+        builder.setMessage("Gli orari sono quelli resi noti dalle compagnie di navigazione alle biglietterie o sui loro siti web. L'autore non e' in alcun modo responsabile di ogni eventuale loro cambiamento. By Porfirio Tramontana 2011. In licenza GPL3. ")
                .setCancelable(false)
                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
@@ -298,7 +298,7 @@ public class OrariProcida2011Activity extends Activity {
 		try {
 			String rigaAggiornamento=r.readLine();
 			StringTokenizer st0 = new StringTokenizer( rigaAggiornamento, "," );			
-			aggiornamentoOrariWeb=aggiornamentoOrariIS;
+			aggiornamentoOrariWeb=(Calendar) aggiornamentoOrariIS.clone();
 			aggiornamentoOrariWeb.set(Calendar.DAY_OF_MONTH, Integer.parseInt(st0.nextToken()));
 			aggiornamentoOrariWeb.set(Calendar.MONTH, Integer.parseInt(st0.nextToken()));
 			aggiornamentoOrariWeb.set(Calendar.YEAR, Integer.parseInt(st0.nextToken()));
@@ -663,7 +663,20 @@ public class OrariProcida2011Activity extends Activity {
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnPortoArrivo.setAdapter(adapter3);
         
-        portoArrivo=new String(adapter3.getItem(0).toString());
+        if (!(portoPartenza.contentEquals("Procida"))){
+        	portoArrivo="Procida";
+        }
+        else{
+        	portoArrivo=new String(adapter3.getItem(0).toString());
+        }
+        
+        //trova il valore corretto nello spinner
+        for (int i=0;i<spnPortoArrivo.getCount();i++){
+        	if (adapter3.getItem(i).equals(portoArrivo)){
+        		spnPortoArrivo.setSelection(i);
+        	}
+        }
+
         
         spnPortoArrivo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
