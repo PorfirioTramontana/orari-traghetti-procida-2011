@@ -1,5 +1,7 @@
 package com.porfirio.orariprocida2011;
 
+//versione 1.3 per Android Market 
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
@@ -103,7 +105,7 @@ public class OrariProcida2011Activity extends Activity {
     		if (isOnline())
     			riempiMezzidaWeb();
     		else
-    			Log.d("ORARI", "Non c'è connessione: non carico orari da Web");
+    			Log.d("ORARI", "Non c'è la connessione: non carico orari da Web");
         	return true;
         case R.id.esci:
         	OrariProcida2011Activity.this.finish();
