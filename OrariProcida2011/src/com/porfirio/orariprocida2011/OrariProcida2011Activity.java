@@ -74,6 +74,7 @@ public class OrariProcida2011Activity extends Activity {
 	private LocationManager myManager;
 	private Criteria criteria;
 	private String BestProvider;
+	private boolean updateWeb=true; //capacità di fare l'upload degli orari da Web: impostata a true
 
     
     //Menu
@@ -102,12 +103,21 @@ public class OrariProcida2011Activity extends Activity {
         	finestraDialog.show();
         	return true;
         case R.id.updateWeb:
-    		if (isOnline())
-    			riempiMezzidaWeb();
-    		else
-    			Log.d("ORARI", "Non c'è la connessione: non carico orari da Web");
-        	return true;
-        case R.id.esci:
+        	if (updateWeb){
+        		updateWeb=false;
+        		item.setTitle(getResources().getString(R.string.updateWeb));
+        		return true;
+        	}
+        	else {
+        		updateWeb=true;
+        		item.setTitle(getResources().getString(R.string.noUpdateWeb));
+        		if (isOnline())
+        			riempiMezzidaWeb();
+        		else
+        			Log.d("ORARI", "Non c'è la connessione: non carico orari da Web");
+        		return true;
+        	}
+		case R.id.esci:
         	OrariProcida2011Activity.this.finish();
             return true;
         default:
@@ -371,6 +381,8 @@ public class OrariProcida2011Activity extends Activity {
     	c.addTelefono("Napoli", "0813334411");
     	listCompagnia.add(c);
 
+    	//TODO Aggiungere taxi
+    	
     	try {
 			FileInputStream fstream = new FileInputStream("/data/data/com.porfirio.orariprocida2011/files/orari.csv");			
     		riempiMezzidaInternalStorage(fstream);
@@ -499,12 +511,13 @@ public class OrariProcida2011Activity extends Activity {
 				listMezzi.add(new Mezzo("Aliscafo SNAV",19,45,10,0,"Casamicciola","Procida",0,0,0,0,0,0,"1234567"));		
 		}
 
-//		Tolgo l'automatismo del caricamento da Web per non avere problemi relativi a connessioni particolarmente lente
-//		if (isOnline())
-//			riempiMezzidaWeb();
-//		else
-//			Log.d("ORARI", "Non c'è connessione: non carico orari da Web");
 
+		if (updateWeb){
+			if (isOnline())
+				riempiMezzidaWeb();
+			else
+				Log.d("ORARI", "Non c'è connessione: non carico orari da Web");
+		}
 	}
 
 	@Override
@@ -720,7 +733,7 @@ public class OrariProcida2011Activity extends Activity {
     	  if (distPozzuoli<15000)
       		return new String ("Pozzuoli");
     	  else
-    		return new String ("Tutti");
+    		return new String ("Napoli o Pozzuoli");
       }
       else { //TODO Inserire coordinate Porti Napoli
     	  if (distNapoli<15000){
@@ -734,7 +747,7 @@ public class OrariProcida2011Activity extends Activity {
     		  }    			  
     	  }        		
       	  else
-      		return new String ("Tutti");    	  
+      		return new String ("Napoli o Pozzuoli");    	  
       }
 	}
 

@@ -34,7 +34,7 @@
         <string name="plusplus">&gt;&gt;</string>
         <string name="about">About</string>
         <string name="esci">Esci</string>
-        <string name="numeriUtili">Chiama per informazioni</string>
+        <string name="numeriUtili">Chiama la biglietteria</string>
         <string name="tampone">1234567890123456789012345</string>
         <string name="labelBackground">labelBackground</string>
         <string name="back">Indietro</string>
@@ -42,4 +42,6 @@
         <string name="ok">OK</string>
         <string name="ventiquattro">24</string>
         <string name="updateWeb">Aggiorna orari da Web</string>
+        <string name="numeriTaxi">Chiama un taxi</string>
+        <string name="noUpdateWeb">Non aggiornare orari da Web</string>
 </resources>

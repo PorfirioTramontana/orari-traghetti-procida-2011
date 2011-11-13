@@ -34,6 +34,7 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 	public ListView lvNumeri;
 	public ArrayList <String> listNumeri;
 	public BiglietterieDialog biglietterieDialog;
+	public TaxiDialog taxiDialog;
 	
 
 	public DettagliMezzoDialog(Context context) {
@@ -60,6 +61,14 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 	    	}
 	    });
 
+	    Button btnTaxi = (Button)findViewById(R.id.btnTaxi);    
+	    btnTaxi.setOnClickListener(new View.OnClickListener(){
+	    	@Override
+	    	public void onClick(View v) {
+	            taxiDialog.show();
+	    	}
+	    });
+	    
 	    Button btnBiglietterie = (Button)findViewById(R.id.btnBiglietterie);    
 	    btnBiglietterie.setOnClickListener(new View.OnClickListener(){
 	    	@Override
@@ -111,6 +120,9 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
         
         biglietterieDialog = new BiglietterieDialog(this.getContext());
         biglietterieDialog.fill(c);
+        
+        taxiDialog = new TaxiDialog(this.getContext());
+        taxiDialog.fill(mezzo.portoPartenza);
         
 //        
 //        for (int i=0;i<c.nomeNumeroTelefono.size();i++){        	
