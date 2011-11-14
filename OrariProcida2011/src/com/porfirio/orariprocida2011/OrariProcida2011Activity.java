@@ -368,10 +368,13 @@ public class OrariProcida2011Activity extends Activity {
     	listCompagnia.add(c);
     	
     	c=new Compagnia("Gestur");
+    	c.addTelefono("Sede", "0818531405");
     	c.addTelefono("Procida", "0818531405");
+    	c.addTelefono("Pozzuoli", "0815268165");
     	listCompagnia.add(c);
     	
     	c=new Compagnia("SNAV");
+    	c.addTelefono("Call Center", "0814285111");
     	c.addTelefono("Napoli", "0814285111");
     	c.addTelefono("Ischia", "081984818");
     	c.addTelefono("Procida", "0818969975");  	
@@ -379,9 +382,12 @@ public class OrariProcida2011Activity extends Activity {
     	
     	c=new Compagnia("Medmar");
     	c.addTelefono("Napoli", "0813334411");
+    	c.addTelefono("Procida - Agenzia Graziella", "0818969594");
     	listCompagnia.add(c);
 
-    	//TODO Aggiungere taxi
+    	c=new Compagnia("Procida Lines");
+    	c.addTelefono("Procida","0818960328");
+    	listCompagnia.add(c);
     	
     	try {
 			FileInputStream fstream = new FileInputStream("/data/data/com.porfirio.orariprocida2011/files/orari.csv");			
