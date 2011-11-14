@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, OrariProcida2011Activity!</string>
-    <string name="app_name">OrariProcida2011</string>
+    <string name="app_name">Uno Procida Residente</string>
     <string-array name="strMezzi">
         <item>Tutti</item>
         <item>Traghetto Caremar</item>
@@ -32,7 +31,7 @@
         <string name="minus">&lt;</string>
         <string name="plus">&gt;</string>
         <string name="plusplus">&gt;&gt;</string>
-        <string name="about">About</string>
+        <string name="about">Info</string>
         <string name="esci">Esci</string>
         <string name="numeriUtili">Chiama la biglietteria</string>
         <string name="tampone">1234567890123456789012345</string>
