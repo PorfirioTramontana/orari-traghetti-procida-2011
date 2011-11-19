@@ -29,6 +29,7 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 //	private TextView txtTelefonoCompagnia;
 //	private TextView txtNomeCompagnia;
 	private TextView txtArrivo;
+	private TextView txtCosto;
 	
 	public ArrayAdapter<String> aalvNumeri;
 	public ListView lvNumeri;
@@ -52,6 +53,7 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 		txtGiorniSettimana = (TextView) findViewById(R.id.txtGiorniSettimana); txtGiorniSettimana.setText("");
 //		txtNomeCompagnia = (TextView) findViewById(R.id.txtNomeCompagnia);
 //		txtTelefonoCompagnia = (TextView) findViewById(R.id.txtTelefonoCompagnia);
+		txtCosto= (TextView) findViewById(R.id.txtCosto);
 		
 	    Button btnReturnToHome = (Button)findViewById(R.id.btnReturnToHome);    
 	    btnReturnToHome.setOnClickListener(new View.OnClickListener(){
@@ -101,6 +103,7 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 		s+=" del "+mezzo.oraArrivo.get(Calendar.DAY_OF_MONTH)+"/"+(mezzo.oraArrivo.get(Calendar.MONTH)+1)+"/"+mezzo.oraArrivo.get(Calendar.YEAR);		
 		s+=" a "+mezzo.portoArrivo;
 		txtArrivo.setText(s);
+		
 		//TODO Da COmpletare
 //		if (mezzo.isEsclusione())
 //			txtPeriodo.setText(mezzo.inizioEsclusione.get(Calendar.DAY_OF_MONTH));
@@ -111,6 +114,16 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 //        aalvNumeri = new ArrayAdapter<String>(this.getContext(),android.R.layout.simple_list_item_1);       
 //        lvNumeri.setAdapter(aalvNumeri);
 //		
+		s=new String();
+		s+="Costo : "+mezzo.getCostoResidente()+" euro ";
+		if (mezzo.isCircaResidente())
+			s+="circa ";
+		s+="(residente) o "+mezzo.getCostoIntero()+" euro";
+		if (mezzo.isCircaIntero())
+			s+="circa ";		
+		s+="(intero)";
+		txtCosto.setText(s);
+		
         //trova compagnia c
         Compagnia c=null;
         for (int i=0;i<listCompagnia.size();i++){

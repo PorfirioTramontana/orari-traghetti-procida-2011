@@ -15,6 +15,10 @@ public class Mezzo {
 	private boolean esclusione;
 	private int orderInList;
 	private int id;
+	private double costoIntero;
+	private double costoResidente;
+	private boolean circaIntero=false;
+	private boolean circaResidente=false;
 	
 	public Mezzo(String n,int op, int mp, int oa, int ma, String pp, String pa,int gie,int mie,int aie,int gfe,int mfe,int afe,String gs){
 		nave=n;	
@@ -43,6 +47,10 @@ public class Mezzo {
 			fineEsclusione.set(Calendar.MINUTE,59);
 		}
 		giorniSettimana=gs;
+		if (pp.contentEquals("Procida"))
+			calcolaCosto(n,pa);
+		else
+			calcolaCosto(n,pp);
 	
 	
 	}
@@ -74,16 +82,96 @@ public class Mezzo {
 			fineEsclusione.set(Calendar.MINUTE,59);
 		}
 		giorniSettimana=gs;
-	
+		if (pp.contentEquals("Procida"))
+			calcolaCosto(n,pa);
+		else
+			calcolaCosto(n,pp);
 	
 	}
+	private void calcolaCosto(String n,String p) {
+		//TODO Mettere costi precisi
+		if (n.contentEquals("Traghetto Caremar") && p.contentEquals("Pozzuoli")){
+			costoIntero=6;
+			costoResidente=2.30;
+			setCircaIntero(true);
+			return;
+		}
+		if (n.contentEquals("Medmar") && p.contentEquals("Pozzuoli")){
+			costoIntero=5.30;
+			costoResidente=2.30;
+			setCircaIntero(true);
+			return;
+		}		
+		if (n.contentEquals("Procida Lines") && p.contentEquals("Pozzuoli")){
+			costoIntero=6;
+			costoResidente=2.3;
+			setCircaIntero(true);
+			return;
+		}
+		if (n.contentEquals("Gestur") && p.contentEquals("Pozzuoli")){
+			costoIntero=6;
+			costoResidente=2.3;
+			setCircaIntero(true);
+			return;
+		}
+		if (n.contentEquals("Traghetto Caremar") && p.contentEquals("Napoli Porta di Massa")){
+			costoIntero=8;
+			costoResidente=3;
+			setCircaIntero(true);
+			setCircaResidente(true);
+			return;
+		}
+		if (n.contentEquals("Aliscafo Caremar") && p.contentEquals("Napoli Beverello")){
+			costoIntero=12;
+			costoResidente=4;
+			setCircaIntero(true);
+			setCircaResidente(true);
+			return;
+		}		
+		if (n.contentEquals("Aliscafo SNAV") && p.contentEquals("Napoli Beverello")){
+			costoIntero=12;
+			costoResidente=4;
+			setCircaIntero(true);
+			setCircaResidente(true);
+			return;
+		}
+		if (n.contentEquals("Traghetto Caremar") && p.contentEquals("Ischia Porto")){
+			costoIntero=3;
+			costoResidente=1.50;
+			setCircaIntero(true);
+			setCircaResidente(true);
+			return;
+		}
+		if (n.contentEquals("Aliscafo Caremar") && p.contentEquals("Ischia Porto")){
+			costoIntero=6;
+			costoResidente=3;
+			setCircaIntero(true);
+			setCircaResidente(true);
+			return;
+		}
+		if (n.contentEquals("Aliscafo SNAV") && p.contentEquals("Casamicciola")){
+			costoIntero=6;
+			costoResidente=3;
+			setCircaIntero(true);
+			setCircaResidente(true);
+			return;
+		}
+		if (n.contentEquals("Medmar") && p.contentEquals("Ischia Porto")){
+			costoIntero=5.30;
+			costoResidente=2.00;
+			setCircaIntero(true);
+			setCircaResidente(true);
+			return;
+		}
+		
+		
+	}
+
 	public void setGiornoSeguente(boolean b) {
-		// TODO Auto-generated method stub
 		giornoSeguente=b;
 	}
 
 	public boolean getGiornoSeguente() {
-		// TODO Auto-generated method stub
 		return giornoSeguente;
 	}
 
@@ -109,6 +197,38 @@ public class Mezzo {
 
 	public boolean isEsclusione() {
 		return esclusione;
+	}
+
+	public double getCostoIntero() {
+		return costoIntero;
+	}
+
+	public void setCostoIntero(double costoIntero) {
+		this.costoIntero = costoIntero;
+	}
+
+	public double getCostoResidente() {
+		return costoResidente;
+	}
+
+	public void setCostoResidente(double costoResidente) {
+		this.costoResidente = costoResidente;
+	}
+
+	public boolean isCircaIntero() {
+		return circaIntero;
+	}
+
+	public void setCircaIntero(boolean circaIntero) {
+		this.circaIntero = circaIntero;
+	}
+
+	public boolean isCircaResidente() {
+		return circaResidente;
+	}
+
+	public void setCircaResidente(boolean circaResidente) {
+		this.circaResidente = circaResidente;
 	}
 
 }
