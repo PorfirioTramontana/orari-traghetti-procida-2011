@@ -9,9 +9,14 @@ import android.util.Log;
 public class MeteoXMLHandler extends DefaultHandler{
 
 	    StringBuffer buff = null;
-	    boolean buffering = false; 
+	    boolean buffering = false;
+		private OrariProcida2011Activity callingActivity; 
 	    
-	    @Override
+		public MeteoXMLHandler(OrariProcida2011Activity orariProcida2011Activity) {
+			callingActivity=orariProcida2011Activity;
+		}
+
+		@Override
 	    public void startDocument() throws SAXException {
 	        Log.d("ORARI","Start document");
 	    } 
@@ -28,12 +33,64 @@ public class MeteoXMLHandler extends DefaultHandler{
 	    	if (localName.equals("wind_condition")) {
 	    		/** Get attribute value */
 	    		String attr = attributes.getValue("data");
+	    		setMeteo(attr);
 	    		Log.d("ORARI", attr);
 	    	}
 
 	    }
 
-	    @Override
+	    private void setMeteo(String attr) {
+	    	if (attr.contains(" N "))
+				callingActivity.meteo.setWindDirection(0);
+	    	else if (attr.contains(" NE "))
+	    		callingActivity.meteo.setWindDirection(45);
+	    	else if (attr.contains(" E "))
+	    		callingActivity.meteo.setWindDirection(90);
+	    	else if (attr.contains(" SE "))
+	    		callingActivity.meteo.setWindDirection(135);
+	    	else if (attr.contains(" S "))
+	    		callingActivity.meteo.setWindDirection(180);
+	    	else if (attr.contains(" SW "))
+	    		callingActivity.meteo.setWindDirection(225);
+	    	else if (attr.contains(" W "))
+	    		callingActivity.meteo.setWindDirection(270);
+	    	else if (attr.contains(" NW "))
+	    		callingActivity.meteo.setWindDirection(315);
+			
+	    	//TODO gestire anche i kmh
+	    	int pos= attr.indexOf(" at ");
+	    	int pos2=attr.indexOf("mph");
+	    	String wind=attr.substring(pos+4, pos2-1);
+	    	double wkmh=Integer.parseInt(wind)*1.609;
+	    	if (wkmh<=1)
+	    		callingActivity.meteo.setWindBeaufort(0.0);
+	    	else if (wkmh>1 && wkmh<=5)
+	    		callingActivity.meteo.setWindBeaufort(1+(wkmh-1)/(5-1));
+	    	else if (wkmh>=6 && wkmh<=11)
+	    		callingActivity.meteo.setWindBeaufort(2+(wkmh-6)/(11-6));
+	    	else if (wkmh>=12 && wkmh<=19)
+	    		callingActivity.meteo.setWindBeaufort(3+(wkmh-12)/(19-12));
+	    	else if (wkmh>=20 && wkmh<=28)
+	    		callingActivity.meteo.setWindBeaufort(4+(wkmh-20)/(28-20));
+	    	else if (wkmh>=29 && wkmh<=38)
+	    		callingActivity.meteo.setWindBeaufort(5+(wkmh-29)/(38-29));
+	    	else if (wkmh>=39 && wkmh<=49)
+	    		callingActivity.meteo.setWindBeaufort(6+(wkmh-39)/(49-39));
+	    	else if (wkmh>=50 && wkmh<=61)
+	    		callingActivity.meteo.setWindBeaufort(7+(wkmh-50)/(61-50));
+	    	else if (wkmh>=62 && wkmh<=74)
+	    		callingActivity.meteo.setWindBeaufort(8+(wkmh-62)/(74-62));
+	    	else if (wkmh>=75 && wkmh<=88)
+	    		callingActivity.meteo.setWindBeaufort(9+(wkmh-75)/(88-75));
+	    	else if (wkmh>=89 && wkmh<=102)
+	    		callingActivity.meteo.setWindBeaufort(10+(wkmh-89)/(102-89));
+	    	else if (wkmh>=103 && wkmh<=117)
+	    		callingActivity.meteo.setWindBeaufort(11+(wkmh-103)/(117-103));
+	    	else if (wkmh>=118)
+	    		callingActivity.meteo.setWindBeaufort(12);
+		}
+
+		@Override
 	    public void endElement(String uri, String localName, String qName)
 	    throws SAXException {
 	    	Log.d("ORARI","End element");

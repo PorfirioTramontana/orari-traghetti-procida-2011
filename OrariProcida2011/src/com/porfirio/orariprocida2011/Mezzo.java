@@ -91,73 +91,63 @@ public class Mezzo {
 	private void calcolaCosto(String n,String p) {
 		//TODO Mettere costi precisi
 		if (n.contentEquals("Traghetto Caremar") && p.contentEquals("Pozzuoli")){
-			costoIntero=6;
+			costoIntero=9.5;
 			costoResidente=2.30;
-			setCircaIntero(true);
 			return;
 		}
 		if (n.contentEquals("Medmar") && p.contentEquals("Pozzuoli")){
-			costoIntero=5.30;
+			costoIntero=9.50;
 			costoResidente=2.30;
 			setCircaIntero(true);
 			return;
 		}		
 		if (n.contentEquals("Procida Lines") && p.contentEquals("Pozzuoli")){
-			costoIntero=6;
+			costoIntero=7;
 			costoResidente=2.3;
-			setCircaIntero(true);
 			return;
 		}
 		if (n.contentEquals("Gestur") && p.contentEquals("Pozzuoli")){
-			costoIntero=6;
+			costoIntero=7;
 			costoResidente=2.3;
 			setCircaIntero(true);
 			return;
 		}
 		if (n.contentEquals("Traghetto Caremar") && p.contentEquals("Napoli Porta di Massa")){
-			costoIntero=8;
+			costoIntero=11;
 			costoResidente=3;
 			setCircaIntero(true);
-			setCircaResidente(true);
 			return;
 		}
 		if (n.contentEquals("Aliscafo Caremar") && p.contentEquals("Napoli Beverello")){
-			costoIntero=12;
-			costoResidente=4;
-			setCircaIntero(true);
-			setCircaResidente(true);
+			costoIntero=13;
+			costoResidente=4.6;
 			return;
 		}		
 		if (n.contentEquals("Aliscafo SNAV") && p.contentEquals("Napoli Beverello")){
-			costoIntero=12;
-			costoResidente=4;
-			setCircaIntero(true);
-			setCircaResidente(true);
+			costoIntero=13;
+			costoResidente=4.6;
 			return;
 		}
 		if (n.contentEquals("Traghetto Caremar") && p.contentEquals("Ischia Porto")){
-			costoIntero=3;
-			costoResidente=1.50;
+			costoIntero=6;
+			costoResidente=1.90;
 			setCircaIntero(true);
-			setCircaResidente(true);
 			return;
 		}
 		if (n.contentEquals("Aliscafo Caremar") && p.contentEquals("Ischia Porto")){
-			costoIntero=6;
-			costoResidente=3;
+			costoIntero=8;
+			costoResidente=2.4;
 			setCircaIntero(true);
-			setCircaResidente(true);
 			return;
 		}
 		if (n.contentEquals("Aliscafo SNAV") && p.contentEquals("Casamicciola")){
-			costoIntero=6;
-			costoResidente=3;
+			costoIntero=8;
+			costoResidente=2.4;
 			setCircaIntero(true);
-			setCircaResidente(true);
 			return;
 		}
 		if (n.contentEquals("Medmar") && p.contentEquals("Ischia Porto")){
-			costoIntero=5.30;
+			costoIntero=6;
 			costoResidente=2.00;
 			setCircaIntero(true);
 			setCircaResidente(true);
