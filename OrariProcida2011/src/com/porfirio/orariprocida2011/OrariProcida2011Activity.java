@@ -20,6 +20,15 @@ import java.util.Comparator;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.DefaultHandler;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -204,6 +213,7 @@ public class OrariProcida2011Activity extends Activity {
         });
         setSpinner();
 
+        leggiMeteo();
         
         listMezzi = new ArrayList <Mezzo>();
         lvMezzi=(ListView)findViewById(R.id.listMezzi);
@@ -239,6 +249,43 @@ public class OrariProcida2011Activity extends Activity {
         aggiornaLista();
 
     }
+
+	private void leggiMeteo() {
+		// TODO Metodo solo di prova
+		/* Create a URL we want to load some xml-data from. */
+		URL url;
+		try {
+			url = new URL("http://www.google.com/ig/api?weather=Procida");
+		
+
+			/* Get a SAXParser from the SAXPArserFactory. */
+			SAXParserFactory spf = SAXParserFactory.newInstance();
+			SAXParser sp = spf.newSAXParser();
+	
+			/* Get the XMLReader of the SAXParser we created. */
+			XMLReader xr = sp.getXMLReader();
+			/* Create a new ContentHandler and apply it to the XML-Reader*/
+			MeteoXMLHandler meteoXMLHandler = new MeteoXMLHandler();
+			xr.setContentHandler(meteoXMLHandler);
+	
+			/* Parse the xml-data from our URL. */
+			xr.parse(new InputSource(url.openStream()));
+			/* Parsing has finished. */ 
+			
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	private void setTxtOrario(Calendar c) {
 		String s=new String("Dalle ");
