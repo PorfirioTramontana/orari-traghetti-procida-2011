@@ -349,11 +349,7 @@ public class OrariProcida2011Activity extends Activity {
 		}
 		try {
 			in = conn.getInputStream();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		BufferedReader r = new BufferedReader(new InputStreamReader(in));
-		try {
+			BufferedReader r = new BufferedReader(new InputStreamReader(in));
 			String rigaAggiornamento=r.readLine();
 			StringTokenizer st0 = new StringTokenizer( rigaAggiornamento, "," );			
 			aggiornamentoOrariWeb=(Calendar) aggiornamentoOrariIS.clone();
@@ -386,10 +382,11 @@ public class OrariProcida2011Activity extends Activity {
 			Log.d("ORARI", "Orari web letti");
 			Toast.makeText(getApplicationContext(), "Aggiornamento degli orari letto da Web", Toast.LENGTH_LONG);
 			Log.d("ORARI", "Orari IS aggiornati");
-		} catch (IOException e) {			
+
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+				
 	}
 
 	public boolean isOnline() {
@@ -680,22 +677,21 @@ public class OrariProcida2011Activity extends Activity {
 
 	}
     
-	private String condimeteoString(Mezzo mezzo) {
-	// TODO Algoritmo per condimeteo
+	public String condimeteoString(Mezzo mezzo) {
 		String result=new String("");
 		Double actualBeaufort=meteo.getWindBeaufort();
 		if (mezzo.nave.equals("Procida Lines") || mezzo.nave.equals("Gestur"))
-			actualBeaufort-=1; //penalizzazione per mezzi piccoli
+			actualBeaufort+=1; //penalizzazione per mezzi piccoli
 		else if (mezzo.nave.equals("Aliscafo SNAV"))
-			actualBeaufort-=0.5; //penalizzazione per compagnia privata
+			actualBeaufort+=0.5; //penalizzazione per compagnia privata
 		if (mezzo.oraPartenza.get(Calendar.HOUR_OF_DAY)==7 && mezzo.oraPartenza.get(Calendar.MINUTE)==40)
-			actualBeaufort+=1; // incremento per corsa fondamentale
+			actualBeaufort-=1; // incremento per corsa fondamentale
 		else if (mezzo.oraPartenza.get(Calendar.HOUR_OF_DAY)==19 && mezzo.oraPartenza.get(Calendar.MINUTE)==30)
-			actualBeaufort+=1; // incremento per corsa fondamentale
+			actualBeaufort-=1; // incremento per corsa fondamentale
 		else if (mezzo.oraPartenza.get(Calendar.HOUR_OF_DAY)==6 && mezzo.oraPartenza.get(Calendar.MINUTE)==25)
-			actualBeaufort+=1; // incremento per corsa fondamentale
+			actualBeaufort-=1; // incremento per corsa fondamentale
 		else if (mezzo.oraPartenza.get(Calendar.HOUR_OF_DAY)==20 && mezzo.oraPartenza.get(Calendar.MINUTE)==30)
-			actualBeaufort+=1; // incremento per corsa fondamentale
+			actualBeaufort-=1; // incremento per corsa fondamentale
 		//Non metto aggiustamenti per l'orario perchè ho dati solo su base giornaliera
 		//Non metto aggiustamenti in base ai porti perchè ho dati per tutto il golfo
 		
@@ -723,7 +719,9 @@ public class OrariProcida2011Activity extends Activity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnNave.setAdapter(adapter);
         
-        nave=new String("Tutti");
+        nave="Tutti";
+        portoPartenza="Tutti";
+        portoArrivo="Tutti";
         
         spnNave.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -735,26 +733,43 @@ public class OrariProcida2011Activity extends Activity {
             }
         });
 
-    	Spinner spnPortoPartenza = (Spinner)findViewById(R.id.spnPortoPartenza);
-    	ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(
+    	final Spinner spnPortoPartenza = (Spinner)findViewById(R.id.spnPortoPartenza);
+    	final ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(
                 this, R.array.strPorti, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnPortoPartenza.setAdapter(adapter2);
         
-        //portoPartenza=new String(adapter2.getItem(0).toString());
+        //controllo e setto tramite algoritmo di set con gps
         portoPartenza=setPortoPartenza();
         if (!(portoPartenza.equals("Tutti")))
         	Toast.makeText(getApplicationContext(), "Secondo me, vuoi partire da "+portoPartenza, Toast.LENGTH_LONG).show();
-        //trova il valore corretto nello spinner
-        for (int i=0;i<spnPortoPartenza.getCount();i++){
-        	if (adapter2.getItem(i).equals(portoPartenza)){
-        		spnPortoPartenza.setSelection(i);
-        	}
+
+        setSpnPortoPartenza(spnPortoPartenza, adapter2); 
+        
+    	final Spinner spnPortoArrivo = (Spinner)findViewById(R.id.spnPortoArrivo);
+    	final ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(
+                this, R.array.strPorti, android.R.layout.simple_spinner_item);
+        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnPortoArrivo.setAdapter(adapter3);
+
+        if (!(portoPartenza.contentEquals("Procida")||portoPartenza.contentEquals("Tutti"))){
+        	portoArrivo="Procida";
+            setSpnPortoArrivo(spnPortoArrivo, adapter3);
         }
-        	       
+
         spnPortoPartenza.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            	portoPartenza=parent.getItemAtPosition(pos).toString();            	
+        		portoPartenza=parent.getItemAtPosition(pos).toString();
+        		if (portoPartenza.contentEquals("Procida")&&portoArrivo.contentEquals("Procida")){
+        			portoArrivo="Tutti";
+        			setSpnPortoArrivo(spnPortoArrivo, adapter2);
+                    setSpnPortoPartenza(spnPortoPartenza, adapter3);
+        		}
+        		else if (!(portoPartenza.contentEquals("Procida")||portoPartenza.contentEquals("Tutti"))){
+        			portoArrivo="Procida";
+	            	setSpnPortoArrivo(spnPortoArrivo, adapter2);
+	            	setSpnPortoPartenza(spnPortoPartenza, adapter3);
+        		}
             	aggiornaLista();
             }
             public void onNothingSelected(AdapterView<?> parent) {
@@ -762,35 +777,44 @@ public class OrariProcida2011Activity extends Activity {
         });
 
         
-    	Spinner spnPortoArrivo = (Spinner)findViewById(R.id.spnPortoArrivo);
-    	ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(
-                this, R.array.strPorti, android.R.layout.simple_spinner_item);
-        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnPortoArrivo.setAdapter(adapter3);
-        
-        if (!(portoPartenza.contentEquals("Procida"))){
-        	portoArrivo="Procida";
-        }
-        else{
-        	portoArrivo=new String(adapter3.getItem(0).toString());
-        }
-        
-        //trova il valore corretto nello spinner
-        for (int i=0;i<spnPortoArrivo.getCount();i++){
-        	if (adapter3.getItem(i).equals(portoArrivo)){
-        		spnPortoArrivo.setSelection(i);
-        	}
-        }
-
-        
         spnPortoArrivo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            	portoArrivo=parent.getItemAtPosition(pos).toString();
+        		portoArrivo=parent.getItemAtPosition(pos).toString();
+        		if (portoArrivo.contentEquals("Procida")&&portoPartenza.contentEquals("Procida")){
+        			portoPartenza="Tutti";
+        			setSpnPortoPartenza(spnPortoPartenza, adapter2);
+                    setSpnPortoArrivo(spnPortoArrivo, adapter3);
+        		}
+        		else if (!(portoArrivo.contentEquals("Procida")||portoArrivo.contentEquals("Tutti"))){
+        			portoPartenza="Procida";
+	            	setSpnPortoPartenza(spnPortoPartenza, adapter2);
+	            	setSpnPortoArrivo(spnPortoArrivo, adapter3);
+        		}
             	aggiornaLista();
             }
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });        
+	}
+
+	private void setSpnPortoArrivo(Spinner spnPortoArrivo,
+			final ArrayAdapter<CharSequence> adapter3) {
+		//trova il valore corretto nello spinner
+        for (int i=0;i<spnPortoArrivo.getCount();i++){
+        	if (adapter3.getItem(i).equals(portoArrivo)){
+        		spnPortoArrivo.setSelection(i);
+        	}
+        }
+	}
+
+	private void setSpnPortoPartenza(Spinner spnPortoPartenza,
+			ArrayAdapter<CharSequence> adapter2) {
+		//trova il valore corretto nello spinner
+        for (int i=0;i<spnPortoPartenza.getCount();i++){
+        	if (adapter2.getItem(i).equals(portoPartenza)){
+        		spnPortoPartenza.setSelection(i);
+        	}
+        }
 	}
       
 	private String setPortoPartenza() {

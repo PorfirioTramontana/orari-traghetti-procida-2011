@@ -36,6 +36,7 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 	public ArrayList <String> listNumeri;
 	public BiglietterieDialog biglietterieDialog;
 	public TaxiDialog taxiDialog;
+	private TextView txtAuto;
 	
 
 	public DettagliMezzoDialog(Context context) {
@@ -54,6 +55,7 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 //		txtNomeCompagnia = (TextView) findViewById(R.id.txtNomeCompagnia);
 //		txtTelefonoCompagnia = (TextView) findViewById(R.id.txtTelefonoCompagnia);
 		txtCosto= (TextView) findViewById(R.id.txtCosto);
+		txtAuto=(TextView) findViewById(R.id.txtAuto);
 		
 	    Button btnReturnToHome = (Button)findViewById(R.id.btnReturnToHome);    
 	    btnReturnToHome.setOnClickListener(new View.OnClickListener(){
@@ -118,7 +120,7 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 		s+="Costo : "+mezzo.getCostoResidente()+" euro ";
 		if (mezzo.isCircaResidente())
 			s+="circa ";
-		s+="(residente) o "+mezzo.getCostoIntero()+" euro";
+		s+="(residente) o "+mezzo.getCostoIntero()+" euro ";
 		if (mezzo.isCircaIntero())
 			s+="circa ";		
 		s+="(intero)";
@@ -130,6 +132,11 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
         	if (mezzo.nave.contains(listCompagnia.get(i).nome))
         		c=listCompagnia.get(i);
         } 
+        
+        if (c.nome.contentEquals("Procida Lines")||mezzo.nave.contains("Aliscafo"))
+        	txtAuto.setText("Trasporta solo passeggeri");
+        else
+        	txtAuto.setText("Trasporta auto e passeggeri");
         
         biglietterieDialog = new BiglietterieDialog(this.getContext());
         biglietterieDialog.fill(c);
