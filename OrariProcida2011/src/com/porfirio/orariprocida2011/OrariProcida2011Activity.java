@@ -671,47 +671,12 @@ public class OrariProcida2011Activity extends Activity {
     		s+=selectMezzi.get(i).oraPartenza.get(Calendar.MINUTE)+" ";
 //    		s+=selectMezzi.get(i).getGiornoSeguente()+" ";			
     		//TODO Qui aggiungo l'indicazione meteo eventuale
-    		s+=condimeteoString(selectMezzi.get(i));
+    		s+=meteo.condimeteoString(this, selectMezzi.get(i));
     		aalvMezzi.add(s);
 		}
 
 	}
     
-	public String condimeteoString(Mezzo mezzo) {
-		String result=new String("");
-		Double actualBeaufort=meteo.getWindBeaufort();
-		if (mezzo.nave.equals("Procida Lines") || mezzo.nave.equals("Gestur"))
-			actualBeaufort+=1; //penalizzazione per mezzi piccoli
-		else if (mezzo.nave.equals("Aliscafo SNAV"))
-			actualBeaufort+=0.5; //penalizzazione per compagnia privata
-		if (mezzo.oraPartenza.get(Calendar.HOUR_OF_DAY)==7 && mezzo.oraPartenza.get(Calendar.MINUTE)==40)
-			actualBeaufort-=1; // incremento per corsa fondamentale
-		else if (mezzo.oraPartenza.get(Calendar.HOUR_OF_DAY)==19 && mezzo.oraPartenza.get(Calendar.MINUTE)==30)
-			actualBeaufort-=1; // incremento per corsa fondamentale
-		else if (mezzo.oraPartenza.get(Calendar.HOUR_OF_DAY)==6 && mezzo.oraPartenza.get(Calendar.MINUTE)==25)
-			actualBeaufort-=1; // incremento per corsa fondamentale
-		else if (mezzo.oraPartenza.get(Calendar.HOUR_OF_DAY)==20 && mezzo.oraPartenza.get(Calendar.MINUTE)==30)
-			actualBeaufort-=1; // incremento per corsa fondamentale
-		//Non metto aggiustamenti per l'orario perchè ho dati solo su base giornaliera
-		//Non metto aggiustamenti in base ai porti perchè ho dati per tutto il golfo
-		
-		if ((meteo.getWindDirection()==0 || meteo.getWindDirection()==315)&&(actualBeaufort>4) && (mezzo.portoArrivo.contains("Ischia")||mezzo.portoPartenza.contains("Ischia")))
-			result=" - A Rischio Maltempo!!!";
-		else if ((meteo.getWindDirection()==0 || meteo.getWindDirection()==315)&&(actualBeaufort>5) && (mezzo.portoArrivo.contains("Napoli")||mezzo.portoPartenza.contains("Napoli")||mezzo.portoArrivo.contentEquals("Pozzuoli")||mezzo.portoPartenza.contentEquals("Pozzuoli")))
-			result=" - A Rischio Maltempo!!!";
-		else if ((meteo.getWindDirection()==45 || meteo.getWindDirection()==90)&&(actualBeaufort>4))
-			result=" - A Rischio Maltempo!!!";
-		else if ((meteo.getWindDirection()==135 || meteo.getWindDirection()==180 || meteo.getWindDirection()==225)&&(actualBeaufort>4)&&(!(mezzo.nave.contains("Aliscafo"))))
-			result=" - A Rischio Maltempo!!!";
-		else if ((meteo.getWindDirection()==135 || meteo.getWindDirection()==180 || meteo.getWindDirection()==225)&&(actualBeaufort>3)&&(mezzo.nave.contains("Aliscafo")))
-			result=" - A Rischio Maltempo!!!";
-		else if ((meteo.getWindDirection()==270)&&(actualBeaufort>3))
-			result=" - A Rischio Maltempo!!!";
-		
-		return result;
-
-}
-
 	private void setSpinner(){
     	Spinner spnNave = (Spinner)findViewById(R.id.spnNave);
     	ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
