@@ -5,4 +5,5 @@
 <item android:enabled="true" android:id="@+id/esci" android:orderInCategory="2" android:title="@string/esci" android:visible="true"></item>
 <item android:title="Finestra Temporale" android:id="@+id/finTemp" android:visible="false" android:enabled="false"></item>
 <item android:id="@+id/updateWeb" android:title="@string/noUpdateWeb" android:orderInCategory="3"></item>
+<item android:id="@+id/meteo" android:title="Meteo" android:titleCondensed="Meteo"></item>
 </menu>

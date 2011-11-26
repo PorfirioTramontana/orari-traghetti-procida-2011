@@ -5,6 +5,8 @@ import java.util.Calendar;
 public class Meteo {
 	private double windBeaufort;
 	private int windDirection;
+	private double windKmh;
+	private String windDirectionString;
 	
 	public Meteo (double wb,int wd){
 		setWindBeaufort(wb);
@@ -14,6 +16,8 @@ public class Meteo {
 	public Meteo(){
 		windBeaufort=0.0;
 		windDirection=0;
+		windKmh=0.0;
+		windDirectionString="";
 	}
 
 	public void setWindBeaufort(double windBeaufort) {
@@ -77,4 +81,56 @@ public class Meteo {
 		return result;
 	
 	}
+
+	public String getWindDirectionString() {
+		return windDirectionString;
+	}
+
+	public Double getWindKmh() {		
+		return windKmh;
+	}
+
+	public void setWindKmh(double wkmh) {
+		windKmh=wkmh;
+		return;
+	}
+
+	public void setWindDirectionString(String string) {
+		windDirectionString=string;
+		return;
+	}
+	
+	public String getWindBeaufortString(){
+		int forza=new Double(windBeaufort).intValue();
+		switch (forza){
+		case 0:
+			return "Calma";
+		case 1:
+			return "Bava di vento";
+		case 2:
+			return "Brezza leggera";
+		case 3:
+			return "Brezza tesa";
+		case 4:
+			return "Vento moderato";
+		case 5:
+			return "Vento teso";
+		case 6:
+			return "Vento fresco";
+		case 7:
+			return "Vento forte";
+		case 8:
+			return "Burrasca";
+		case 9:
+			return "Burrasca forte";
+		case 10:
+			return "Tempesta";
+		case 11:
+			return "Fortunale";
+		case 12:
+			return "Uragano";
+		}
+		return "Errore";
+		}
+		
 }

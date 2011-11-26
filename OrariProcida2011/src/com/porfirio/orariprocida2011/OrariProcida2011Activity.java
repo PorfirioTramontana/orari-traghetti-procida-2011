@@ -72,11 +72,13 @@ public class OrariProcida2011Activity extends Activity {
 	public Button buttonPlus;
 	public TextView txtOrario;
 	public AlertDialog aboutDialog;
+	private AlertDialog meteoDialog;
 	public ConfigData configData; 
 	private DettagliMezzoDialog dettagliMezzoDialog;
 	private ArrayList <Mezzo> selectMezzi;
 	
     static final int ABOUT_DIALOG_ID = 0;
+    static final int METEO_DIALOG_ID=1;
 
 	private ArrayList<Mezzo> listMezzi;
 	private ArrayList<Compagnia> listCompagnia;
@@ -128,7 +130,10 @@ public class OrariProcida2011Activity extends Activity {
         			Log.d("ORARI", "Non c'è la connessione: non carico orari da Web");
         		return true;
         	}
-		case R.id.esci:
+        case R.id.meteo:
+        	showDialog(METEO_DIALOG_ID);
+        	return true;
+        case R.id.esci:
         	OrariProcida2011Activity.this.finish();
             return true;
         default:
@@ -157,7 +162,20 @@ public class OrariProcida2011Activity extends Activity {
                    }
                });
         aboutDialog = builder.create();
-               
+
+        meteo=new Meteo();
+        leggiMeteo();
+       
+        builder = new AlertDialog.Builder(this);      
+        builder.setMessage("Condizioni meteo: "+meteo.getWindBeaufortString()+" ("+new Double(meteo.getWindKmh()).intValue()+" km/h) da "+meteo.getWindDirectionString())
+               .setCancelable(false)
+               .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                   }
+               });
+        meteoDialog = builder.create();
+
         configData=new ConfigData();
         configData.setFinestraTemporale(24);
         
@@ -215,9 +233,7 @@ public class OrariProcida2011Activity extends Activity {
         });
         setSpinner();
         
-        meteo=new Meteo();
-        leggiMeteo();
-        
+       
         listMezzi = new ArrayList <Mezzo>();
         lvMezzi=(ListView)findViewById(R.id.listMezzi);
         aalvMezzi = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);       
@@ -254,35 +270,41 @@ public class OrariProcida2011Activity extends Activity {
     }
 
 	private void leggiMeteo() {
-		// TODO Metodo solo di prova
 		/* Create a URL we want to load some xml-data from. */
 		URL url;
-		try {
-			url = new URL("http://www.google.com/ig/api?weather=Procida");
-		
-
-			/* Get a SAXParser from the SAXPArserFactory. */
-			SAXParserFactory spf = SAXParserFactory.newInstance();
-			SAXParser sp = spf.newSAXParser();
-	
-			/* Get the XMLReader of the SAXParser we created. */
-			XMLReader xr = sp.getXMLReader();
-			/* Create a new ContentHandler and apply it to the XML-Reader*/
-			MeteoXMLHandler meteoXMLHandler = new MeteoXMLHandler(this);
-			xr.setContentHandler(meteoXMLHandler);
-	
-			/* Parse the xml-data from our URL. */
-			xr.parse(new InputSource(url.openStream()));
-			/* Parsing has finished. */ 
+		if (isOnline())
+		{
+			try {
+				url = new URL("http://www.google.com/ig/api?weather=Procida");
 			
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+	
+				/* Get a SAXParser from the SAXPArserFactory. */
+				SAXParserFactory spf = SAXParserFactory.newInstance();
+				SAXParser sp = spf.newSAXParser();
+		
+				/* Get the XMLReader of the SAXParser we created. */
+				XMLReader xr = sp.getXMLReader();
+				/* Create a new ContentHandler and apply it to the XML-Reader*/
+				MeteoXMLHandler meteoXMLHandler = new MeteoXMLHandler(this);
+				xr.setContentHandler(meteoXMLHandler);
+		
+				/* Parse the xml-data from our URL. */
+				xr.parse(new InputSource(url.openStream()));
+				/* Parsing has finished. */ 
+				
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			} catch (ParserConfigurationException e) {
+				e.printStackTrace();
+			} catch (SAXException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		else
+		{
+			Log.d("ORARI", "dati meteo non caricati da web");
 		}
 	}
 
@@ -573,8 +595,10 @@ public class OrariProcida2011Activity extends Activity {
     protected Dialog onCreateDialog(int id) {
         switch (id) {
         case ABOUT_DIALOG_ID:
-			return aboutDialog;
-        }        
+			return aboutDialog;       
+        case METEO_DIALOG_ID:
+        	return meteoDialog;
+        }
         return null;
     }
     

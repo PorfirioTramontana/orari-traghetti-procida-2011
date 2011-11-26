@@ -39,23 +39,23 @@ public class MeteoXMLHandler extends DefaultHandler{
 
 	    }
 
-	    private void setMeteo(String attr) {
+	    private void setMeteo(String attr) {	    	
 	    	if (attr.contains(" N "))
-				callingActivity.meteo.setWindDirection(0);
+				{callingActivity.meteo.setWindDirection(0);callingActivity.meteo.setWindDirectionString("Nord");}
 	    	else if (attr.contains(" NE "))
-	    		callingActivity.meteo.setWindDirection(45);
+	    		{callingActivity.meteo.setWindDirection(45);callingActivity.meteo.setWindDirectionString("Nord-Est");}
 	    	else if (attr.contains(" E "))
-	    		callingActivity.meteo.setWindDirection(90);
+	    		{callingActivity.meteo.setWindDirection(90);callingActivity.meteo.setWindDirectionString("Est");}
 	    	else if (attr.contains(" SE "))
-	    		callingActivity.meteo.setWindDirection(135);
+	    		{callingActivity.meteo.setWindDirection(135);callingActivity.meteo.setWindDirectionString("Sud-Est");}
 	    	else if (attr.contains(" S "))
-	    		callingActivity.meteo.setWindDirection(180);
+	    		{callingActivity.meteo.setWindDirection(180);callingActivity.meteo.setWindDirectionString("Sud");}
 	    	else if (attr.contains(" SW "))
-	    		callingActivity.meteo.setWindDirection(225);
+	    		{callingActivity.meteo.setWindDirection(225);callingActivity.meteo.setWindDirectionString("Sud-Ovest");}
 	    	else if (attr.contains(" W "))
-	    		callingActivity.meteo.setWindDirection(270);
+	    		{callingActivity.meteo.setWindDirection(270);callingActivity.meteo.setWindDirectionString("Ovest");}
 	    	else if (attr.contains(" NW "))
-	    		callingActivity.meteo.setWindDirection(315);
+	    		{callingActivity.meteo.setWindDirection(315);callingActivity.meteo.setWindDirectionString("Nord-Ovest");}
 			
 	    	Log.d("ORARI","Vento da "+callingActivity.meteo.getWindDirection());	    	
 	    	
@@ -64,6 +64,7 @@ public class MeteoXMLHandler extends DefaultHandler{
 	    	int pos2=attr.indexOf("mph");
 	    	String wind=attr.substring(pos+4, pos2-1);
 	    	double wkmh=Integer.parseInt(wind)*1.609;
+	    	callingActivity.meteo.setWindKmh(wkmh);
 	    	if (wkmh<=1)
 	    		callingActivity.meteo.setWindBeaufort(0.0);
 	    	else if (wkmh>1 && wkmh<=5)
