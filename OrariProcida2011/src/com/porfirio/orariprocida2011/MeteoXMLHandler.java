@@ -67,27 +67,27 @@ public class MeteoXMLHandler extends DefaultHandler{
 	    	callingActivity.meteo.setWindKmh(wkmh);
 	    	if (wkmh<=1)
 	    		callingActivity.meteo.setWindBeaufort(0.0);
-	    	else if (wkmh>1 && wkmh<=5)
+	    	else if (wkmh>1 && wkmh<6)
 	    		callingActivity.meteo.setWindBeaufort(1+(wkmh-3)/(5-1));
-	    	else if (wkmh>=6 && wkmh<=11)
+	    	else if (wkmh>=6 && wkmh<12)
 	    		callingActivity.meteo.setWindBeaufort(2+(wkmh-8.5)/(11-6));
-	    	else if (wkmh>=12 && wkmh<=19)
+	    	else if (wkmh>=12 && wkmh<20)
 	    		callingActivity.meteo.setWindBeaufort(3+(wkmh-15.5)/(19-12));
-	    	else if (wkmh>=20 && wkmh<=28)
+	    	else if (wkmh>=20 && wkmh<29)
 	    		callingActivity.meteo.setWindBeaufort(4+(wkmh-24)/(28-20));
-	    	else if (wkmh>=29 && wkmh<=38)
+	    	else if (wkmh>=29 && wkmh<39)
 	    		callingActivity.meteo.setWindBeaufort(5+(wkmh-33.5)/(38-29));
-	    	else if (wkmh>=39 && wkmh<=49)
+	    	else if (wkmh>=39 && wkmh<50)
 	    		callingActivity.meteo.setWindBeaufort(6+(wkmh-44)/(49-39));
-	    	else if (wkmh>=50 && wkmh<=61)
+	    	else if (wkmh>=50 && wkmh<62)
 	    		callingActivity.meteo.setWindBeaufort(7+(wkmh-55.5)/(61-50));
-	    	else if (wkmh>=62 && wkmh<=74)
+	    	else if (wkmh>=62 && wkmh<75)
 	    		callingActivity.meteo.setWindBeaufort(8+(wkmh-68)/(74-62));
-	    	else if (wkmh>=75 && wkmh<=88)
+	    	else if (wkmh>=75 && wkmh<89)
 	    		callingActivity.meteo.setWindBeaufort(9+(wkmh-81.5)/(88-75));
-	    	else if (wkmh>=89 && wkmh<=102)
+	    	else if (wkmh>=89 && wkmh<103)
 	    		callingActivity.meteo.setWindBeaufort(10+(wkmh-95.5)/(102-89));
-	    	else if (wkmh>=103 && wkmh<=117)
+	    	else if (wkmh>=103 && wkmh<118)
 	    		callingActivity.meteo.setWindBeaufort(11+(wkmh-110)/(117-103));
 	    	else if (wkmh>=118)
 	    		callingActivity.meteo.setWindBeaufort(12);
