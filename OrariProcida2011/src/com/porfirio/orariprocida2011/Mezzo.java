@@ -102,13 +102,13 @@ public class Mezzo {
 			return;
 		}		
 		if (n.contentEquals("Procida Lines") && p.contentEquals("Pozzuoli")){
-			costoIntero=7;
-			costoResidente=2.3;
+			costoIntero=5;
+			costoResidente=2.5;
 			return;
 		}
 		if (n.contentEquals("Gestur") && p.contentEquals("Pozzuoli")){
-			costoIntero=7;
-			costoResidente=2.3;
+			costoIntero=5;
+			costoResidente=2.5;
 			setCircaIntero(true);
 			return;
 		}

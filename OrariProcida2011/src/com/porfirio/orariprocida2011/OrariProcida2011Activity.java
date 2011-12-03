@@ -131,6 +131,7 @@ public class OrariProcida2011Activity extends Activity {
         		return true;
         	}
         case R.id.meteo:
+        	leggiMeteo();
         	showDialog(METEO_DIALOG_ID);
         	return true;
         case R.id.esci:
