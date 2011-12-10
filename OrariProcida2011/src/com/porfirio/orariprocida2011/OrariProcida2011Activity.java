@@ -637,7 +637,13 @@ public class OrariProcida2011Activity extends Activity {
     	
     	aalvMezzi.clear();
 
-		String portoPartenzaEspanso=new String(portoPartenza);
+		String naveEspanso=new String(nave);
+		if (nave.equals("Traghetti"))
+			naveEspanso="Traghetto Caremar Procida Lines Gestur Medmar";
+		if (nave.equals("Aliscafi"))
+			naveEspanso="Aliscafo Caremar Aliscafo SNAV";
+    	
+    	String portoPartenzaEspanso=new String(portoPartenza);
 		if (portoPartenza.equals("Napoli"))
 			portoPartenzaEspanso="Napoli Porta di Massa o Napoli Beverello";
 		if (portoPartenza.equals("Napoli o Pozzuoli"))
@@ -664,7 +670,7 @@ public class OrariProcida2011Activity extends Activity {
     		if ((oraNave.get(Calendar.HOUR_OF_DAY)<c.get(Calendar.HOUR_OF_DAY))||(oraNave.get(Calendar.HOUR_OF_DAY)==c.get(Calendar.HOUR_OF_DAY))&&(oraNave.get(Calendar.MINUTE)<c.get(Calendar.MINUTE)))
     			oraNave.add(Calendar.DAY_OF_MONTH, 1);
 
-    		if (listMezzi.get(i).nave.equals(nave) || nave.equals("Tutti")){
+    		if (naveEspanso.contains(listMezzi.get(i).nave) || nave.equals("Tutti")){
     			if ((listMezzi.get(i).portoPartenza.equals((portoPartenza))) || (portoPartenzaEspanso.contains(listMezzi.get(i).portoPartenza)) || (portoPartenza.equals("Tutti"))){
     				if ((listMezzi.get(i).portoArrivo.equals((portoArrivo))) || (portoArrivoEspanso.contains(listMezzi.get(i).portoArrivo)) || (portoArrivo.equals("Tutti"))){
     					if (listMezzi.get(i).inizioEsclusione.after(oraNave) || listMezzi.get(i).fineEsclusione.before(oraNave))

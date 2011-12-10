@@ -3,6 +3,8 @@
     <string name="app_name">Uno Procida Residente</string>
     <string-array name="strMezzi">
         <item>Tutti</item>
+        <item >Traghetti</item>
+        <item >Aliscafi</item>
         <item>Traghetto Caremar</item>
         <item>Aliscafo Caremar</item>
         <item>Aliscafo SNAV</item>
