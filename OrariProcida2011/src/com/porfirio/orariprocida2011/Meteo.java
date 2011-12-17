@@ -78,6 +78,8 @@ public class Meteo {
 			result=" - A rischio Maltempo!!!";
 		else if (extraWind<=3)
 			result=" - Corsa quasi sicuramente sospesa !!!";
+		else
+			result=" - Corsa impossibile !!!";
 		return result;
 	
 	}
