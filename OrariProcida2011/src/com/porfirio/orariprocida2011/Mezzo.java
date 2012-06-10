@@ -153,7 +153,7 @@ public class Mezzo {
 			setCircaResidente(true);
 			return;
 		}
-		
+		//TODO Aggiungere Ippocampo
 		
 	}
 

@@ -455,6 +455,8 @@ public class OrariProcida2011Activity extends Activity {
     	c.addTelefono("Procida","0818960328");
     	listCompagnia.add(c);
     	
+    	//TODO: Aggiungere Ippocampo
+    	
     	try {
 			FileInputStream fstream = new FileInputStream("/data/data/com.porfirio.orariprocida2011/files/orari.csv");			
     		riempiMezzidaInternalStorage(fstream);
@@ -639,11 +641,11 @@ public class OrariProcida2011Activity extends Activity {
 
 		String naveEspanso=new String(nave);
 		if (nave.equals("Traghetti"))
-			naveEspanso="Traghetto Caremar Procida Lines Gestur Medmar";
+			naveEspanso="Traghetto Caremar Procida Lines Gestur Medmar"; //TODO Aggiungi Ippocampo
 		if (nave.equals("Aliscafi"))
 			naveEspanso="Aliscafo Caremar Aliscafo SNAV";
     	
-    	String portoPartenzaEspanso=new String(portoPartenza);
+    	String portoPartenzaEspanso=new String(portoPartenza); 
 		if (portoPartenza.equals("Napoli"))
 			portoPartenzaEspanso="Napoli Porta di Massa o Napoli Beverello";
 		if (portoPartenza.equals("Napoli o Pozzuoli"))
@@ -835,7 +837,7 @@ public class OrariProcida2011Activity extends Activity {
         		return new String ("Ischia");
         	else
         		return new String ("Casamicciola");
-        }
+        } //TODO: Inserire Monte di Procida
       //Inserire coordinate Napoli (media porti) e Pozzuoli
       double distNapoli=calcolaDistanza(l,14.2575,40.84); Log.d("OrariProcida","d(Napoli)="+distNapoli);
       double distPozzuoli=calcolaDistanza(l,14.1179,40.8239); Log.d("OrariProcida","d(Pozzuoli)="+distPozzuoli);

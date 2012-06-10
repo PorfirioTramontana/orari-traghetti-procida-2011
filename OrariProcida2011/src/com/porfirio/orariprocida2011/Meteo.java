@@ -41,7 +41,7 @@ public class Meteo {
 		Double actualBeaufort=getWindBeaufort();
 		Double limitBeaufort=0.0;
 		
-		if (mezzo.nave.equals("Procida Lines") || mezzo.nave.equals("Gestur"))
+		if (mezzo.nave.equals("Procida Lines") || mezzo.nave.equals("Gestur")) //TODO Aggiungere Ippocampo
 			limitBeaufort-=1; //penalizzazione per mezzi piccoli
 		else if (mezzo.nave.equals("Aliscafo SNAV"))
 			limitBeaufort-=0.5; //penalizzazione per compagnia privata
@@ -56,6 +56,7 @@ public class Meteo {
 		//Non metto aggiustamenti per l'orario perchè ho dati solo su base giornaliera
 		//Non metto aggiustamenti in base ai porti perchè ho dati per tutto il golfo
 		
+		//TODO Aggiungere porto di Monte di Procida
 		if ((getWindDirection()==0 || getWindDirection()==315) && (mezzo.portoArrivo.contains("Ischia")||mezzo.portoPartenza.contains("Ischia")||mezzo.portoArrivo.contains("Casamicciola")||mezzo.portoPartenza.contains("Casamicciola")))
 			limitBeaufort+=4;
 		else if ((getWindDirection()==0 || getWindDirection()==315) && (mezzo.portoArrivo.contains("Napoli")||mezzo.portoPartenza.contains("Napoli")||mezzo.portoArrivo.contentEquals("Pozzuoli")||mezzo.portoPartenza.contentEquals("Pozzuoli")))

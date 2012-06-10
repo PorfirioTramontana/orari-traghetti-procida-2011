@@ -11,6 +11,7 @@
         <item>Procida Lines</item>
         <item>Gestur</item>
         <item>Medmar</item>
+        <item>Ippocampo</item>
     </string-array>
     <string-array name="strPorti">
         <item>Tutti</item>
@@ -25,6 +26,7 @@
 		<item>Ischia Porto</item>                
         <item>Casamicciola</item>
         <item>Ischia</item>
+        <item>Monte di Procida</item>
     </string-array>
         <string name="mezzo">Mezzo : </string>
         <string name="portoPartenza">Da : </string>
