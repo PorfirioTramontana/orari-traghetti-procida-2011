@@ -153,7 +153,14 @@ public class Mezzo {
 			setCircaResidente(true);
 			return;
 		}
-		//TODO Aggiungere Ippocampo
+		if (n.contentEquals("Ippocampo") ){ //TODO Da verificare
+			costoIntero=8;
+			costoResidente=2.00;
+			setCircaIntero(true);
+			setCircaResidente(true);
+			return;
+		}
+
 		
 	}
 

@@ -133,8 +133,8 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
         		c=listCompagnia.get(i);
         } 
         
-        //TODO Aggiungere Ippocampo
-        if (c.nome.contentEquals("Procida Lines")||mezzo.nave.contains("Aliscafo"))
+        //Aggiunto Ippocampo
+        if (c.nome.contentEquals("Ippocampo")||c.nome.contentEquals("Procida Lines")||mezzo.nave.contains("Aliscafo"))
         	txtAuto.setText("Trasporta solo passeggeri");
         else
         	txtAuto.setText("Trasporta auto e passeggeri");

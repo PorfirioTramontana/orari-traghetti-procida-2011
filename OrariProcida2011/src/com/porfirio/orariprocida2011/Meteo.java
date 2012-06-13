@@ -41,22 +41,21 @@ public class Meteo {
 		Double actualBeaufort=getWindBeaufort();
 		Double limitBeaufort=0.0;
 		
-		if (mezzo.nave.equals("Procida Lines") || mezzo.nave.equals("Gestur")) //TODO Aggiungere Ippocampo
+		if (mezzo.nave.equals("Procida Lines") || mezzo.nave.equals("Gestur")|| mezzo.nave.equals("Ippocampo")) 
 			limitBeaufort-=1; //penalizzazione per mezzi piccoli
 		else if (mezzo.nave.equals("Aliscafo SNAV"))
 			limitBeaufort-=0.5; //penalizzazione per compagnia privata
 		if (mezzo.oraPartenza.get(Calendar.HOUR_OF_DAY)==7 && mezzo.oraPartenza.get(Calendar.MINUTE)==40)
 			limitBeaufort+=1; // incremento per corsa fondamentale
-		else if (mezzo.oraPartenza.get(Calendar.HOUR_OF_DAY)==19 && mezzo.oraPartenza.get(Calendar.MINUTE)==30)
+		else if (mezzo.oraPartenza.get(Calendar.HOUR_OF_DAY)==19 && mezzo.oraPartenza.get(Calendar.MINUTE)==25)
 			limitBeaufort+=1; // incremento per corsa fondamentale
 		else if (mezzo.oraPartenza.get(Calendar.HOUR_OF_DAY)==6 && mezzo.oraPartenza.get(Calendar.MINUTE)==25)
 			limitBeaufort+=1; // incremento per corsa fondamentale
-		else if (mezzo.oraPartenza.get(Calendar.HOUR_OF_DAY)==20 && mezzo.oraPartenza.get(Calendar.MINUTE)==30)
+		else if (mezzo.oraPartenza.get(Calendar.HOUR_OF_DAY)==20 && mezzo.oraPartenza.get(Calendar.MINUTE)==0)
 			limitBeaufort+=1; // incremento per corsa fondamentale
 		//Non metto aggiustamenti per l'orario perchè ho dati solo su base giornaliera
 		//Non metto aggiustamenti in base ai porti perchè ho dati per tutto il golfo
 		
-		//TODO Aggiungere porto di Monte di Procida
 		if ((getWindDirection()==0 || getWindDirection()==315) && (mezzo.portoArrivo.contains("Ischia")||mezzo.portoPartenza.contains("Ischia")||mezzo.portoArrivo.contains("Casamicciola")||mezzo.portoPartenza.contains("Casamicciola")))
 			limitBeaufort+=4;
 		else if ((getWindDirection()==0 || getWindDirection()==315) && (mezzo.portoArrivo.contains("Napoli")||mezzo.portoPartenza.contains("Napoli")||mezzo.portoArrivo.contentEquals("Pozzuoli")||mezzo.portoPartenza.contentEquals("Pozzuoli")))
@@ -69,6 +68,8 @@ public class Meteo {
 			limitBeaufort+=3;
 		else if ((getWindDirection()==270))
 			limitBeaufort+=3;
+		else if (mezzo.portoPartenza.contentEquals("Monte di Procida")||mezzo.portoArrivo.contentEquals("Monte di Procida"))
+			limitBeaufort+=4; //TODO Metto valore standard per il porto di Monte di Procida
 		
 		double extraWind=actualBeaufort-limitBeaufort;
 		if (extraWind<=0)
