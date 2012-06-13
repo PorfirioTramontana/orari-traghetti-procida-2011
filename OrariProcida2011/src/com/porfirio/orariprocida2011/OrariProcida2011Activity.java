@@ -73,12 +73,14 @@ public class OrariProcida2011Activity extends Activity {
 	public TextView txtOrario;
 	public AlertDialog aboutDialog;
 	private AlertDialog meteoDialog;
+	public AlertDialog novitaDialog;
 	public ConfigData configData; 
 	private DettagliMezzoDialog dettagliMezzoDialog;
 	private ArrayList <Mezzo> selectMezzi;
 	
     static final int ABOUT_DIALOG_ID = 0;
     static final int METEO_DIALOG_ID=1;
+    static final int NOVITA_DIALOG_ID=1;
 
 	private ArrayList<Mezzo> listMezzi;
 	private ArrayList<Compagnia> listCompagnia;
@@ -360,7 +362,7 @@ public class OrariProcida2011Activity extends Activity {
 	
 	private void riempiMezzidaWeb(){
 		Log.d("ORARI", "Inizio Lettura da Web");
-		String url="http://wpage.unina.it/ptramont/orari.csv";
+		String url="http://wpage.unina.it/ptramont/orariP.csv";
 		HttpURLConnection conn = null;
 		InputStream in=null;
 		try {
@@ -374,6 +376,7 @@ public class OrariProcida2011Activity extends Activity {
 			in = conn.getInputStream();
 			BufferedReader r = new BufferedReader(new InputStreamReader(in));
 			String rigaAggiornamento=r.readLine();
+			String rigaNovita=r.readLine();
 			StringTokenizer st0 = new StringTokenizer( rigaAggiornamento, "," );			
 			aggiornamentoOrariWeb=(Calendar) aggiornamentoOrariIS.clone();
 			aggiornamentoOrariWeb.set(Calendar.DAY_OF_MONTH, Integer.parseInt(st0.nextToken()));
@@ -400,6 +403,18 @@ public class OrariProcida2011Activity extends Activity {
 				}
 				fos.close();
 				aggiornamentoOrariIS=aggiornamentoOrariWeb;
+				//TODO Aggiungere un messaggio che ricordi l'aggiornamento
+		        AlertDialog.Builder builder = new AlertDialog.Builder(this);      
+		        builder.setMessage("Nuovo aggiornamento degli orari al "+rigaAggiornamento+" \n Novita':\n"+rigaNovita)
+		               .setCancelable(false)
+		               .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		                   public void onClick(DialogInterface dialog, int id) {
+		                        dialog.cancel();
+		                   }
+		               });
+		        novitaDialog = builder.create();
+		        novitaDialog.show();
+
 			}
 			r.close();
 			Log.d("ORARI", "Orari web letti");
@@ -455,7 +470,6 @@ public class OrariProcida2011Activity extends Activity {
     	c.addTelefono("Procida","0818960328");
     	listCompagnia.add(c);
     	
-    	//TODO: Aggiungere Ippocampo
     	c=new Compagnia("Ippocampo");
     	c.addTelefono("Procida", "3663575751");
     	c.addTelefono("Procida", "0818967764");
@@ -841,12 +855,12 @@ public class OrariProcida2011Activity extends Activity {
         		return new String ("Ischia");
         	else
         		return new String ("Casamicciola");
-        } //TODO: Inserire Monte di Procida
+        } 
       //Inserire coordinate Napoli (media porti) e Pozzuoli
       double distNapoli=calcolaDistanza(l,14.2575,40.84); Log.d("OrariProcida","d(Napoli)="+distNapoli);
       double distPozzuoli=calcolaDistanza(l,14.1179,40.8239); Log.d("OrariProcida","d(Pozzuoli)="+distPozzuoli);
       double distMonteProcida=calcolaDistanza(l,14.05,40.8);
-      if (distMonteProcida<1000)
+      if (distMonteProcida<1500)
     	  return new String("Monte di Procida");
       if (distPozzuoli<distNapoli){
     	  if (distPozzuoli<15000)

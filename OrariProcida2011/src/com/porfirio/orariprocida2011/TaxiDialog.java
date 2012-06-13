@@ -53,6 +53,8 @@ public class TaxiDialog extends Dialog implements OnClickListener{
 	    taxiList.add(new Taxi("Ischia","Arrivo porto turistico (Casamicciola)","081900369"));
 	    taxiList.add(new Taxi("Ischia","Piazza Bagni (Casamicciola)","081900881"));
 	    taxiList.add(new Taxi("Pozzuoli","Piazza della Repubblica","0815265800"));
+	    taxiList.add(new Taxi("Monte di Procida","Via Faro, Bacoli","3349003894"));
+	    taxiList.add(new Taxi("Monte di Procida","Via Faro, Bacoli","3395352014"));
 	    //TODO: Aggiungere Monte di Procida
 	}
 
