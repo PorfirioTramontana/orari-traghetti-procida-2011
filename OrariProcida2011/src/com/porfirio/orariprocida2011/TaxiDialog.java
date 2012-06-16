@@ -61,7 +61,7 @@ public class TaxiDialog extends Dialog implements OnClickListener{
 	public void fill(String porto) {
 		ArrayList<Taxi> taxiPortoList=new ArrayList<Taxi>();
 		for (int i=0;i<taxiList.size();i++)
-			if (porto.contains(taxiList.get(i).getPorto()))
+			if (porto.contains(taxiList.get(i).getPorto()) && !(porto.contentEquals("Monte di Procida")&&taxiList.get(i).getPorto().contentEquals("Procida")))
 				taxiPortoList.add(taxiList.get(i));
 				
 		if (taxiPortoList.size()>=1){

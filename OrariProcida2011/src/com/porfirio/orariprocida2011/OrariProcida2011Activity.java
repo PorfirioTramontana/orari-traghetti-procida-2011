@@ -362,7 +362,7 @@ public class OrariProcida2011Activity extends Activity {
 	
 	private void riempiMezzidaWeb(){
 		Log.d("ORARI", "Inizio Lettura da Web");
-		String url="http://wpage.unina.it/ptramont/orariP.csv";
+		String url="http://wpage.unina.it/ptramont/orari.csv";
 		HttpURLConnection conn = null;
 		InputStream in=null;
 		try {
@@ -376,7 +376,7 @@ public class OrariProcida2011Activity extends Activity {
 			in = conn.getInputStream();
 			BufferedReader r = new BufferedReader(new InputStreamReader(in));
 			String rigaAggiornamento=r.readLine();
-			String rigaNovita=r.readLine();
+			String rigaNovita="";
 			StringTokenizer st0 = new StringTokenizer( rigaAggiornamento, "," );			
 			aggiornamentoOrariWeb=(Calendar) aggiornamentoOrariIS.clone();
 			aggiornamentoOrariWeb.set(Calendar.DAY_OF_MONTH, Integer.parseInt(st0.nextToken()));
@@ -389,6 +389,27 @@ public class OrariProcida2011Activity extends Activity {
 
 			if (aggiornamentoOrariWeb.after(aggiornamentoOrariIS)){
 				Log.d("ORARI", "GLi orari dal Web sono più aggiornati");
+				
+				//legge riga novita da novita.csv
+				String url2="http://wpage.unina.it/ptramont/novita.txt";
+				HttpURLConnection conn2 = null;
+				InputStream in2=null;
+				try {
+					conn2 = (HttpURLConnection) new URL(url2).openConnection();
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				try {
+					in2 = conn2.getInputStream();
+					BufferedReader r2 = new BufferedReader(new InputStreamReader(in2));
+					rigaNovita=r2.readLine();
+					r2.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
 				FileOutputStream fos = openFileOutput("orari.csv", Context.MODE_WORLD_WRITEABLE);
 				fos.write(rigaAggiornamento.getBytes());
 				fos.write("\n".getBytes());
@@ -474,6 +495,7 @@ public class OrariProcida2011Activity extends Activity {
     	c.addTelefono("Procida", "3663575751");
     	c.addTelefono("Procida", "0818967764");
     	c.addTelefono("Monte di Procida", "3397585125");
+    	listCompagnia.add(c);
     	
     	try {
 			FileInputStream fstream = new FileInputStream("/data/data/com.porfirio.orariprocida2011/files/orari.csv");			
@@ -659,9 +681,11 @@ public class OrariProcida2011Activity extends Activity {
 
 		String naveEspanso=new String(nave);
 		if (nave.equals("Traghetti"))
-			naveEspanso="Traghetto Caremar Procida Lines Gestur Medmar Ippocampo"; 
+			naveEspanso="Traghetto Caremar Procida Lines Gestur Medmar Ippocampo Ippocampo(da Chiaiolella) Ippocampo(a Chiaiolella)"; 
 		if (nave.equals("Aliscafi"))
 			naveEspanso="Aliscafo Caremar Aliscafo SNAV";
+		if (nave.equals("Ippocampo"))
+			naveEspanso="Ippocampo Ippocampo(da Chiaiolella) Ippocampo(a Chiaiolella)";
     	
     	String portoPartenzaEspanso=new String(portoPartenza); 
 		if (portoPartenza.equals("Napoli"))
