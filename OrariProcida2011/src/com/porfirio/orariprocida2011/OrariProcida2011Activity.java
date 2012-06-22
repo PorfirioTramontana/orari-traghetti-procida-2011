@@ -157,7 +157,7 @@ public class OrariProcida2011Activity extends Activity {
         BestProvider = myManager.getBestProvider(criteria, true);        
         
         AlertDialog.Builder builder = new AlertDialog.Builder(this);      
-        builder.setMessage("Gli orari sono quelli resi noti dalle compagnie di navigazione alle biglietterie o sui loro siti web. L'autore non e' in alcun modo responsabile di ogni eventuale loro cambiamento. By Porfirio Tramontana 2011. In licenza GPL3. ")
+        builder.setMessage(getString(R.string.disclaimer))
                .setCancelable(false)
                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
@@ -166,11 +166,11 @@ public class OrariProcida2011Activity extends Activity {
                });
         aboutDialog = builder.create();
 
-        meteo=new Meteo();
+        meteo=new Meteo(this);
         leggiMeteo();
        
         builder = new AlertDialog.Builder(this);      
-        builder.setMessage("Condizioni meteo: "+meteo.getWindBeaufortString()+" ("+new Double(meteo.getWindKmh()).intValue()+" km/h) da "+meteo.getWindDirectionString())
+        builder.setMessage(getString(R.string.condimeteo)+meteo.getWindBeaufortString()+" ("+new Double(meteo.getWindKmh()).intValue()+" km/h) "+getString(R.string.da)+meteo.getWindDirectionString())
                .setCancelable(false)
                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
@@ -312,13 +312,13 @@ public class OrariProcida2011Activity extends Activity {
 	}
 
 	private void setTxtOrario(Calendar c) {
-		String s=new String("Dalle ");
+		String s=new String(getString(R.string.dalle)+" ");
 		if (c.get(Calendar.HOUR_OF_DAY)<10)
 			s+="0";
 		s+=c.get(Calendar.HOUR_OF_DAY)+":";
 		if (c.get(Calendar.MINUTE)<10)
 			s+="0";
-		s+=c.get(Calendar.MINUTE)+" del ";
+		s+=c.get(Calendar.MINUTE)+" "+getString(R.string.del)+" ";
 		s+=c.get(Calendar.DAY_OF_MONTH)+"/";
 		s+=(c.get(Calendar.MONTH)+1)+"";
 		txtOrario.setText(s);
@@ -339,7 +339,8 @@ public class OrariProcida2011Activity extends Activity {
 			  aggiornamentoOrariIS.set(Calendar.DAY_OF_MONTH, Integer.parseInt(st0.nextToken()));
 			  aggiornamentoOrariIS.set(Calendar.MONTH, Integer.parseInt(st0.nextToken()));
 			  aggiornamentoOrariIS.set(Calendar.YEAR, Integer.parseInt(st0.nextToken()));
-			  aboutDialog.setMessage("Gli orari sono quelli resi noti dalle compagnie di navigazione alle biglietterie o sui loro siti web. L'autore non e' in alcun modo responsabile di ogni eventuale loro cambiamento. Orari aggiornati al "+aggiornamentoOrariIS.get(Calendar.DAY_OF_MONTH)+"/"+aggiornamentoOrariIS.get(Calendar.MONTH)+"/"+aggiornamentoOrariIS.get(Calendar.YEAR)+". By Porfirio Tramontana 2011. In licenza GPL3. http://code.google.com/p/orari-traghetti-procida-2011/");
+			  //aboutDialog.setMessage("Gli orari sono quelli resi noti dalle compagnie di navigazione alle biglietterie o sui loro siti web. L'autore non e' in alcun modo responsabile di ogni eventuale loro cambiamento. Orari aggiornati al "+aggiornamentoOrariIS.get(Calendar.DAY_OF_MONTH)+"/"+aggiornamentoOrariIS.get(Calendar.MONTH)+"/"+aggiornamentoOrariIS.get(Calendar.YEAR)+". By Porfirio Tramontana 2011. In licenza GPL3. http://code.google.com/p/orari-traghetti-procida-2011/");
+			  aboutDialog.setMessage(""+getString(R.string.disclaimer));
 			  
 			  for (String line = br.readLine(); line != null; line = br.readLine())
 				{
@@ -351,7 +352,7 @@ public class OrariProcida2011Activity extends Activity {
 			  //Close the input stream
 			  in.close();
 			  Log.d("ORARI", "Fine caricamento orari da IS");
-			  String str=new String("Orari aggiornati al "+aggiornamentoOrariIS.get(Calendar.DAY_OF_MONTH)+"/"+aggiornamentoOrariIS.get(Calendar.MONTH)+"/"+aggiornamentoOrariIS.get(Calendar.YEAR));
+			  String str=new String(getString(R.string.orariAggiornatiAl)+aggiornamentoOrariIS.get(Calendar.DAY_OF_MONTH)+"/"+aggiornamentoOrariIS.get(Calendar.MONTH)+"/"+aggiornamentoOrariIS.get(Calendar.YEAR));
 			  Log.d("ORARI", str);
 			  Toast.makeText(getApplicationContext(), str, Toast.LENGTH_LONG);
 
@@ -382,8 +383,8 @@ public class OrariProcida2011Activity extends Activity {
 			aggiornamentoOrariWeb.set(Calendar.DAY_OF_MONTH, Integer.parseInt(st0.nextToken()));
 			aggiornamentoOrariWeb.set(Calendar.MONTH, Integer.parseInt(st0.nextToken()));
 			aggiornamentoOrariWeb.set(Calendar.YEAR, Integer.parseInt(st0.nextToken()));
-		    String str=new String("Orari Web aggiornati al "+aggiornamentoOrariWeb.get(Calendar.DAY_OF_MONTH)+"/"+aggiornamentoOrariWeb.get(Calendar.MONTH)+"/"+aggiornamentoOrariWeb.get(Calendar.YEAR));
-		    aboutDialog.setMessage("Gli orari sono quelli resi noti dalle compagnie di navigazione alle biglietterie o sui loro siti web. L'autore non e' in alcun modo responsabile di ogni eventuale loro cambiamento. Orari aggiornati al "+aggiornamentoOrariIS.get(Calendar.DAY_OF_MONTH)+"/"+aggiornamentoOrariIS.get(Calendar.MONTH)+"/"+aggiornamentoOrariIS.get(Calendar.YEAR)+". By Porfirio Tramontana 2011. In licenza GPL3. http://code.google.com/p/orari-traghetti-procida-2011/");
+		    String str=new String(getString(R.string.orariAggiornatiAl)+aggiornamentoOrariWeb.get(Calendar.DAY_OF_MONTH)+"/"+aggiornamentoOrariWeb.get(Calendar.MONTH)+"/"+aggiornamentoOrariWeb.get(Calendar.YEAR));
+		    aboutDialog.setMessage(""+getString(R.string.disclaimer));
 			Log.d("ORARI", str);
 			Toast.makeText(getApplicationContext(), str, Toast.LENGTH_LONG);
 
@@ -426,7 +427,7 @@ public class OrariProcida2011Activity extends Activity {
 				aggiornamentoOrariIS=aggiornamentoOrariWeb;
 				//TODO Aggiungere un messaggio che ricordi l'aggiornamento
 		        AlertDialog.Builder builder = new AlertDialog.Builder(this);      
-		        builder.setMessage("Nuovo aggiornamento degli orari al "+rigaAggiornamento+" \n Novita':\n"+rigaNovita)
+		        builder.setMessage(getString(R.string.nuovoAggiornamento)+rigaAggiornamento+" \n "+getString(R.string.novita)+"\n"+rigaNovita)
 		               .setCancelable(false)
 		               .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 		                   public void onClick(DialogInterface dialog, int id) {
@@ -439,7 +440,7 @@ public class OrariProcida2011Activity extends Activity {
 			}
 			r.close();
 			Log.d("ORARI", "Orari web letti");
-			Toast.makeText(getApplicationContext(), "Aggiornamento degli orari letto da Web", Toast.LENGTH_LONG);
+			Toast.makeText(getApplicationContext(), ""+getString(R.string.aggiornamentoDaWeb), Toast.LENGTH_LONG);
 			Log.d("ORARI", "Orari IS aggiornati");
 
 		} catch (IOException e) {
@@ -507,7 +508,7 @@ public class OrariProcida2011Activity extends Activity {
 		    	
 				aggiornamentoOrariIS=Calendar.getInstance(TimeZone.getDefault());		
 			    aggiornamentoOrariIS.set(2011, 11, 1); //Orari aggiornato all'1/11/2011
-			    aboutDialog.setMessage("Gli orari sono quelli resi noti dalle compagnie di navigazione alle biglietterie o sui loro siti web. L'autore non e' in alcun modo responsabile di ogni eventuale loro cambiamento. Orari aggiornati al "+aggiornamentoOrariIS.get(Calendar.DAY_OF_MONTH)+"/"+aggiornamentoOrariIS.get(Calendar.MONTH)+"/"+aggiornamentoOrariIS.get(Calendar.YEAR)+". By Porfirio Tramontana 2011. In licenza GPL3. http://code.google.com/p/orari-traghetti-procida-2011/");
+			    aboutDialog.setMessage(""+getString(R.string.disclaimer));
 
 //		    	listMezzi.add(new Mezzo("Prova",0,20,8,25,"Prova","Prova",2,10,2011,6,10,2011,"1234567"));
 //		    	listMezzi.add(new Mezzo("Prova-",0,20,8,25,"Prova","Prova",6,10,2011,7,10,2011,"1234567"));
@@ -680,9 +681,9 @@ public class OrariProcida2011Activity extends Activity {
     	aalvMezzi.clear();
 
 		String naveEspanso=new String(nave);
-		if (nave.equals("Traghetti"))
+		if (nave.equals(getString(R.string.traghetti)))
 			naveEspanso="Traghetto Caremar Procida Lines Gestur Medmar Ippocampo Ippocampo(da Chiaiolella) Ippocampo(a Chiaiolella)"; 
-		if (nave.equals("Aliscafi"))
+		if (nave.equals(getString(R.string.aliscafi)))
 			naveEspanso="Aliscafo Caremar Aliscafo SNAV";
 		if (nave.equals("Ippocampo"))
 			naveEspanso="Ippocampo Ippocampo(da Chiaiolella) Ippocampo(a Chiaiolella)";
@@ -714,9 +715,9 @@ public class OrariProcida2011Activity extends Activity {
     		if ((oraNave.get(Calendar.HOUR_OF_DAY)<c.get(Calendar.HOUR_OF_DAY))||(oraNave.get(Calendar.HOUR_OF_DAY)==c.get(Calendar.HOUR_OF_DAY))&&(oraNave.get(Calendar.MINUTE)<c.get(Calendar.MINUTE)))
     			oraNave.add(Calendar.DAY_OF_MONTH, 1);
 
-    		if (naveEspanso.contains(listMezzi.get(i).nave) || nave.equals("Tutti")){
-    			if ((listMezzi.get(i).portoPartenza.equals((portoPartenza))) || (portoPartenzaEspanso.contains(listMezzi.get(i).portoPartenza)) || (portoPartenza.equals("Tutti"))){
-    				if ((listMezzi.get(i).portoArrivo.equals((portoArrivo))) || (portoArrivoEspanso.contains(listMezzi.get(i).portoArrivo)) || (portoArrivo.equals("Tutti"))){
+    		if (naveEspanso.contains(listMezzi.get(i).nave) || nave.equals(getString(R.string.tutti))){
+    			if ((listMezzi.get(i).portoPartenza.equals((portoPartenza))) || (portoPartenzaEspanso.contains(listMezzi.get(i).portoPartenza)) || (portoPartenza.equals(getString(R.string.tutti)))){
+    				if ((listMezzi.get(i).portoArrivo.equals((portoArrivo))) || (portoArrivoEspanso.contains(listMezzi.get(i).portoArrivo)) || (portoArrivo.equals(getString(R.string.tutti)))){
     					if (listMezzi.get(i).inizioEsclusione.after(oraNave) || listMezzi.get(i).fineEsclusione.before(oraNave))
     						if (listMezzi.get(i).giorniSettimana.contains(String.valueOf(oraNave.get(Calendar.DAY_OF_WEEK))))
 		    					if (oraNave.before(oraLimite))	{
@@ -759,9 +760,9 @@ public class OrariProcida2011Activity extends Activity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnNave.setAdapter(adapter);
         
-        nave="Tutti";
-        portoPartenza="Tutti";
-        portoArrivo="Tutti";
+        nave=getString(R.string.tutti);
+        portoPartenza=getString(R.string.tutti);
+        portoArrivo=getString(R.string.tutti);
         
         spnNave.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -781,8 +782,8 @@ public class OrariProcida2011Activity extends Activity {
         
         //controllo e setto tramite algoritmo di set con gps
         portoPartenza=setPortoPartenza();
-        if (!(portoPartenza.equals("Tutti")))
-        	Toast.makeText(getApplicationContext(), "Secondo me, vuoi partire da "+portoPartenza, Toast.LENGTH_LONG).show();
+        if (!(portoPartenza.equals(getString(R.string.tutti))))
+        	Toast.makeText(getApplicationContext(), getString(R.string.secondoMeVuoiPartireDa)+" "+portoPartenza, Toast.LENGTH_LONG).show();
 
         setSpnPortoPartenza(spnPortoPartenza, adapter2); 
         
@@ -792,7 +793,7 @@ public class OrariProcida2011Activity extends Activity {
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnPortoArrivo.setAdapter(adapter3);
 
-        if (!(portoPartenza.contentEquals("Procida")||portoPartenza.contentEquals("Tutti"))){
+        if (!(portoPartenza.contentEquals("Procida")||portoPartenza.contentEquals(getString(R.string.tutti)))){
         	portoArrivo="Procida";
             setSpnPortoArrivo(spnPortoArrivo, adapter3);
         }
@@ -801,11 +802,11 @@ public class OrariProcida2011Activity extends Activity {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         		portoPartenza=parent.getItemAtPosition(pos).toString();
         		if (portoPartenza.contentEquals("Procida")&&portoArrivo.contentEquals("Procida")){
-        			portoArrivo="Tutti";
+        			portoArrivo=getString(R.string.tutti);
         			setSpnPortoArrivo(spnPortoArrivo, adapter2);
                     setSpnPortoPartenza(spnPortoPartenza, adapter3);
         		}
-        		else if (!(portoPartenza.contentEquals("Procida")||portoPartenza.contentEquals("Tutti"))){
+        		else if (!(portoPartenza.contentEquals("Procida")||portoPartenza.contentEquals(getString(R.string.tutti)))){
         			portoArrivo="Procida";
 	            	setSpnPortoArrivo(spnPortoArrivo, adapter2);
 	            	setSpnPortoPartenza(spnPortoPartenza, adapter3);
@@ -821,11 +822,11 @@ public class OrariProcida2011Activity extends Activity {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         		portoArrivo=parent.getItemAtPosition(pos).toString();
         		if (portoArrivo.contentEquals("Procida")&&portoPartenza.contentEquals("Procida")){
-        			portoPartenza="Tutti";
+        			portoPartenza=getString(R.string.tutti);
         			setSpnPortoPartenza(spnPortoPartenza, adapter2);
                     setSpnPortoArrivo(spnPortoArrivo, adapter3);
         		}
-        		else if (!(portoArrivo.contentEquals("Procida")||portoArrivo.contentEquals("Tutti"))){
+        		else if (!(portoArrivo.contentEquals("Procida")||portoArrivo.contentEquals(getString(R.string.tutti)))){
         			portoPartenza="Procida";
 	            	setSpnPortoPartenza(spnPortoPartenza, adapter2);
 	            	setSpnPortoArrivo(spnPortoArrivo, adapter3);
@@ -868,7 +869,7 @@ public class OrariProcida2011Activity extends Activity {
 			Log.d("ACTIVITY", "Problema con GPS");
 		}
         if (l==null)
-        	return new String("Tutti");
+        	return new String(getString(R.string.tutti));
         //Coordinate angoli Procida
         if ((l.getLatitude()>40.7374)&&(l.getLatitude()<40.7733)&&(l.getLongitude()>13.9897)&&(l.getLongitude()<14.0325))
         	return new String ("Procida");

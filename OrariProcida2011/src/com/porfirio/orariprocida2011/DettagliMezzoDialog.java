@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.os.Bundle;
 
 public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 	private Mezzo mezzo;
@@ -30,6 +31,7 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 //	private TextView txtNomeCompagnia;
 	private TextView txtArrivo;
 	private TextView txtCosto;
+	private Context callingContext;
 	
 	public ArrayAdapter<String> aalvNumeri;
 	public ListView lvNumeri;
@@ -41,6 +43,7 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 
 	public DettagliMezzoDialog(Context context) {
 		super(context);
+		callingContext=context;
 		setContentView(R.layout.dettaglimezzo);
 		txtMezzo = (TextView) findViewById(R.id.txtMezzo);
 		txtPartenza = (TextView) findViewById(R.id.txtPartenza);
@@ -96,14 +99,14 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 	public void fill(ArrayList<Compagnia> listCompagnia) {
 		txtMezzo.setText("    "+mezzo.nave+"    ");
 		String s=new String();
-		s+="Parte alle "+mezzo.oraPartenza.get(Calendar.HOUR_OF_DAY)+":"+mezzo.oraPartenza.get(Calendar.MINUTE);
-		s+=" del "+mezzo.oraPartenza.get(Calendar.DAY_OF_MONTH)+"/"+(mezzo.oraPartenza.get(Calendar.MONTH)+1)+"/"+mezzo.oraPartenza.get(Calendar.YEAR);
-		s+=" da "+mezzo.portoPartenza;
+		s+=callingContext.getString(R.string.parteAlle)+" "+mezzo.oraPartenza.get(Calendar.HOUR_OF_DAY)+":"+mezzo.oraPartenza.get(Calendar.MINUTE);
+		s+=" "+callingContext.getString(R.string.del)+" "+mezzo.oraPartenza.get(Calendar.DAY_OF_MONTH)+"/"+(mezzo.oraPartenza.get(Calendar.MONTH)+1)+"/"+mezzo.oraPartenza.get(Calendar.YEAR);
+		s+=" "+callingContext.getString(R.string.da)+" "+mezzo.portoPartenza;
 		txtPartenza.setText(s);
 		s=new String();
-		s+="Arriva alle "+mezzo.oraArrivo.get(Calendar.HOUR_OF_DAY)+":"+mezzo.oraArrivo.get(Calendar.MINUTE);
-		s+=" del "+mezzo.oraArrivo.get(Calendar.DAY_OF_MONTH)+"/"+(mezzo.oraArrivo.get(Calendar.MONTH)+1)+"/"+mezzo.oraArrivo.get(Calendar.YEAR);		
-		s+=" a "+mezzo.portoArrivo;
+		s+=callingContext.getString(R.string.arrivaAlle)+" "+mezzo.oraArrivo.get(Calendar.HOUR_OF_DAY)+":"+mezzo.oraArrivo.get(Calendar.MINUTE);
+		s+=" "+callingContext.getString(R.string.del)+" "+mezzo.oraArrivo.get(Calendar.DAY_OF_MONTH)+"/"+(mezzo.oraArrivo.get(Calendar.MONTH)+1)+"/"+mezzo.oraArrivo.get(Calendar.YEAR);		
+		s+=" "+callingContext.getString(R.string.a)+" "+mezzo.portoArrivo;
 		txtArrivo.setText(s);
 		
 		//TODO Da COmpletare
@@ -117,13 +120,14 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 //        lvNumeri.setAdapter(aalvNumeri);
 //		
 		s=new String();
-		s+="Costo : "+mezzo.getCostoResidente()+" euro ";
 		if (mezzo.isCircaResidente())
-			s+="circa ";
-		s+="(residente) o "+mezzo.getCostoIntero()+" euro ";
+			s+=callingContext.getString(R.string.circa)+" ";
+		s+=callingContext.getString(R.string.costo)+" "+mezzo.getCostoResidente()+" euro ";		
 		if (mezzo.isCircaIntero())
-			s+="circa ";		
-		s+="(intero)";
+			s+=callingContext.getString(R.string.circa)+" ";
+		s+=callingContext.getString(R.string.residenteO)+" "+mezzo.getCostoIntero()+" euro ";
+		
+		s+=" "+callingContext.getString(R.string.intero);
 		txtCosto.setText(s);
 		
         //trova compagnia c
@@ -135,9 +139,9 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
         
         //Aggiunto Ippocampo
         if (c.nome.contains("Ippocampo")||c.nome.contentEquals("Procida Lines")||mezzo.nave.contains("Aliscafo"))
-        	txtAuto.setText("Trasporta solo passeggeri");
+        	txtAuto.setText(""+callingContext.getString(R.string.trasportaSoloPasseggeri));
         else
-        	txtAuto.setText("Trasporta auto e passeggeri");
+        	txtAuto.setText(""+callingContext.getString(R.string.trasportaAutoPasseggeri));
         
         biglietterieDialog = new BiglietterieDialog(this.getContext());
         biglietterieDialog.fill(c);

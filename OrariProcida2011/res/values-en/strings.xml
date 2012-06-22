@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Uno Procida Residente</string>
+    <string-array name="strMezzi">
+        <item>Any</item>
+        <item>Ferries</item>
+        <item>Hydrofoils</item>
+        <item>Traghetto Caremar</item>
+        <item>Aliscafo Caremar</item>
+        <item>Aliscafo SNAV</item>
+        <item>Procida Lines</item>
+        <item>Gestur</item>
+        <item>Medmar</item>
+        <item>Ippocampo</item>
+    </string-array>
+    <string-array name="strPorti">
+        <item>Any</item>
+        <item>Procida</item>
+        <item>Napoli</item>
+        <item>Pozzuoli</item>
+        <item>Ischia</item>
+        <item>Napoli o Pozzuoli</item>
+        <item>Napoli Beverello</item>
+        <item>Napoli Porta di Massa</item>        
+        <item>Napoli Mergellina</item>        
+		<item>Ischia Porto</item>                
+        <item>Casamicciola</item>
+        <item>Ischia</item>
+        <item>Monte di Procida</item>
+    </string-array>
+        <string name="mezzo">Ship : </string>
+        <string name="portoPartenza">From : </string>
+        <string name="portoArrivo">To : </string>
+        <string name="minusminus">&lt;&lt;</string>
+        <string name="minus">&lt;</string>
+        <string name="plus">&gt;</string>
+        <string name="plusplus">&gt;&gt;</string>
+        <string name="about">Info</string>
+        <string name="esci">Quit</string>
+        <string name="numeriUtili">Call to ticket office</string>
+        <string name="tampone">1234567890123456789012345</string>
+        <string name="labelBackground">labelBackground</string>
+        <string name="back">Back</string>
+        <string name="inserisciFinestra">Size of time window</string>
+        <string name="ok">OK</string>
+        <string name="ventiquattro">24</string>
+        <string name="updateWeb">Update timetable from Web</string>
+        <string name="numeriTaxi">Call for a taxi</string>
+        <string name="noUpdateWeb">Don\'t update timetable from Web</string>
+        <string name="disclaimer">Timetables are originally published by shipping companies. The author is not responsible for timetable variations. By Porfirio Tramontana 2011-2012. License GPL3. </string>
+        <string name="condimeteo">Meteorological conditions:</string>
+        <string name="dalle">From </string>
+        <string name="orariAggiornatiAl">Last timetable update: </string>
+        <string name="nuovoAggiornamento">Timetables updated to </string>
+        <string name="novita">News</string>
+        <string name="aggiornamentoDaWeb">Timetables updated from Web</string>
+        <string name="secondoMeVuoiPartireDa">In my opinion, you want to leave from </string>
+        <string name="da">from  </string>
+        <string name="parteAlle">Leaves at  </string>
+        <string name="del"> of  </string>
+        <string name="arrivaAlle">Arrives at  </string>
+        <string name="costo">Price :  </string>
+        <string name="a">to</string>
+        <string name="circa">(about) </string>
+        <string name="residenteO">(reduced for islanders) or  </string>
+        <string name="intero">(normal)</string>
+        <string name="trasportaSoloPasseggeri">Passengers only ship</string>
+        <string name="trasportaAutoPasseggeri">The ship carries both cars and passengers</string>
+        <string name="calma">Calm</string>
+        <string name="bavaDiVento">Light air</string>
+        <string name="brezzaLeggera">Light breeze</string>
+        <string name="brezzaTesa">Gentle breeze</string>
+        <string name="ventoModerato">Moderate breeze</string>
+        <string name="ventoTeso">Fresh breeze</string>
+        <string name="ventoFresco">Strong breeze</string>
+        <string name="ventoForte">Moderate gale</string>
+        <string name="burrasca">Gale</string>
+        <string name="burrascaForte">Strong gale</string>
+        <string name="tempesta">Storm</string>
+        <string name="fortunale">Violent storm</string>
+        <string name="uragano">Hurricane</string>
+        <string name="pocoProbabile">Risks of late due to bad weather conditions!!!</string>
+        <string name="aRischio">Chance of cancellation due to bad weather conditions!!!</string>
+        <string name="corsaQuasi">Probably cancelled for bad weather conditions !!!</string>
+        <string name="corsaImpossibile">Surely cancelled for bad weather conditions !!!</string>
+        <string name="errore">Error</string>
+        <string name="nord">North</string>
+        <string name="nordOvest">North-West</string>
+        <string name="ovest">West</string>
+        <string name="sudOvest">South-West</string>
+        <string name="sud">South</string>
+        <string name="sudEst">Soth-East</string>
+        <string name="est">East</string>
+        <string name="nordEst">North-East</string>
+        <string name="tutti">Any</string>
+        <string name="traghetti">Ferries</string>
+        <string name="aliscafi">Hydrofoils</string>
+</resources>

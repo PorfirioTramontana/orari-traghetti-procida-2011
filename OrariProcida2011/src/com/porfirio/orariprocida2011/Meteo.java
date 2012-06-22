@@ -2,22 +2,26 @@ package com.porfirio.orariprocida2011;
 
 import java.util.Calendar;
 
+import android.app.Activity;
+
 public class Meteo {
 	private double windBeaufort;
 	private int windDirection;
 	private double windKmh;
 	private String windDirectionString;
+	private Activity callingActivity;
 	
 	public Meteo (double wb,int wd){
 		setWindBeaufort(wb);
 		setWindDirection(wd);
 	}
 	
-	public Meteo(){
+	public Meteo(OrariProcida2011Activity orariProcida2011Activity){
 		windBeaufort=0.0;
 		windDirection=0;
 		windKmh=0.0;
 		windDirectionString="";
+		callingActivity=orariProcida2011Activity;
 	}
 
 	public void setWindBeaufort(double windBeaufort) {
@@ -38,7 +42,7 @@ public class Meteo {
 
 	public String condimeteoString(OrariProcida2011Activity orariProcida2011Activity, Mezzo mezzo) {
 		String result=new String("");
-		Double actualBeaufort=getWindBeaufort();
+		Double callingActivityualBeaufort=getWindBeaufort();
 		Double limitBeaufort=0.0;
 		
 		if (mezzo.nave.equals("Procida Lines") || mezzo.nave.equals("Gestur")|| mezzo.nave.contains("Ippocampo")) 
@@ -71,17 +75,17 @@ public class Meteo {
 		else if (mezzo.portoPartenza.contentEquals("Monte di Procida")||mezzo.portoArrivo.contentEquals("Monte di Procida"))
 			limitBeaufort+=4; //TODO Metto valore standard per il porto di Monte di Procida
 		
-		double extraWind=actualBeaufort-limitBeaufort;
+		double extraWind=callingActivityualBeaufort-limitBeaufort;
 		if (extraWind<=0)
 			result="";
 		else if (extraWind<=1)
-			result=" - Poco probabile rischio Maltempo!!!";
+			result=" - "+callingActivity.getString(R.string.pocoProbabile);
 		else if (extraWind<=2)
-			result=" - A rischio Maltempo!!!";
+			result=" - "+callingActivity.getString(R.string.aRischio);
 		else if (extraWind<=3)
-			result=" - Corsa quasi sicuramente sospesa !!!";
+			result=" - "+callingActivity.getString(R.string.corsaQuasi);
 		else
-			result=" - Corsa impossibile !!!";
+			result=" - "+callingActivity.getString(R.string.corsaImpossibile);
 		return result;
 	
 	}
@@ -108,33 +112,33 @@ public class Meteo {
 		int forza=new Double(windBeaufort).intValue();
 		switch (forza){
 		case 0:
-			return "Calma";
+			return ""+callingActivity.getString(R.string.calma);
 		case 1:
-			return "Bava di vento";
+			return ""+callingActivity.getString(R.string.bavaDiVento);
 		case 2:
-			return "Brezza leggera";
+			return ""+callingActivity.getString(R.string.brezzaLeggera);
 		case 3:
-			return "Brezza tesa";
+			return ""+callingActivity.getString(R.string.brezzaTesa);
 		case 4:
-			return "Vento moderato";
+			return ""+callingActivity.getString(R.string.ventoModerato);
 		case 5:
-			return "Vento teso";
+			return ""+callingActivity.getString(R.string.ventoTeso);
 		case 6:
-			return "Vento fresco";
+			return ""+callingActivity.getString(R.string.ventoFresco);
 		case 7:
-			return "Vento forte";
+			return ""+callingActivity.getString(R.string.ventoForte);
 		case 8:
-			return "Burrasca";
+			return ""+callingActivity.getString(R.string.burrasca);
 		case 9:
-			return "Burrasca forte";
+			return ""+callingActivity.getString(R.string.burrascaForte);
 		case 10:
-			return "Tempesta";
+			return ""+callingActivity.getString(R.string.tempesta);
 		case 11:
-			return "Fortunale";
+			return ""+callingActivity.getString(R.string.fortunale);
 		case 12:
-			return "Uragano";
+			return ""+callingActivity.getString(R.string.uragano);
 		}
-		return "Errore";
+		return ""+callingActivity.getString(R.string.errore);
 		}
 		
 }
