@@ -47,7 +47,7 @@ public class Meteo {
 		
 		if (mezzo.nave.equals("Procida Lines") || mezzo.nave.equals("Gestur")|| mezzo.nave.contains("Ippocampo")) 
 			limitBeaufort-=1; //penalizzazione per mezzi piccoli
-		else if (mezzo.nave.equals("Aliscafo SNAV"))
+		else if (mezzo.nave.equals(callingActivity.getString(R.string.aliscafo)+" SNAV"))
 			limitBeaufort-=0.5; //penalizzazione per compagnia privata
 		if (mezzo.oraPartenza.get(Calendar.HOUR_OF_DAY)==7 && mezzo.oraPartenza.get(Calendar.MINUTE)==40)
 			limitBeaufort+=1; // incremento per corsa fondamentale

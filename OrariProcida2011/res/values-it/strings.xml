@@ -95,4 +95,6 @@
         <string name="tutti">Tutti</string>
         <string name="traghetti">Traghetti</string>
         <string name="aliscafi">Aliscafi</string>
+        <string name="traghetto">Traghetto</string>
+        <string name="aliscafo">Aliscafo</string>
 </resources>

@@ -5,9 +5,9 @@
         <item>Any</item>
         <item>Ferries</item>
         <item>Hydrofoils</item>
-        <item>Traghetto Caremar</item>
-        <item>Aliscafo Caremar</item>
-        <item>Aliscafo SNAV</item>
+        <item>Ferry of Caremar</item>
+        <item>Hydrofoil of Caremar</item>
+        <item>Hydrofoil of SNAV</item>
         <item>Procida Lines</item>
         <item>Gestur</item>
         <item>Medmar</item>
@@ -95,4 +95,6 @@
         <string name="tutti">Any</string>
         <string name="traghetti">Ferries</string>
         <string name="aliscafi">Hydrofoils</string>
+        <string name="traghetto">Ferry of</string>
+        <string name="aliscafo">Hydrofoil of</string>        
 </resources>
