@@ -3,11 +3,11 @@
     <string name="app_name">Uno Procida Residente</string>
     <string-array name="strMezzi">
         <item>Any</item>
-        <item>Ferries</item>
-        <item>Hydrofoils</item>
-        <item>Ferry of Caremar</item>
-        <item>Hydrofoil of Caremar</item>
-        <item>Hydrofoil of SNAV</item>
+        <item>Ferries (Traghetti)</item>
+        <item>Hydrofoils (Aliscafi)</item>
+        <item>Traghetto Caremar</item>
+        <item>Aliscafo Caremar</item>
+        <item>Aliscafo SNAV</item>
         <item>Procida Lines</item>
         <item>Gestur</item>
         <item>Medmar</item>
@@ -49,10 +49,10 @@
         <string name="noUpdateWeb">Don\'t update timetable from Web</string>
         <string name="disclaimer">Timetables are originally published by shipping companies. The author is not responsible for timetable variations. By Porfirio Tramontana 2011-2012. License GPL3. </string>
         <string name="condimeteo">Meteorological conditions:</string>
-        <string name="dalle">From </string>
+        <string name="dalle">As of </string>
         <string name="orariAggiornatiAl">Last timetable update: </string>
         <string name="nuovoAggiornamento">Timetables updated to </string>
-        <string name="novita">News</string>
+        <string name="novita">Recent news : </string>
         <string name="aggiornamentoDaWeb">Timetables updated from Web</string>
         <string name="secondoMeVuoiPartireDa">In my opinion, you want to leave from </string>
         <string name="da">from  </string>
@@ -95,6 +95,5 @@
         <string name="tutti">Any</string>
         <string name="traghetti">Ferries</string>
         <string name="aliscafi">Hydrofoils</string>
-        <string name="traghetto">Ferry of</string>
-        <string name="aliscafo">Hydrofoil of</string>        
 </resources>
+
