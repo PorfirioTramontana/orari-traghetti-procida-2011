@@ -42,7 +42,7 @@ public class Meteo {
 
 	public String condimeteoString(OrariProcida2011Activity orariProcida2011Activity, Mezzo mezzo) {
 		String result=new String("");
-		Double callingActivityualBeaufort=getWindBeaufort();
+		Double actualBeaufort=getWindBeaufort();
 		Double limitBeaufort=0.0;
 		
 		if (mezzo.nave.equals("Procida Lines") || mezzo.nave.equals("Gestur")|| mezzo.nave.contains("Ippocampo")) 
@@ -75,7 +75,7 @@ public class Meteo {
 		else if (mezzo.portoPartenza.contentEquals("Monte di Procida")||mezzo.portoArrivo.contentEquals("Monte di Procida"))
 			limitBeaufort+=4; //TODO Metto valore standard per il porto di Monte di Procida
 		
-		double extraWind=callingActivityualBeaufort-limitBeaufort;
+		double extraWind=actualBeaufort-limitBeaufort;
 		if (extraWind<=0)
 			result="";
 		else if (extraWind<=1)

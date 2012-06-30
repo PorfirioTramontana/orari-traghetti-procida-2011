@@ -36,7 +36,7 @@
         <string name="plus">&gt;</string>
         <string name="plusplus">&gt;&gt;</string>
         <string name="about">Info</string>
-        <string name="esci">Esci</string>
+        <string name="esci">Torna agli orari</string>
         <string name="numeriUtili">Chiama la biglietteria</string>
         <string name="tampone">1234567890123456789012345</string>
         <string name="labelBackground">labelBackground</string>
@@ -97,4 +97,6 @@
         <string name="aliscafi">Aliscafi</string>
         <string name="traghetto">Traghetto</string>
         <string name="aliscafo">Aliscafo</string>
+        <string name="costoResidenteNonNoto">Non conosco il prezzo del biglietto residente</string>
+        <string name="costoInteroNonNoto">Non conosco il prezzo del biglietto intero</string>
 </resources>

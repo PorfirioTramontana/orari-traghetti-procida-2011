@@ -120,14 +120,21 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 //        lvNumeri.setAdapter(aalvNumeri);
 //		
 		s=new String();
-		if (mezzo.isCircaResidente())
-			s+=callingContext.getString(R.string.circa)+" ";
-		s+=callingContext.getString(R.string.costo)+" "+mezzo.getCostoResidente()+" euro ";		
-		if (mezzo.isCircaIntero())
-			s+=callingContext.getString(R.string.circa)+" ";
-		s+=callingContext.getString(R.string.residenteO)+" "+mezzo.getCostoIntero()+" euro ";
-		
-		s+=" "+callingContext.getString(R.string.intero);
+		if (mezzo.getCostoResidente()>0.0){
+			if (mezzo.isCircaResidente())
+				s+=callingContext.getString(R.string.circa)+" ";
+			s+=callingContext.getString(R.string.costo)+" "+mezzo.getCostoResidente()+" euro ";
+		}
+		else 
+			s+=callingContext.getString(R.string.costoResidenteNonNoto)+" ";
+		if (mezzo.getCostoIntero()>0.0){
+			if (mezzo.isCircaIntero())
+				s+=callingContext.getString(R.string.circa)+" ";
+			s+=callingContext.getString(R.string.residenteO)+" "+mezzo.getCostoIntero()+" euro ";		
+			s+=" "+callingContext.getString(R.string.intero);
+		}
+		else 
+			s+=callingContext.getString(R.string.costoInteroNonNoto)+" ";		
 		txtCosto.setText(s);
 		
         //trova compagnia c

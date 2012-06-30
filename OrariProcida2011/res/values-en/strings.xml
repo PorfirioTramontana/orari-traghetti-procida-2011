@@ -36,7 +36,7 @@
         <string name="plus">&gt;</string>
         <string name="plusplus">&gt;&gt;</string>
         <string name="about">Info</string>
-        <string name="esci">Quit</string>
+        <string name="esci">Back to timetable</string>
         <string name="numeriUtili">Call to ticket office</string>
         <string name="tampone">1234567890123456789012345</string>
         <string name="labelBackground">labelBackground</string>
@@ -61,7 +61,7 @@
         <string name="arrivaAlle">Arrives at  </string>
         <string name="costo">Price :  </string>
         <string name="a">to</string>
-        <string name="circa">(about) </string>
+        <string name="circa">(approximately) </string>
         <string name="residenteO">(reduced for islanders) or  </string>
         <string name="intero">(normal)</string>
         <string name="trasportaSoloPasseggeri">Passengers only ship</string>
@@ -79,7 +79,7 @@
         <string name="tempesta">Storm</string>
         <string name="fortunale">Violent storm</string>
         <string name="uragano">Hurricane</string>
-        <string name="pocoProbabile">Risks of late due to bad weather conditions!!!</string>
+        <string name="pocoProbabile">Risks of delay due to bad weather conditions!!!</string>
         <string name="aRischio">Chance of cancellation due to bad weather conditions!!!</string>
         <string name="corsaQuasi">Probably cancelled for bad weather conditions !!!</string>
         <string name="corsaImpossibile">Surely cancelled for bad weather conditions !!!</string>
@@ -95,5 +95,9 @@
         <string name="tutti">Any</string>
         <string name="traghetti">Ferries</string>
         <string name="aliscafi">Hydrofoils</string>
+        <string name="traghetto">Ferry</string>
+        <string name="aliscafo">Hydrofoil</string>
+        <string name="costoResidenteNonNoto">I don\'t know the price of the reduced ticket for islanders</string>
+        <string name="costoInteroNonNoto">I don\'t know the price of the full ticket</string>        
 </resources>
 
