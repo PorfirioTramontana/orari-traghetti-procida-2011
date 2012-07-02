@@ -36,7 +36,8 @@
         <string name="plus">&gt;</string>
         <string name="plusplus">&gt;&gt;</string>
         <string name="about">Info</string>
-        <string name="esci">Torna agli orari</string>
+        <string name="esci">Esci</string>
+        <string name="backTimetable">Torna agli orari</string>
         <string name="numeriUtili">Chiama la biglietteria</string>
         <string name="tampone">1234567890123456789012345</string>
         <string name="labelBackground">labelBackground</string>

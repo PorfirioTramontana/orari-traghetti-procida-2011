@@ -41,21 +41,21 @@ public class MeteoXMLHandler extends DefaultHandler{
 
 	    private void setMeteo(String attr) {	    	
 	    	if (attr.contains(" N "))
-				{callingActivity.meteo.setWindDirection(0);callingActivity.meteo.setWindDirectionString(""+callingActivity.getString(R.string.nord));}
+				{callingActivity.meteo.setWindDirection(0);callingActivity.meteo.setWindDirectionString("Nord");}
 	    	else if (attr.contains(" NE "))
-	    		{callingActivity.meteo.setWindDirection(45);callingActivity.meteo.setWindDirectionString(""+callingActivity.getString(R.string.nordEst));}
+	    		{callingActivity.meteo.setWindDirection(45);callingActivity.meteo.setWindDirectionString("Nord-Est");}
 	    	else if (attr.contains(" E "))
-	    		{callingActivity.meteo.setWindDirection(90);callingActivity.meteo.setWindDirectionString(""+callingActivity.getString(R.string.est));}
+	    		{callingActivity.meteo.setWindDirection(90);callingActivity.meteo.setWindDirectionString("Est");}
 	    	else if (attr.contains(" SE "))
-	    		{callingActivity.meteo.setWindDirection(135);callingActivity.meteo.setWindDirectionString(""+callingActivity.getString(R.string.sudEst));}
+	    		{callingActivity.meteo.setWindDirection(135);callingActivity.meteo.setWindDirectionString("Sud-Est");}
 	    	else if (attr.contains(" S "))
-	    		{callingActivity.meteo.setWindDirection(180);callingActivity.meteo.setWindDirectionString(""+callingActivity.getString(R.string.sud));}
+	    		{callingActivity.meteo.setWindDirection(180);callingActivity.meteo.setWindDirectionString("Sud");}
 	    	else if (attr.contains(" SW "))
-	    		{callingActivity.meteo.setWindDirection(225);callingActivity.meteo.setWindDirectionString(""+callingActivity.getString(R.string.sudOvest));}
+	    		{callingActivity.meteo.setWindDirection(225);callingActivity.meteo.setWindDirectionString("Sud-Ovest");}
 	    	else if (attr.contains(" W "))
-	    		{callingActivity.meteo.setWindDirection(270);callingActivity.meteo.setWindDirectionString(""+callingActivity.getString(R.string.ovest));}
+	    		{callingActivity.meteo.setWindDirection(270);callingActivity.meteo.setWindDirectionString("Ovest");}
 	    	else if (attr.contains(" NW "))
-	    		{callingActivity.meteo.setWindDirection(315);callingActivity.meteo.setWindDirectionString(""+callingActivity.getString(R.string.nordOvest));}
+	    		{callingActivity.meteo.setWindDirection(315);callingActivity.meteo.setWindDirectionString("Nord-Ovest");}
 			
 	    	Log.d("ORARI","Vento da "+callingActivity.meteo.getWindDirection());	    	
 	    	

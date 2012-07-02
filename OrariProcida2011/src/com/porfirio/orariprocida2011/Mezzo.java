@@ -19,10 +19,8 @@ public class Mezzo {
 	private double costoResidente;
 	private boolean circaIntero=false;
 	private boolean circaResidente=false;
-	private OrariProcida2011Activity callingActivity;
 	
-	public Mezzo(String n,int op, int mp, int oa, int ma, String pp, String pa,int gie,int mie,int aie,int gfe,int mfe,int afe,String gs,OrariProcida2011Activity act){
-		callingActivity=act;
+	public Mezzo(String n,int op, int mp, int oa, int ma, String pp, String pa,int gie,int mie,int aie,int gfe,int mfe,int afe,String gs,OrariProcida2011Activity callingActivity){
 		nave=n;	
 		oraPartenza=Calendar.getInstance();
 		oraPartenza.set(Calendar.HOUR_OF_DAY, op);
@@ -57,8 +55,7 @@ public class Mezzo {
 	
 	}
 
-	public Mezzo(String n,String op, String mp, String oa, String ma, String pp, String pa,String gie,String mie,String aie,String gfe,String mfe,String afe,String gs,OrariProcida2011Activity act){
-		callingActivity=act;
+	public Mezzo(String n,String op, String mp, String oa, String ma, String pp, String pa,String gie,String mie,String aie,String gfe,String mfe,String afe,String gs,OrariProcida2011Activity callingActivity){
 		nave=n;	
 		oraPartenza=Calendar.getInstance();
 		oraPartenza.set(Calendar.HOUR_OF_DAY, Integer.parseInt(op));
@@ -93,7 +90,7 @@ public class Mezzo {
 	}
 	private void calcolaCosto(String n,String p) {
 		//TODO Mettere costi precisi
-		if (n.contentEquals(""+callingActivity.getString(R.string.traghetto)+" Caremar") && p.contentEquals("Pozzuoli")){
+		if (n.contentEquals("Traghetto Caremar") && p.contentEquals("Pozzuoli")){
 			costoIntero=9.5;
 			costoResidente=2.30;
 			return;
@@ -115,35 +112,35 @@ public class Mezzo {
 			setCircaIntero(true);
 			return;
 		}
-		if (n.contentEquals(""+callingActivity.getString(R.string.traghetto)+" Caremar") && p.contentEquals("Napoli Porta di Massa")){
+		if (n.contentEquals("Traghetto Caremar") && p.contentEquals("Napoli Porta di Massa")){
 			costoIntero=11;
 			costoResidente=3;
 			setCircaIntero(true);
 			return;
 		}
-		if (n.contentEquals(""+callingActivity.getString(R.string.aliscafo)+" Caremar") && p.contentEquals("Napoli Beverello")){
+		if (n.contentEquals("Aliscafo Caremar") && p.contentEquals("Napoli Beverello")){
 			costoIntero=13;
 			costoResidente=4.6;
 			return;
 		}		
-		if (n.contentEquals(""+callingActivity.getString(R.string.aliscafo)+" SNAV") && p.contentEquals("Napoli Beverello")){
+		if (n.contentEquals("Aliscafo SNAV") && p.contentEquals("Napoli Beverello")){
 			costoIntero=13;
 			costoResidente=4.6;
 			return;
 		}
-		if (n.contentEquals(""+callingActivity.getString(R.string.traghetto)+" Caremar") && p.contentEquals("Ischia Porto")){
+		if (n.contentEquals("Traghetto Caremar") && p.contentEquals("Ischia Porto")){
 			costoIntero=6;
 			costoResidente=1.90;
 			setCircaIntero(true);
 			return;
 		}
-		if (n.contentEquals(""+callingActivity.getString(R.string.aliscafo)+" Caremar") && p.contentEquals("Ischia Porto")){
+		if (n.contentEquals("Aliscafo Caremar") && p.contentEquals("Ischia Porto")){
 			costoIntero=8;
 			costoResidente=2.4;
 			setCircaIntero(true);
 			return;
 		}
-		if (n.contentEquals(""+callingActivity.getString(R.string.aliscafo)+" SNAV") && p.contentEquals("Casamicciola")){
+		if (n.contentEquals("Aliscafo SNAV") && p.contentEquals("Casamicciola")){
 			costoIntero=8;
 			costoResidente=2.4;
 			setCircaIntero(true);
@@ -156,7 +153,7 @@ public class Mezzo {
 			setCircaResidente(true);
 			return;
 		}
-		if (n.contains("Ippocampo") ){ //TODO Da verificare
+		if (n.contentEquals("Ippocampo") ){ //TODO Da verificare
 			costoIntero=8;
 			costoResidente=2.00;
 			setCircaIntero(true);
