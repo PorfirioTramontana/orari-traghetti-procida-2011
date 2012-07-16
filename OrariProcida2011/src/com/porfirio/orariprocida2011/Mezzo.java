@@ -114,18 +114,20 @@ public class Mezzo {
 		}
 		if (n.contentEquals("Traghetto Caremar") && p.contentEquals("Napoli Porta di Massa")){
 			costoIntero=11;
-			costoResidente=3;
+			costoResidente=3.10;
 			setCircaIntero(true);
 			return;
 		}
 		if (n.contentEquals("Aliscafo Caremar") && p.contentEquals("Napoli Beverello")){
 			costoIntero=13;
-			costoResidente=4.6;
+			costoResidente=4.70;
+			setCircaIntero(true);
 			return;
 		}		
 		if (n.contentEquals("Aliscafo SNAV") && p.contentEquals("Napoli Beverello")){
 			costoIntero=13;
-			costoResidente=4.6;
+			costoResidente=4.70;
+			setCircaIntero(true);
 			return;
 		}
 		if (n.contentEquals("Traghetto Caremar") && p.contentEquals("Ischia Porto")){
@@ -160,7 +162,13 @@ public class Mezzo {
 			setCircaResidente(true);
 			return;
 		}
-
+		if (n.contentEquals("Aladino") ){ //TODO Da verificare
+			costoIntero=0.00;
+			costoResidente=0.00;
+			setCircaIntero(true);
+			setCircaResidente(true);
+			return;
+		}
 		
 	}
 

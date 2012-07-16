@@ -45,7 +45,8 @@ public class Meteo {
 		Double actualBeaufort=getWindBeaufort();
 		Double limitBeaufort=0.0;
 		
-		if (mezzo.nave.equals("Procida Lines") || mezzo.nave.equals("Gestur")|| mezzo.nave.contains("Ippocampo")) 
+		//Aggiunto Aladino
+		if (mezzo.nave.equals("Procida Lines") || mezzo.nave.equals("Gestur")|| mezzo.nave.contains("Ippocampo")||mezzo.nave.contains("Aladino")) 
 			limitBeaufort-=1; //penalizzazione per mezzi piccoli
 		else if (mezzo.nave.equals(callingActivity.getString(R.string.aliscafo)+" SNAV"))
 			limitBeaufort-=0.5; //penalizzazione per compagnia privata

@@ -529,7 +529,11 @@ public class OrariProcida2011Activity extends Activity {
     	c.addTelefono("Procida", "0818967764");
     	c.addTelefono("Monte di Procida", "3397585125");
     	listCompagnia.add(c);
-    	
+
+    	c=new Compagnia("Aladino");
+    	c.addTelefono("Procida", ""); //TODO Trovare numero di telefono
+    	listCompagnia.add(c);
+
     	try {
 			FileInputStream fstream = new FileInputStream("/data/data/com.porfirio.orariprocida2011/files/orari.csv");			
     		riempiMezzidaInternalStorage(fstream);
@@ -727,7 +731,7 @@ public class OrariProcida2011Activity extends Activity {
 
 		String naveEspanso=new String(nave);
 		if (nave.contains(getString(R.string.traghetti)))
-			naveEspanso="Traghetto Caremar Procida Lines Gestur Medmar Ippocampo Ippocampo(da Chiaiolella) Ippocampo(a Chiaiolella)"; 
+			naveEspanso="Traghetto Caremar Procida Lines Gestur Medmar Ippocampo Ippocampo(da Chiaiolella) Ippocampo(a Chiaiolella) Aladino"; 
 		if (nave.contains(getString(R.string.aliscafi)))
 			naveEspanso="Aliscafo Caremar Aliscafo SNAV";
 		if (nave.equals("Ippocampo"))
