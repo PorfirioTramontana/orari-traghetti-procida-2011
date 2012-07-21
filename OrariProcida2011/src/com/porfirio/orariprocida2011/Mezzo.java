@@ -91,12 +91,13 @@ public class Mezzo {
 	private void calcolaCosto(String n,String p) {
 		//TODO Mettere costi precisi
 		if (n.contentEquals("Traghetto Caremar") && p.contentEquals("Pozzuoli")){
-			costoIntero=9.5;
-			costoResidente=2.30;
+			costoIntero=10.0;
+			setCircaIntero(true);
+			costoResidente=2.40;
 			return;
 		}
 		if (n.contentEquals("Medmar") && p.contentEquals("Pozzuoli")){
-			costoIntero=9.50;
+			costoIntero=10.0;
 			costoResidente=2.30;
 			setCircaIntero(true);
 			return;
@@ -104,6 +105,8 @@ public class Mezzo {
 		if (n.contentEquals("Procida Lines") && p.contentEquals("Pozzuoli")){
 			costoIntero=5;
 			costoResidente=2.5;
+			setCircaIntero(true);
+			setCircaResidente(true);
 			return;
 		}
 		if (n.contentEquals("Gestur") && p.contentEquals("Pozzuoli")){
@@ -116,36 +119,42 @@ public class Mezzo {
 			costoIntero=11;
 			costoResidente=3.10;
 			setCircaIntero(true);
+			setCircaResidente(true);
 			return;
 		}
 		if (n.contentEquals("Aliscafo Caremar") && p.contentEquals("Napoli Beverello")){
 			costoIntero=13;
 			costoResidente=4.70;
 			setCircaIntero(true);
+			setCircaResidente(true);
 			return;
 		}		
 		if (n.contentEquals("Aliscafo SNAV") && p.contentEquals("Napoli Beverello")){
-			costoIntero=13;
-			costoResidente=4.70;
+			costoIntero=15;
+			costoResidente=5.0;
 			setCircaIntero(true);
+			setCircaResidente(true);
 			return;
 		}
 		if (n.contentEquals("Traghetto Caremar") && p.contentEquals("Ischia Porto")){
 			costoIntero=6;
 			costoResidente=1.90;
 			setCircaIntero(true);
+			setCircaResidente(true);
 			return;
 		}
 		if (n.contentEquals("Aliscafo Caremar") && p.contentEquals("Ischia Porto")){
 			costoIntero=8;
 			costoResidente=2.4;
 			setCircaIntero(true);
+			setCircaResidente(true);
 			return;
 		}
 		if (n.contentEquals("Aliscafo SNAV") && p.contentEquals("Casamicciola")){
 			costoIntero=8;
 			costoResidente=2.4;
 			setCircaIntero(true);
+			setCircaResidente(true);
 			return;
 		}
 		if (n.contentEquals("Medmar") && p.contentEquals("Ischia Porto")){

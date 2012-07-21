@@ -1,6 +1,7 @@
 package com.porfirio.orariprocida2011;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import android.app.Activity;
 
@@ -45,6 +46,9 @@ public class Meteo {
 		Double actualBeaufort=getWindBeaufort();
 		Double limitBeaufort=0.0;
 		
+		//Penalizzazione per le brezze estive
+		if ((Calendar.getInstance(TimeZone.getDefault()).get(Calendar.MONTH)>=5)&&(Calendar.getInstance(TimeZone.getDefault()).get(Calendar.MONTH)<=7))
+			limitBeaufort+=2;
 		//Aggiunto Aladino
 		if (mezzo.nave.equals("Procida Lines") || mezzo.nave.equals("Gestur")|| mezzo.nave.contains("Ippocampo")||mezzo.nave.contains("Aladino")) 
 			limitBeaufort-=1; //penalizzazione per mezzi piccoli
