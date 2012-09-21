@@ -90,7 +90,7 @@ public class MeteoXMLHandler extends DefaultHandler{
 	    	else if (wkmh>=103 && wkmh<118)
 	    		callingActivity.meteo.setWindBeaufort(11+(wkmh-110)/(117-103));
 	    	else if (wkmh>=118)
-	    		callingActivity.meteo.setWindBeaufort(12);
+	    		callingActivity.meteo.setWindBeaufort(12.0);
 	    	Log.d("ORARI","Vento forza "+callingActivity.meteo.getWindBeaufort());
 		}
 

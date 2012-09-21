@@ -7,12 +7,15 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -25,6 +28,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.simple.*;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -302,38 +310,83 @@ public class OrariProcida2011Activity extends Activity {
 
     }
 
+  	  private static String readAll(Reader rd) throws IOException {
+    	    StringBuilder sb = new StringBuilder();
+    	    int cp;
+    	    while ((cp = rd.read()) != -1) {
+    	      sb.append((char) cp);
+    	    }
+    	    return sb.toString();
+    	  }
+
+   	  public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+    	    InputStream is = new URL(url).openStream();
+    	    try {
+    	      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+    	      String jsonText = readAll(rd);
+    	      JSONObject json = new JSONObject(jsonText);
+    	      return json;
+    	    } finally {
+    	      is.close();
+    	    }
+    	  }
+    
+    
 	private void leggiMeteo() {
 		/* Create a URL we want to load some xml-data from. */
 		URL url;
 		if (isOnline())
 		{
 			try {
-				url = new URL("http://www.google.com/ig/api?weather=Procida");
-			
-	
-				/* Get a SAXParser from the SAXPArserFactory. */
-				SAXParserFactory spf = SAXParserFactory.newInstance();
-				SAXParser sp = spf.newSAXParser();
-		
-				/* Get the XMLReader of the SAXParser we created. */
-				XMLReader xr = sp.getXMLReader();
-				/* Create a new ContentHandler and apply it to the XML-Reader*/
-				MeteoXMLHandler meteoXMLHandler = new MeteoXMLHandler(this);
-				xr.setContentHandler(meteoXMLHandler);
-		
-				/* Parse the xml-data from our URL. */
-				xr.parse(new InputSource(url.openStream()));
-				/* Parsing has finished. */ 
+				JSONObject jsonObject=null;
+				try {
+					jsonObject = readJsonFromUrl("http://api.wunderground.com/api/7a2bedc35ab44ecb/geolookup/conditions/q/IA/Procida.json");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					Log.d("ORARI", "dati meteo non caricati da web");
+				}				
+//Grazie alla formattazione ottenuta con http://jsonformatter.curiousconcept.com/		 				
+					meteo.setWindKmh((Double) jsonObject.getJSONObject("current_observation").get("wind_kph"));
+					Integer windDir=(Integer) jsonObject.getJSONObject("current_observation").get("wind_degrees");					
+					meteo.setWindDirection((int) (45*(Math.round(windDir/45.0))));
+					meteo.setWindDirectionString((String) jsonObject.getJSONObject("current_observation").get("wind_dir"));
+					meteo.setWindBeaufort((Double) jsonObject.getJSONObject("current_observation").get("wind_kph"));
+					System.out.println("");
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					Log.d("ORARI", "dati meteo non caricati da web");
+				}
 				
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			} catch (ParserConfigurationException e) {
-				e.printStackTrace();
-			} catch (SAXException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+				
+// COMMENTATO IL VECCHIO CODICE CHE LEGGEVA DATI METEO DA GOOGLE
+//			try {
+//				url = new URL("http://www.google.com/ig/api?weather=Procida");
+//			
+//	
+//				/* Get a SAXParser from the SAXPArserFactory. */
+//				SAXParserFactory spf = SAXParserFactory.newInstance();
+//				SAXParser sp = spf.newSAXParser();
+//		
+//				/* Get the XMLReader of the SAXParser we created. */
+//				XMLReader xr = sp.getXMLReader();
+//				/* Create a new ContentHandler and apply it to the XML-Reader*/
+//				MeteoXMLHandler meteoXMLHandler = new MeteoXMLHandler(this);
+//				xr.setContentHandler(meteoXMLHandler);
+//		
+//				/* Parse the xml-data from our URL. */
+//				xr.parse(new InputSource(url.openStream()));
+//				/* Parsing has finished. */ 
+//				
+//			} catch (MalformedURLException e) {
+//				e.printStackTrace();
+//			} catch (ParserConfigurationException e) {
+//				e.printStackTrace();
+//			} catch (SAXException e) {
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+// FINE VECCHIO CODICE
 		}
 		else
 		{
