@@ -100,6 +100,8 @@
         <string name="traghetto">Ferry</string>
         <string name="aliscafo">Hydrofoil</string>
         <string name="costoResidenteNonNoto">I don\'t know the price of the reduced ticket for islanders</string>
-        <string name="costoInteroNonNoto">I don\'t know the price of the full ticket</string>        
+        <string name="costoInteroNonNoto">I don\'t know the price of the full ticket</string>
+        <string name="updated">Refreshed at </string>
+        <string name="ore">hour </string>        
 </resources>
 

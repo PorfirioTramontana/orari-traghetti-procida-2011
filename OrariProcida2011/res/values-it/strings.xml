@@ -101,4 +101,6 @@
         <string name="aliscafo">Aliscafo</string>
         <string name="costoResidenteNonNoto">Non conosco il prezzo del biglietto residente</string>
         <string name="costoInteroNonNoto">Non conosco il prezzo del biglietto intero</string>
+        <string name="updated">Aggiornato al  </string>
+        <string name="ore">ore </string>                
 </resources>
