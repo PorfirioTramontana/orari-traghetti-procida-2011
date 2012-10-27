@@ -143,6 +143,8 @@ public class OrariProcida2011Activity extends Activity {
         		return true;
         case R.id.meteo:
         	leggiMeteo(true);
+            meteoDialog.setMessage(getString(R.string.condimeteo)+meteo.getWindBeaufortString()+" ("+new Double(meteo.getWindKmh()).intValue()+" km/h) "+getString(R.string.da)+" "+meteo.getWindDirectionString()+"\n"+getString(R.string.updated)+" "+aggiornamentoMeteo.get(Calendar.DAY_OF_MONTH)+"/"+(1+aggiornamentoMeteo.get(Calendar.MONTH))+"/"+aggiornamentoMeteo.get(Calendar.YEAR)+" "+getString(R.string.ore)+" "+aggiornamentoMeteo.get(Calendar.HOUR_OF_DAY)+":"+aggiornamentoMeteo.get(Calendar.MINUTE));
+            this.aggiornaLista();
         	showDialog(METEO_DIALOG_ID);
         	return true;
         case R.id.esci:

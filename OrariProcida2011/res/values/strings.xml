@@ -101,7 +101,8 @@
         <string name="aliscafo">Hydrofoil</string>
         <string name="costoResidenteNonNoto">I don\'t know the price of the reduced ticket for islanders</string>
         <string name="costoInteroNonNoto">I don\'t know the price of the full ticket</string>
-        <string name="updated">Refreshed at </string>
+        <string name="updated">Meteo info refreshed at </string>
+        <string name="meteo">Refresh meteo data</string>        
         <string name="ore">hour </string>        
 </resources>
 
