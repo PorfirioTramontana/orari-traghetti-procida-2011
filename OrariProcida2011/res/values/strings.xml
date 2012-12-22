@@ -49,7 +49,7 @@
         <string name="updateWeb">Update timetable from Web</string>
         <string name="numeriTaxi">Call for a taxi</string>
         <string name="noUpdateWeb">Don\'t update timetable from Web</string>
-        <string name="disclaimer">Timetables are originally published by shipping companies. The author is not responsible for timetable variations. By Porfirio Tramontana 2011-2012. License GPL3. </string>
+        <string name="disclaimer">Timetables are originally published by navigation companies. The author is not responsible for timetable variations. </string>
         <string name="condimeteo">Meteorological conditions:</string>
         <string name="dalle">As of </string>
         <string name="orariAggiornatiAl">Last timetable update: </string>
@@ -103,6 +103,7 @@
         <string name="costoInteroNonNoto">I don\'t know the price of the full ticket</string>
         <string name="updated">Meteo info refreshed at </string>
         <string name="meteo">Refresh meteo data</string>        
-        <string name="ore">hour </string>        
+        <string name="ore">hour </string>
+		<string name="credits">By Porfirio Tramontana 2011,2012. GPL3 license. Credits: Prof.Tramontana for the metheorological algorithm, Maria for the application name, for the icon, for the international publicity and for the usability discussions, Angela for english version support, Gilda for continous criticism, Google and Weather Underground for meteo data, the navigation companies for the continuous timetable changes and the procidan voyagers for the broadcasting of timetable changes information.</string>        
 </resources>
 

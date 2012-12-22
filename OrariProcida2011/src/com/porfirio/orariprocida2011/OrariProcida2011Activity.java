@@ -195,7 +195,7 @@ public class OrariProcida2011Activity extends Activity {
         BestProvider = myManager.getBestProvider(criteria, true);        
         
         AlertDialog.Builder builder = new AlertDialog.Builder(this);      
-        builder.setMessage(getString(R.string.disclaimer))
+        builder.setMessage(getString(R.string.disclaimer)+"\n"+getString(R.string.credits))
                .setCancelable(false)
                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
@@ -521,8 +521,8 @@ public class OrariProcida2011Activity extends Activity {
 			  aggiornamentoOrariIS.set(Calendar.DAY_OF_MONTH, Integer.parseInt(st0.nextToken()));
 			  aggiornamentoOrariIS.set(Calendar.MONTH, Integer.parseInt(st0.nextToken()));
 			  aggiornamentoOrariIS.set(Calendar.YEAR, Integer.parseInt(st0.nextToken()));
-			  //aboutDialog.setMessage("Gli orari sono quelli resi noti dalle compagnie di navigazione alle biglietterie o sui loro siti web. L'autore non e' in alcun modo responsabile di ogni eventuale loro cambiamento. Orari aggiornati al "+aggiornamentoOrariIS.get(Calendar.DAY_OF_MONTH)+"/"+aggiornamentoOrariIS.get(Calendar.MONTH)+"/"+aggiornamentoOrariIS.get(Calendar.YEAR)+". By Porfirio Tramontana 2011. In licenza GPL3. http://code.google.com/p/orari-traghetti-procida-2011/");
-			  aboutDialog.setMessage(""+getString(R.string.disclaimer));
+			  //aboutDialog.setMessage(R.string.credits+"+aggiornamentoOrariIS.get(Calendar.DAY_OF_MONTH)+"/"+aggiornamentoOrariIS.get(Calendar.MONTH)+"/"+aggiornamentoOrariIS.get(Calendar.YEAR)+");
+			  aboutDialog.setMessage(""+getString(R.string.disclaimer)+"\n"+getString(R.string.credits));
 			  
 			  for (String line = br.readLine(); line != null; line = br.readLine())
 				{
@@ -571,7 +571,7 @@ public class OrariProcida2011Activity extends Activity {
 			aggiornamentoOrariWeb.set(Calendar.YEAR, Integer.parseInt(st0.nextToken()));
 			ultimaLetturaOrariDaWeb=Calendar.getInstance();
 		    String str=new String(getString(R.string.orariAggiornatiAl)+aggiornamentoOrariWeb.get(Calendar.DAY_OF_MONTH)+"/"+aggiornamentoOrariWeb.get(Calendar.MONTH)+"/"+aggiornamentoOrariWeb.get(Calendar.YEAR));
-		    aboutDialog.setMessage(""+getString(R.string.disclaimer));
+		    aboutDialog.setMessage(""+getString(R.string.disclaimer)+"\n"+getString(R.string.credits));
 			Log.d("ORARI", str);
 			Toast.makeText(getApplicationContext(), str, Toast.LENGTH_LONG);
 
@@ -701,7 +701,7 @@ public class OrariProcida2011Activity extends Activity {
 		    	
 				aggiornamentoOrariIS=Calendar.getInstance(TimeZone.getDefault());		
 			    aggiornamentoOrariIS.set(2011, 11, 1); //Orari aggiornato all'1/11/2011
-			    aboutDialog.setMessage(""+getString(R.string.disclaimer));
+			    aboutDialog.setMessage(""+getString(R.string.disclaimer)+"\n"+getString(R.string.credits) );
 
 //		    	listMezzi.add(new Mezzo("Prova",0,20,8,25,"Prova","Prova",2,10,2011,6,10,2011,"1234567",this));
 //		    	listMezzi.add(new Mezzo("Prova-",0,20,8,25,"Prova","Prova",6,10,2011,7,10,2011,"1234567",this));

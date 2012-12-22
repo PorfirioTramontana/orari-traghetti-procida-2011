@@ -49,7 +49,7 @@
         <string name="updateWeb">Aggiorna orari da Web</string>
         <string name="numeriTaxi">Chiama un taxi</string>
         <string name="noUpdateWeb">Non aggiornare orari da Web</string>
-        <string name="disclaimer">Gli orari sono quelli resi noti dalle compagnie di navigazione alle biglietterie o sui loro siti web. L\'autore non e\' in alcun modo responsabile di ogni eventuale loro cambiamento. By Porfirio Tramontana 2011. In licenza GPL3. </string>
+        <string name="disclaimer">Gli orari sono quelli resi noti dalle compagnie di navigazione alle biglietterie o sui loro siti web. L\'autore non e\' in alcun modo responsabile di ogni eventuale loro cambiamento. </string>
         <string name="condimeteo">Condizioni meteo:</string>
         <string name="dalle">Dalle</string>
         <string name="orariAggiornatiAl">Orari aggiornati al </string>
@@ -103,5 +103,6 @@
         <string name="costoInteroNonNoto">Non conosco il prezzo del biglietto intero</string>
         <string name="updated">Meteo aggiornato al  </string>
         <string name="meteo">Aggiorna dati meteo</string>
-        <string name="ore">ore </string>                
+        <string name="ore">ore </string>   
+        <string name="credits">By Porfirio Tramontana 2011,2012. Licenza GPL3. Si ringraziano il Prof.Tramontana per l\'algoritmo meteorologico, Maria per il nome Uno Procida Residente, l\'icona, la pubblicita\' a livello internazionale e le critiche sull\'interfaccia, Angela per il supporto linguistico, Gilda per le continue critiche, Google e Weather Underground per i dati meteorologici, le compagnie di navigazione per i continui cambiamenti degli orari e i pendolari procidani per le continue segnalazioni di cambiamento.</string>             
 </resources>
