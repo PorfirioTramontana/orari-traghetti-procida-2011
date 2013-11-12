@@ -416,11 +416,12 @@ public class OrariProcida2011Activity extends Activity {
 				}				
 //Grazie alla formattazione ottenuta con http://jsonformatter.curiousconcept.com/		 				
 				if (!(jsonObject==null)){	
-					meteo.setWindKmh((Double) jsonObject.getJSONObject("current_observation").get("wind_kph"));
-					Integer windDir=(Integer) jsonObject.getJSONObject("current_observation").get("wind_degrees");					
+					
+					Integer windDir=(Integer) jsonObject.getJSONObject("current_observation").get("wind_degrees");
+					meteo.setWindKmh(Double.parseDouble(jsonObject.getJSONObject("current_observation").get("wind_kph").toString()));									
 					meteo.setWindDirection((int) (45*(Math.round(windDir/45.0)))%360);
 					meteo.setWindDirectionString((String) jsonObject.getJSONObject("current_observation").get("wind_dir"));
-					meteo.setWindBeaufort((Double) jsonObject.getJSONObject("current_observation").get("wind_kph"));
+					meteo.setWindBeaufort(Double.parseDouble(jsonObject.getJSONObject("current_observation").get("wind_kph").toString()));
 					Log.d("ORARI","letto da json");
 					//scrivo l'aggiornamento su internal storage
 					FileOutputStream fos = null;
