@@ -140,7 +140,7 @@ public class Meteo {
 	}
 	
 	public String getWindBeaufortString(){
-		int forza=new Double(windBeaufort).intValue();
+		int forza=Double.valueOf(windBeaufort).intValue();
 		switch (forza){
 		case 0:
 			return ""+callingActivity.getString(R.string.calma);

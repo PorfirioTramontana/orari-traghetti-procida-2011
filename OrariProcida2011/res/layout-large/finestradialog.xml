@@ -6,7 +6,7 @@
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
     <TextView android:textAppearance="?android:attr/textAppearanceLarge" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/inserisciFinestra" android:id="@+id/txtFinestra"></TextView>
-    <EditText android:layout_height="wrap_content" android:layout_width="fill_parent" android:numeric="integer" android:text="@string/ventiquattro" android:id="@+id/editFinestra" android:inputType="number">
+    <EditText android:layout_height="wrap_content" android:layout_width="fill_parent" android:text="@string/ventiquattro" android:id="@+id/editFinestra" android:inputType="number">
         <requestFocus></requestFocus>
     </EditText>
     <Button android:layout_height="wrap_content" android:layout_width="fill_parent" android:text="@string/ok" android:id="@+id/btnOK"></Button>

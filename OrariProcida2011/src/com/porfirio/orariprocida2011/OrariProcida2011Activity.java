@@ -143,7 +143,7 @@ public class OrariProcida2011Activity extends Activity {
         		return true;
         case R.id.meteo:
         	leggiMeteo(true);
-            meteoDialog.setMessage(getString(R.string.condimeteo)+meteo.getWindBeaufortString()+" ("+new Double(meteo.getWindKmh()).intValue()+" km/h) "+getString(R.string.da)+" "+meteo.getWindDirectionString()+"\n"+getString(R.string.updated)+" "+aggiornamentoMeteo.get(Calendar.DAY_OF_MONTH)+"/"+(1+aggiornamentoMeteo.get(Calendar.MONTH))+"/"+aggiornamentoMeteo.get(Calendar.YEAR)+" "+getString(R.string.ore)+" "+aggiornamentoMeteo.get(Calendar.HOUR_OF_DAY)+":"+aggiornamentoMeteo.get(Calendar.MINUTE));
+            meteoDialog.setMessage(getString(R.string.condimeteo)+meteo.getWindBeaufortString()+" ("+Double.valueOf(meteo.getWindKmh()).intValue()+" km/h) "+getString(R.string.da)+" "+meteo.getWindDirectionString()+"\n"+getString(R.string.updated)+" "+aggiornamentoMeteo.get(Calendar.DAY_OF_MONTH)+"/"+(1+aggiornamentoMeteo.get(Calendar.MONTH))+"/"+aggiornamentoMeteo.get(Calendar.YEAR)+" "+getString(R.string.ore)+" "+aggiornamentoMeteo.get(Calendar.HOUR_OF_DAY)+":"+aggiornamentoMeteo.get(Calendar.MINUTE));
             this.aggiornaLista();
         	showDialog(METEO_DIALOG_ID);
         	return true;
@@ -208,7 +208,7 @@ public class OrariProcida2011Activity extends Activity {
         leggiMeteo(false);
        
         builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.condimeteo)+meteo.getWindBeaufortString()+" ("+new Double(meteo.getWindKmh()).intValue()+" km/h) "+getString(R.string.da)+" "+meteo.getWindDirectionString()
+        builder.setMessage(getString(R.string.condimeteo)+meteo.getWindBeaufortString()+" ("+Double.valueOf(meteo.getWindKmh()).intValue()+" km/h) "+getString(R.string.da)+" "+meteo.getWindDirectionString()
         		+"\n"+getString(R.string.updated)+" "+aggiornamentoMeteo.get(Calendar.DAY_OF_MONTH)+"/"+(1+aggiornamentoMeteo.get(Calendar.MONTH))+"/"+aggiornamentoMeteo.get(Calendar.YEAR)+" "+getString(R.string.ore)+" "+aggiornamentoMeteo.get(Calendar.HOUR_OF_DAY)+":"+aggiornamentoMeteo.get(Calendar.MINUTE))
                .setCancelable(false)
                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -306,6 +306,15 @@ public class OrariProcida2011Activity extends Activity {
         	
 		});
         
+        
+        //TODO: aggiungere onlongclick su lvMezzi che faccia partire il dialog di segnalazione
+        //che ha due funzioni: segnala un cambiamento (interazione con mail)
+        //esegui un cambiamento (richiede una password che conosco solo io)
+        //il cambiamento si ottiene andando ad aggiornare un file esclusioni giornaliere
+        //ad ogni cambiamento si apre il file, si riscrivono le righe di oggi, si aggiunge la riga della segnalazione
+        //bisogna cambiare anche la lettura dei mezzi prevedendo la lettura di questo file con la conseguente
+        //eliminazione delle corse indicate
+        
         ultimaLetturaOrariDaWeb=Calendar.getInstance();
         ultimaLetturaOrariDaWeb.setLenient(true);
         //setto fittiziamente ad un valore diverso da oggi
@@ -349,7 +358,8 @@ public class OrariProcida2011Activity extends Activity {
 		//Prova a leggere da Internal Storage il valore di aggiornamentoMeteoIS
 		FileInputStream fstream = null;
 		try {
-			fstream = new FileInputStream("/data/data/com.porfirio.orariprocida2011/files/aggiornamentoMeteo.csv");
+			Log.i("k", getApplicationContext().getFilesDir().getPath());
+			fstream = new FileInputStream(getApplicationContext().getFilesDir().getPath()+"/aggiornamentoMeteo.csv");
 		} catch (FileNotFoundException e1) {
 			scriviSuIS=true;
 			//metto fittiziamente aggiornamento al 2001
@@ -431,6 +441,13 @@ public class OrariProcida2011Activity extends Activity {
 						// 
 						e.printStackTrace();
 					}
+					
+					//TODO: se il valore letto da weather underground è troppo piccolo (oppure è intero anzichè string) rivolgiti a openweathermap
+					//esempio di query json verso openweathermap:
+					//http://api.openweathermap.org/data/2.5/weather?q=Procida,it&lang=it
+					
+					
+					//aggiornamento del file locale con il dato meteo
 					aggiornamentoMeteo=Calendar.getInstance();
 					String rigaAggiornamento=new String(aggiornamentoMeteo.get(Calendar.DAY_OF_MONTH)+","+aggiornamentoMeteo.get(Calendar.MONTH)+","+aggiornamentoMeteo.get(Calendar.YEAR)+","+aggiornamentoMeteo.get(Calendar.HOUR_OF_DAY)+","+aggiornamentoMeteo.get(Calendar.MINUTE));
 					try {
@@ -693,7 +710,7 @@ public class OrariProcida2011Activity extends Activity {
     	listCompagnia.add(c);
 
     	try {
-			FileInputStream fstream = new FileInputStream("/data/data/com.porfirio.orariprocida2011/files/orari.csv");			
+			FileInputStream fstream = new FileInputStream(getApplicationContext().getFilesDir().getPath()+"/orari.csv");			
     		riempiMezzidaInternalStorage(fstream);
 		} catch (FileNotFoundException e) {
 			Log.d("ORARI", "File non trovato su IS. Leggo da codice");
