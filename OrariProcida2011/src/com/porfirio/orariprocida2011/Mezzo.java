@@ -1,8 +1,12 @@
 package com.porfirio.orariprocida2011;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
+import android.content.Context;
+
 public class Mezzo {
+	//gestite nel dettaglio segnalazioni per tipologia e motivi
 	public String nave;
 	public Calendar oraPartenza;
 	public Calendar oraArrivo;
@@ -19,8 +23,33 @@ public class Mezzo {
 	private double costoResidente;
 	private boolean circaIntero=false;
 	private boolean circaResidente=false;
+	private Context callingContext;
+	private String[] ragioni=new String[100];
+	public int[] segnalazioni=new int[100];
+	public int conferme=0;
+	public int tot=0;
+	public boolean conc=true;
+			
+	public String segnalazionePiuComune(){		
+		int max=0;
+		int spc=-1;
+		for (int i=0;i<segnalazioni.length;i++){
+			if (segnalazioni[i]>max){
+				max=segnalazioni[i];
+				spc=i;
+				}
+			}		
+		if (spc>=0)
+			return ragioni[spc];
+		else 
+			return "";
+	}
 	
-	public Mezzo(String n,int op, int mp, int oa, int ma, String pp, String pa,int gie,int mie,int aie,int gfe,int mfe,int afe,String gs,OrariProcida2011Activity callingActivity){
+	public Mezzo(Context c,String n,int op, int mp, int oa, int ma, String pp, String pa,int gie,int mie,int aie,int gfe,int mfe,int afe,String gs,OrariProcida2011Activity callingActivity){
+		callingContext=c;
+		ragioni= callingContext.getResources().getStringArray(R.array.strRagioni);
+		for (int i=0;i<100;i++)
+			segnalazioni[i]=0;		
 		nave=n;	
 		oraPartenza=Calendar.getInstance();
 		oraPartenza.set(Calendar.HOUR_OF_DAY, op);
@@ -55,7 +84,11 @@ public class Mezzo {
 	
 	}
 
-	public Mezzo(String n,String op, String mp, String oa, String ma, String pp, String pa,String gie,String mie,String aie,String gfe,String mfe,String afe,String gs,OrariProcida2011Activity callingActivity){
+	public Mezzo(Context c,String n,String op, String mp, String oa, String ma, String pp, String pa,String gie,String mie,String aie,String gfe,String mfe,String afe,String gs,OrariProcida2011Activity callingActivity){
+		callingContext=c;
+		ragioni = callingContext.getResources().getStringArray(R.array.strRagioni);
+		for (int i=0;i<100;i++)
+			segnalazioni[i]=0;		
 		nave=n;	
 		oraPartenza=Calendar.getInstance();
 		oraPartenza.set(Calendar.HOUR_OF_DAY, Integer.parseInt(op));
@@ -243,6 +276,21 @@ public class Mezzo {
 
 	public void setCircaResidente(boolean circaResidente) {
 		this.circaResidente = circaResidente;
+	}
+
+	public void addMotivo(String rigaMotivo) {
+		Integer motivo=Integer.parseInt(rigaMotivo);
+		if (motivo==99){
+			conferme++;
+		}
+		else {
+			if (tot>segnalazioni[motivo])
+				conc=false;
+			segnalazioni[motivo]++;
+			tot++;
+		}
+		return;
+		
 	}
 
 }

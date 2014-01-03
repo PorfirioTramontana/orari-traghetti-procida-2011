@@ -130,7 +130,8 @@ public class Meteo {
 	}
 
 	public void setWindKmh(double wkmh) {
-		windKmh=wkmh;
+		if (windKmh==0 || wkmh>0)
+			windKmh=wkmh;
 		return;
 	}
 

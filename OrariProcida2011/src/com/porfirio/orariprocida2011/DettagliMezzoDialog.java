@@ -38,12 +38,16 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 	public ArrayList <String> listNumeri;
 	public BiglietterieDialog biglietterieDialog;
 	public TaxiDialog taxiDialog;
+	public SegnalazioneDialog segnalazioneDialog;
 	private TextView txtAuto;
+	private Calendar calen;
+	private ArrayList<Compagnia> lc;
 	
 
-	public DettagliMezzoDialog(Context context) {
+	public DettagliMezzoDialog(Context context,Calendar cal) {
 		super(context);
 		callingContext=context;
+		calen=cal;
 		setContentView(R.layout.dettaglimezzo);
 		txtMezzo = (TextView) findViewById(R.id.txtMezzo);
 		txtPartenza = (TextView) findViewById(R.id.txtPartenza);
@@ -83,6 +87,15 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 	            biglietterieDialog.show();
 	    	}
 	    });
+
+	    Button btnConfermaOSmentisci = (Button)findViewById(R.id.btnConfermaOSmentisci);    
+	    btnConfermaOSmentisci.setOnClickListener(new View.OnClickListener(){
+	    	@Override
+	    	public void onClick(View v) {
+	            segnalazioneDialog.show();
+	    	}
+	    });
+
 	}
 
 	public void setMezzo(Mezzo m){
@@ -97,6 +110,7 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 
 	
 	public void fill(ArrayList<Compagnia> listCompagnia) {
+		lc=listCompagnia;
 		txtMezzo.setText("    "+mezzo.nave+"    ");
 		String s=new String();
 		s+=callingContext.getString(R.string.parteAlle)+" "+mezzo.oraPartenza.get(Calendar.HOUR_OF_DAY)+":"+mezzo.oraPartenza.get(Calendar.MINUTE);
@@ -109,7 +123,7 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 		s+=" "+callingContext.getString(R.string.a)+" "+mezzo.portoArrivo;
 		txtArrivo.setText(s);
 		
-		//TODO Da COmpletare
+
 //		if (mezzo.isEsclusione())
 //			txtPeriodo.setText(mezzo.inizioEsclusione.get(Calendar.DAY_OF_MONTH));
 //		txtGiorniSettimana.setText(mezzo.giorniSettimana);
@@ -155,6 +169,11 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
         
         taxiDialog = new TaxiDialog(this.getContext());
         taxiDialog.fill(mezzo.portoPartenza);
+        
+        segnalazioneDialog=new SegnalazioneDialog(this.getContext(),calen);
+        segnalazioneDialog.setMezzo(mezzo);
+        segnalazioneDialog.fill(lc);
+        
         
 //        
 //        for (int i=0;i<c.nomeNumeroTelefono.size();i++){        	

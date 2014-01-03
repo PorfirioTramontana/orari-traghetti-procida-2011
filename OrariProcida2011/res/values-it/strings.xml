@@ -29,6 +29,15 @@
         <item>Ischia</item>
         <item>Monte di Procida</item>
     </string-array>
+        <string-array name="strRagioni">
+        <item>Ragioni sconosciute</item>
+        <item>Cattive Condizioni Meteomarine</item>
+        <item>Sciopero</item>
+        <item>Nave in Avaria</item>
+        <item>Festivita\'</item>
+        <item>Cambio di orario o soppressione</item>
+        <item>In Ritardo</item>
+    </string-array>
         <string name="mezzo">Mezzo : </string>
         <string name="portoPartenza">Da : </string>
         <string name="portoArrivo">A : </string>
@@ -104,5 +113,22 @@
         <string name="updated">Meteo aggiornato al  </string>
         <string name="meteo">Aggiorna dati meteo</string>
         <string name="ore">ore </string>   
-        <string name="credits">By Porfirio Tramontana 2011,2012. Licenza GPL3. Si ringraziano il Prof.Tramontana per l\'algoritmo meteorologico, Maria per il nome Uno Procida Residente, l\'icona, la pubblicita\' a livello internazionale e le critiche sull\'interfaccia, Angela per il supporto linguistico, Gilda per le continue critiche, Google e Weather Underground per i dati meteorologici, le compagnie di navigazione per i continui cambiamenti degli orari e i pendolari procidani per le continue segnalazioni di cambiamento.</string>             
+        <string name="credits">By Porfirio Tramontana 2011,2012. Licenza GPL3. Si ringraziano il Prof.Tramontana per l\'algoritmo meteorologico, Maria per il nome Uno Procida Residente, l\'icona, la pubblicita\' a livello internazionale e le critiche sull\'interfaccia, Angela per il supporto linguistico, Gilda per le continue critiche, Google e Weather Underground per i dati meteorologici, le compagnie di navigazione per i continui cambiamenti degli orari e i pendolari procidani per le continue segnalazioni di cambiamento.</string>
+		<string name="inviaSegnalazione">Vuoi segnalare una avvenuta soppressione o modifica di questa corsa oggi?</string>
+		<string name="ragione">Motivo :</string>
+		<string name="altriDettagliRagione">"Altri dettagli : "</string>
+		<string name="invia">Invia</string>        
+        <string name="ringraziamentoSegnalazione">Grazie per la segnalazione: sara\' visibile alla prossima apertura dell\'app!</string>
+		<string name="textConferma">Oppure vuoi confermare la regolarita\' di questa corsa?</string>
+		<string name="Conferma">Conferma</string>        
+		<string name="segnalazione">segnalazione</string>
+		<string name="segnalazioni">segnalazioni</string>
+		<string name="diProblemi">di problemi</string>      
+		<string name="possibiliProblemi">possibili problemi</string>
+		<string name="utenteDice">utente dice</string>
+		<string name="utentiDicono">utenti dicono</string>  
+		<string name="cheLaCorsaERegolare">che la corsa e\' regolare</string>
+		<string name="inParticolare">in particolare</string>
+		<string name="confermaOSmentisci">Conferma la regolarita\' o segnala un problema per questa corsa </string>
+		    
 </resources>
