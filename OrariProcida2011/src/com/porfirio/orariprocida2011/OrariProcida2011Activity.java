@@ -1155,7 +1155,8 @@ public class OrariProcida2011Activity extends Activity {
 	    	    		else
 	    	    			s+=" "+getString(R.string.segnalazioni)+")";
 	    	    		s+=", "+getString(R.string.inParticolare)+" "+spc;
-	    			}    		
+	    			} 
+    			}
 	    		if (selectMezzi.get(i).conferme>0){
 	    			s+=" - "+selectMezzi.get(i).conferme;
 	    			if (selectMezzi.get(i).conferme==1)
@@ -1164,7 +1165,7 @@ public class OrariProcida2011Activity extends Activity {
 	    				s+=" "+getString(R.string.utentiDicono);
 	    			s+=" "+getString(R.string.cheLaCorsaERegolare);
     			}
-    		}
+    		
     		}
     		aalvMezzi.add(s);
 		}
