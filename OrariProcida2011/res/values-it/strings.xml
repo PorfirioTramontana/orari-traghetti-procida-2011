@@ -130,5 +130,6 @@
 		<string name="cheLaCorsaERegolare">che la corsa e\' regolare</string>
 		<string name="inParticolare">in particolare</string>
 		<string name="confermaOSmentisci">Conferma la regolarita\' o segnala un problema per questa corsa </string>
-		    
+		<string name="connessioneLenta">La connessione e\' troppo lenta: gli ultimi aggiornamenti degli orari non sono stati caricati!</string>
+		<string name="soloOnline">Funzionalita\' accessibile solo in presenza di connessione a Internet</string>    
 </resources>

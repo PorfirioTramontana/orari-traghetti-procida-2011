@@ -135,8 +135,28 @@ public class Meteo {
 		return;
 	}
 
-	public void setWindDirectionString(String string) {
-		windDirectionString=string;
+	public void setWindDirectionString(int dir) {
+    	if (dir==0)
+			windDirectionString=callingActivity.getString(R.string.nord);
+    	else if (dir==0)
+    		windDirectionString=callingActivity.getString(R.string.nordEst);
+    	else if (dir==45)
+    		windDirectionString=callingActivity.getString(R.string.est);
+    	else if (dir==90)
+    		windDirectionString=callingActivity.getString(R.string.sudEst);
+    	else if (dir==135)
+    		windDirectionString=callingActivity.getString(R.string.sud);
+    	else if (dir==180)
+    		windDirectionString=callingActivity.getString(R.string.sudOvest);
+    	else if (dir==225)
+    		windDirectionString=callingActivity.getString(R.string.ovest);
+    	else if (dir==270)
+    		windDirectionString=callingActivity.getString(R.string.nordOvest);
+		return;
+	}
+	
+	public void setWindDirectionString(String s) {
+		windDirectionString=s;
 		return;
 	}
 	

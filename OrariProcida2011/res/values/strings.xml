@@ -130,5 +130,8 @@
 		<string name="cheLaCorsaERegolare">that the journey will take place</string>
 		<string name="inParticolare">in particular</string>
 		<string name="confermaOSmentisci">Confirm that the journey will take place or report a problem </string>
-</resources>
+		<string name="connessioneLenta">The connection is too slow: timetable updates have not been loaded</string>
+		<string name="soloOnline">This function is accessible only when the device is connected to the Internet</string>
+		    
+		</resources>
 

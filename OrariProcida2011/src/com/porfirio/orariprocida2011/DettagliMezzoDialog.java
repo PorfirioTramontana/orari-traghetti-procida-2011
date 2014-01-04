@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.os.Bundle;
 
 public class DettagliMezzoDialog extends Dialog implements OnClickListener{
@@ -42,10 +43,12 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 	private TextView txtAuto;
 	private Calendar calen;
 	private ArrayList<Compagnia> lc;
+	private OrariProcida2011Activity callingActivity;
 	
 
-	public DettagliMezzoDialog(Context context,Calendar cal) {
+	public DettagliMezzoDialog(OrariProcida2011Activity a,Context context,Calendar cal) {
 		super(context);
+		callingActivity=a;
 		callingContext=context;
 		calen=cal;
 		setContentView(R.layout.dettaglimezzo);
@@ -92,10 +95,12 @@ public class DettagliMezzoDialog extends Dialog implements OnClickListener{
 	    btnConfermaOSmentisci.setOnClickListener(new View.OnClickListener(){
 	    	@Override
 	    	public void onClick(View v) {
-	            segnalazioneDialog.show();
+	    	    if (!callingActivity.isOnline())
+	    	    	Toast.makeText(getContext(), callingActivity.getString(R.string.soloOnline), Toast.LENGTH_SHORT).show();
+	    		else
+	    			segnalazioneDialog.show();
 	    	}
 	    });
-
 	}
 
 	public void setMezzo(Mezzo m){

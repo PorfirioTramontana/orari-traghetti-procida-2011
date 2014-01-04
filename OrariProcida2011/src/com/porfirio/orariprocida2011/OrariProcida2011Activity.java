@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -95,6 +96,8 @@ public class OrariProcida2011Activity extends Activity {
 	public Meteo meteo;
 	private Locale locale;
 	private SegnalazioneDialog segnalazioneDialog;
+	private boolean slow=false;
+	private boolean primoAvvio=true;
 
     
     //Menu
@@ -127,7 +130,10 @@ public class OrariProcida2011Activity extends Activity {
         		// Caricare da Web 
         		if (isOnline()){
         			riempiMezzidaWeb();
-        			Toast.makeText(getApplicationContext(), getString(R.string.orariAggiornatiAl)+aggiornamentoOrariWeb.get(Calendar.DATE)+"/"+aggiornamentoOrariWeb.get(Calendar.MONTH)+"/"+aggiornamentoOrariWeb.get(Calendar.YEAR), Toast.LENGTH_LONG).show();
+        			int meseToast=aggiornamentoOrariWeb.get(Calendar.MONTH);
+        			if (meseToast==0) meseToast=12;
+        			if (!primoAvvio)
+        				Toast.makeText(getApplicationContext(), getString(R.string.orariAggiornatiAl)+" "+aggiornamentoOrariWeb.get(Calendar.DATE)+"/"+meseToast+"/"+aggiornamentoOrariWeb.get(Calendar.YEAR), Toast.LENGTH_LONG).show();
         		}
         		else
         			Log.d("ORARI", "Non c'è la connessione: non carico orari da Web");
@@ -273,7 +279,7 @@ public class OrariProcida2011Activity extends Activity {
         aalvMezzi = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);       
         lvMezzi.setAdapter(aalvMezzi);
         
-        dettagliMezzoDialog = new DettagliMezzoDialog(this,c);
+        dettagliMezzoDialog = new DettagliMezzoDialog(this,this,c);
         segnalazioneDialog=new SegnalazioneDialog(this,c);
         lvMezzi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         	//listener sul click di un item della lista
@@ -303,19 +309,23 @@ public class OrariProcida2011Activity extends Activity {
         	@Override
         	public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                     final int arg2, long arg3) {
-				int position=arg2;
-				for (int i=0;i<aalvMezzi.getCount();i++){
-					if (selectMezzi.get(i).getOrderInList()==position)
-						segnalazioneDialog.setMezzo(selectMezzi.get(i));
-				}
+	    	    if (!isOnline())
+	    	    	Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.soloOnline), Toast.LENGTH_SHORT).show();
+        		else{
+	        		int position=arg2;
+					for (int i=0;i<aalvMezzi.getCount();i++){
+						if (selectMezzi.get(i).getOrderInList()==position)
+							segnalazioneDialog.setMezzo(selectMezzi.get(i));
+					}
+						
 					
-				
-//				problema: clicco sulla lista ma ho solo la stringa, non il mezzo corrispondente
-//				soluzione: mantenere una variabile ordine che abbini lvMezzi con Mezzi
-//				altra soluzione: trovare il mezzo dalla stringa
-				segnalazioneDialog.fill(listCompagnia);
-				segnalazioneDialog.show();
-				aggiornaLista(); //TODO Capire come si fa ad aggiornare dopo una segnalazione (oppure scrivere che prossimamente verrà aggiunta)
+	//				problema: clicco sulla lista ma ho solo la stringa, non il mezzo corrispondente
+	//				soluzione: mantenere una variabile ordine che abbini lvMezzi con Mezzi
+	//				altra soluzione: trovare il mezzo dalla stringa
+					segnalazioneDialog.fill(listCompagnia);
+					segnalazioneDialog.show();
+					aggiornaLista(); //TODO Capire come si fa ad aggiornare dopo una segnalazione (oppure scrivere che prossimamente verrà aggiunta)
+        		}
                 return true;
             }
         });
@@ -368,7 +378,7 @@ public class OrariProcida2011Activity extends Activity {
 		URL url;
 		Double windKmhFromIS=0.0;
 		Integer windDirFromIS=0;
-		String windDirectionStringFromIS="N";
+		String windDirectionStringFromIS=getString(R.string.nord);
 		boolean scriviSuIS=false;
 		//Prova a leggere da Internal Storage il valore di aggiornamentoMeteoIS
 		FileInputStream fstream = null;
@@ -405,10 +415,13 @@ public class OrariProcida2011Activity extends Activity {
 			  try {
 				String s=br.readLine();
 				  windKmhFromIS=Double.parseDouble(s);
+				  meteo.setWindKmh(windKmhFromIS);
 				  s=br.readLine();
 				  windDirFromIS=Integer.parseInt(s);
+				  meteo.setWindDirection(windDirFromIS);
 				  s=br.readLine();
 				windDirectionStringFromIS=s;
+				meteo.setWindDirectionString(windDirectionStringFromIS);
 
 			} catch (NumberFormatException e1) {
 				// 
@@ -430,12 +443,15 @@ public class OrariProcida2011Activity extends Activity {
 		Log.d("ORARI","vecchiaia dell'aggiornamento in millisec "+differenza.toString());
 		if (isOnline() && (differenza>10000000 || aggiorna)) //Valuta un nuovo meteo ogni 10000 secondi (quasi tre ore)
 		//if (isOnline() && differenza>10000) //Valuta un nuovo meteo ogni 10000 secondi (quasi tre ore)
-		{			
+		if (!slow){		
 			try {
 				JSONObject jsonObject=null;
 				try {
 					//jsonObject = readJsonFromUrl("http://api.wunderground.com/api/7a2bedc35ab44ecb/geolookup/conditions/q/IA/Procida.json");
-					jsonObject = readJsonFromUrl("http://api.wunderground.com/api/7a2bedc35ab44ecb/geolookup/conditions/q/IA/Pozzuoli.json");
+					jsonObject = readJsonFromUrl("http://api.wunderground.com/api/7a2bedc35ab44ecb/geolookup/conditions/q/IA/Pozzuoli.json");					
+				} catch (SocketTimeoutException e) {
+					Toast.makeText(getApplicationContext(), getString(R.string.connessioneLenta), Toast.LENGTH_LONG).show();
+					slow=true;
 				} catch (IOException e) {
 					// 
 					Log.d("ORARI", "dati meteo non caricati da web");
@@ -446,7 +462,7 @@ public class OrariProcida2011Activity extends Activity {
 					Integer windDir=(Integer) jsonObject.getJSONObject("current_observation").get("wind_degrees");
 					meteo.setWindKmh(Double.parseDouble(jsonObject.getJSONObject("current_observation").get("wind_kph").toString()));									
 					meteo.setWindDirection((int) (45*(Math.round(windDir/45.0)))%360);
-					meteo.setWindDirectionString((String) jsonObject.getJSONObject("current_observation").get("wind_dir"));
+					meteo.setWindDirectionString(meteo.getWindDirection());
 					meteo.setWindBeaufort(meteo.getWindKmh());
 					Log.d("ORARI","letto da json");
 					//scrivo l'aggiornamento su internal storage
@@ -570,9 +586,12 @@ public class OrariProcida2011Activity extends Activity {
 			  //Close the input stream
 			  in.close();
 			  Log.d("ORARI", "Fine caricamento orari da IS");
-			  String str=new String(getString(R.string.orariAggiornatiAl)+aggiornamentoOrariIS.get(Calendar.DAY_OF_MONTH)+"/"+aggiornamentoOrariIS.get(Calendar.MONTH)+"/"+aggiornamentoOrariIS.get(Calendar.YEAR));
+	          int meseToast=aggiornamentoOrariIS.get(Calendar.MONTH);
+	          if (meseToast==0) meseToast=12;
+			  String str=new String(getString(R.string.orariAggiornatiAl)+" "+aggiornamentoOrariIS.get(Calendar.DAY_OF_MONTH)+"/"+meseToast+"/"+aggiornamentoOrariIS.get(Calendar.YEAR));
 			  Log.d("ORARI", str);
-			  Toast.makeText(getApplicationContext(), str, Toast.LENGTH_LONG);
+			  if (!primoAvvio) 
+				  Toast.makeText(getApplicationContext(), str, Toast.LENGTH_LONG).show();
 
 			  }catch (Exception e){//Catch exception if any
 			  System.err.println("Error: " + e.getMessage());
@@ -588,14 +607,21 @@ public class OrariProcida2011Activity extends Activity {
 		String url="http://wpage.unina.it/ptramont/orari.csv";
 		HttpURLConnection conn = null;
 		InputStream in=null;
-		try {
+		slow=false;
+		//TODO Gestire un TimeOut
+		try {			
 			conn = (HttpURLConnection) new URL(url).openConnection();
+			conn.setConnectTimeout(5000);
+		}	catch (SocketTimeoutException e) {
+				Toast.makeText(getApplicationContext(), getString(R.string.connessioneLenta), Toast.LENGTH_LONG).show();
+				slow=true;
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		try {
+		} 
+		if (!slow){
+			try {			
 			in = conn.getInputStream();
 			BufferedReader r = new BufferedReader(new InputStreamReader(in));
 			String rigaAggiornamento=r.readLine();
@@ -606,10 +632,13 @@ public class OrariProcida2011Activity extends Activity {
 			aggiornamentoOrariWeb.set(Calendar.MONTH, Integer.parseInt(st0.nextToken()));
 			aggiornamentoOrariWeb.set(Calendar.YEAR, Integer.parseInt(st0.nextToken()));
 			ultimaLetturaOrariDaWeb=Calendar.getInstance();
-		    String str=new String(getString(R.string.orariAggiornatiAl)+aggiornamentoOrariWeb.get(Calendar.DAY_OF_MONTH)+"/"+aggiornamentoOrariWeb.get(Calendar.MONTH)+"/"+aggiornamentoOrariWeb.get(Calendar.YEAR));
+        	int meseToast=aggiornamentoOrariIS.get(Calendar.MONTH);
+        	if (meseToast==0) meseToast=12;
+		    String str=new String(getString(R.string.orariAggiornatiAl)+" "+aggiornamentoOrariWeb.get(Calendar.DAY_OF_MONTH)+"/"+meseToast+"/"+aggiornamentoOrariWeb.get(Calendar.YEAR));
 		    aboutDialog.setMessage(""+getString(R.string.disclaimer)+"\n"+getString(R.string.credits));
 			Log.d("ORARI", str);
-			Toast.makeText(getApplicationContext(), str, Toast.LENGTH_LONG);
+			//if (!primoAvvio)
+			//	Toast.makeText(getApplicationContext(), str, Toast.LENGTH_LONG).show();
 
 			if (aggiornamentoOrariWeb.after(aggiornamentoOrariIS)){
 				Log.d("ORARI", "GLi orari dal Web sono più aggiornati");
@@ -665,11 +694,16 @@ public class OrariProcida2011Activity extends Activity {
 			}
 			r.close();
 			Log.d("ORARI", "Orari web letti");
-			Toast.makeText(getApplicationContext(), ""+getString(R.string.aggiornamentoDaWeb), Toast.LENGTH_LONG);
+			//if (!primoAvvio)
+			//	Toast.makeText(getApplicationContext(), ""+getString(R.string.aggiornamentoDaWeb), Toast.LENGTH_LONG).show();
 			Log.d("ORARI", "Orari IS aggiornati");
 
+		} catch (SocketTimeoutException e) {
+			Toast.makeText(getApplicationContext(), getString(R.string.connessioneLenta), Toast.LENGTH_LONG).show();
+			slow=true;
 		} catch (IOException e) {
 			e.printStackTrace();
+		} 
 		}
 				
 	}
@@ -1166,10 +1200,13 @@ public class OrariProcida2011Activity extends Activity {
         
         //controllo e setto tramite algoritmo di set con gps
         portoPartenza=setPortoPartenza();
-        if (!(portoPartenza.equals(getString(R.string.tutti))))
-			Toast.makeText(getApplicationContext(), getString(R.string.secondoMeVuoiPartireDa)+" "+portoPartenza+"\n"+getString(R.string.orariAggiornatiAl)+aggiornamentoOrariIS.get(Calendar.DATE)+"/"+aggiornamentoOrariIS.get(Calendar.MONTH)+"/"+aggiornamentoOrariIS.get(Calendar.YEAR)+"\n"+getString(R.string.updated)+" "+aggiornamentoMeteo.get(Calendar.DAY_OF_MONTH)+"/"+(1+aggiornamentoMeteo.get(Calendar.MONTH))+"/"+aggiornamentoMeteo.get(Calendar.YEAR)+" "+getString(R.string.ore)+" "+aggiornamentoMeteo.get(Calendar.HOUR_OF_DAY)+":"+aggiornamentoMeteo.get(Calendar.MINUTE), Toast.LENGTH_LONG).show();
+        if (!(portoPartenza.equals(getString(R.string.tutti)))){
+        	int mese=aggiornamentoOrariIS.get(Calendar.MONTH);
+        	if (mese==0) mese=12;
+			Toast.makeText(getApplicationContext(), getString(R.string.secondoMeVuoiPartireDa)+" "+portoPartenza+"\n"+getString(R.string.orariAggiornatiAl)+" "+aggiornamentoOrariIS.get(Calendar.DATE)+"/"+mese+"/"+aggiornamentoOrariIS.get(Calendar.YEAR)+"\n"+getString(R.string.updated)+" "+aggiornamentoMeteo.get(Calendar.DAY_OF_MONTH)+"/"+(1+aggiornamentoMeteo.get(Calendar.MONTH))+"/"+aggiornamentoMeteo.get(Calendar.YEAR)+" "+getString(R.string.ore)+" "+aggiornamentoMeteo.get(Calendar.HOUR_OF_DAY)+":"+aggiornamentoMeteo.get(Calendar.MINUTE), Toast.LENGTH_LONG).show();
+			primoAvvio=false;
 //        	Toast.makeText(getApplicationContext(), getString(R.string.secondoMeVuoiPartireDa)+" "+portoPartenza, Toast.LENGTH_LONG).show();
-
+        }
         setSpnPortoPartenza(spnPortoPartenza, adapter2); 
         
     	final Spinner spnPortoArrivo = (Spinner)findViewById(R.id.spnPortoArrivo);
