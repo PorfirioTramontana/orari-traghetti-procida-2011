@@ -94,6 +94,7 @@ public class SegnalazioneDialog extends Dialog implements OnClickListener{
         URL+=orarioRef.get(Calendar.DAY_OF_MONTH)+","+(1+orarioRef.get(Calendar.MONTH))+","+orarioRef.get(Calendar.YEAR)+"&s=";
         if (mezzo.getGiornoSeguente()) //rimettiamo a posto!
         	orarioRef.add(Calendar.DAY_OF_YEAR, -1);
+        String dettagli=txtDettagli.getText().toString().replaceAll ("\r\n|\r|\n", " ");
         try {
 			URL+=URLEncoder.encode((mezzo.nave+","+mezzo.oraPartenza.get(Calendar.HOUR_OF_DAY)+","+mezzo.oraPartenza.get(Calendar.MINUTE)
 			   +","+mezzo.oraArrivo.get(Calendar.HOUR_OF_DAY)+","+mezzo.oraArrivo.get(Calendar.MINUTE)+","
@@ -102,7 +103,7 @@ public class SegnalazioneDialog extends Dialog implements OnClickListener{
 			   +mezzo.fineEsclusione.get(Calendar.DAY_OF_MONTH)+","+mezzo.fineEsclusione.get(Calendar.MONTH)+","+mezzo.fineEsclusione.get(Calendar.YEAR)+","
 			   +mezzo.giorniSettimana), "UTF-8");
 			if (problema)
-				URL=URL+"&motivo="+ragione+"&dettagli="+URLEncoder.encode(txtDettagli.getText().toString(), "UTF-8");	
+				URL=URL+"&motivo="+ragione+"&dettagli="+URLEncoder.encode(dettagli, "UTF-8");	
 			else
 				URL=URL+"&motivo=99"; //99 convenzionalmente sta per Conferma
 		} catch (UnsupportedEncodingException e) {

@@ -139,7 +139,10 @@ public class OrariProcida2011Activity extends Activity {
         			Log.d("ORARI", "Non c'è la connessione: non carico orari da Web");
         		return true;
         case R.id.meteo:
+        	Log.d("CONDIMETEO","PRIMA"+getString(R.string.condimeteo)+meteo.getWindBeaufortString()+" ("+Double.valueOf(meteo.getWindKmh()).intValue()+" km/h) "+getString(R.string.da)+" "+meteo.getWindDirectionString()+"\n"+getString(R.string.updated)+" "+aggiornamentoMeteo.get(Calendar.DAY_OF_MONTH)+"/"+(1+aggiornamentoMeteo.get(Calendar.MONTH))+"/"+aggiornamentoMeteo.get(Calendar.YEAR)+" "+getString(R.string.ore)+" "+aggiornamentoMeteo.get(Calendar.HOUR_OF_DAY)+":"+aggiornamentoMeteo.get(Calendar.MINUTE));
+        	showDialog(METEO_DIALOG_ID);
         	leggiMeteo(true);
+        	Log.d("CONDIMETEO","DOPO"+getString(R.string.condimeteo)+meteo.getWindBeaufortString()+" ("+Double.valueOf(meteo.getWindKmh()).intValue()+" km/h) "+getString(R.string.da)+" "+meteo.getWindDirectionString()+"\n"+getString(R.string.updated)+" "+aggiornamentoMeteo.get(Calendar.DAY_OF_MONTH)+"/"+(1+aggiornamentoMeteo.get(Calendar.MONTH))+"/"+aggiornamentoMeteo.get(Calendar.YEAR)+" "+getString(R.string.ore)+" "+aggiornamentoMeteo.get(Calendar.HOUR_OF_DAY)+":"+aggiornamentoMeteo.get(Calendar.MINUTE));
             meteoDialog.setMessage(getString(R.string.condimeteo)+meteo.getWindBeaufortString()+" ("+Double.valueOf(meteo.getWindKmh()).intValue()+" km/h) "+getString(R.string.da)+" "+meteo.getWindDirectionString()+"\n"+getString(R.string.updated)+" "+aggiornamentoMeteo.get(Calendar.DAY_OF_MONTH)+"/"+(1+aggiornamentoMeteo.get(Calendar.MONTH))+"/"+aggiornamentoMeteo.get(Calendar.YEAR)+" "+getString(R.string.ore)+" "+aggiornamentoMeteo.get(Calendar.HOUR_OF_DAY)+":"+aggiornamentoMeteo.get(Calendar.MINUTE));
             this.aggiornaLista();
         	showDialog(METEO_DIALOG_ID);
@@ -203,6 +206,7 @@ public class OrariProcida2011Activity extends Activity {
 
         meteo=new Meteo(this);
         leggiMeteo(false);
+    	Log.d("CONDIMETEO","AVVIO"+getString(R.string.condimeteo)+meteo.getWindBeaufortString()+" ("+Double.valueOf(meteo.getWindKmh()).intValue()+" km/h) "+getString(R.string.da)+" "+meteo.getWindDirectionString()+"\n"+getString(R.string.updated)+" "+aggiornamentoMeteo.get(Calendar.DAY_OF_MONTH)+"/"+(1+aggiornamentoMeteo.get(Calendar.MONTH))+"/"+aggiornamentoMeteo.get(Calendar.YEAR)+" "+getString(R.string.ore)+" "+aggiornamentoMeteo.get(Calendar.HOUR_OF_DAY)+":"+aggiornamentoMeteo.get(Calendar.MINUTE));
        
         builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.condimeteo)+meteo.getWindBeaufortString()+" ("+Double.valueOf(meteo.getWindKmh()).intValue()+" km/h) "+getString(R.string.da)+" "+meteo.getWindDirectionString()
@@ -634,7 +638,7 @@ public class OrariProcida2011Activity extends Activity {
 			ultimaLetturaOrariDaWeb=Calendar.getInstance();
         	int meseToast=aggiornamentoOrariIS.get(Calendar.MONTH);
         	if (meseToast==0) meseToast=12;
-		    String str=new String(getString(R.string.orariAggiornatiAl)+" "+aggiornamentoOrariWeb.get(Calendar.DAY_OF_MONTH)+"/"+meseToast+"/"+aggiornamentoOrariWeb.get(Calendar.YEAR));
+		    String str=new String(getString(R.string.orariAggiornatiAl)+" "+aggiornamentoOrariWeb.get(Calendar.DAY_OF_MONTH)+"/"+meseToast+"/"+aggiornamentoOrariWeb.get(Calendar.YEAR));		    
 		    aboutDialog.setMessage(""+getString(R.string.disclaimer)+"\n"+getString(R.string.credits));
 			Log.d("ORARI", str);
 			//if (!primoAvvio)
@@ -800,7 +804,8 @@ public class OrariProcida2011Activity extends Activity {
     	
     	c=new Compagnia("Medmar");
     	c.addTelefono("Napoli", "0813334411");
-    	c.addTelefono("Procida - Agenzia Graziella", "0818969594");
+    	c.addTelefono("Procida", "0818969594");
+    	c.addTelefono("Procida", "0818969190");
     	listCompagnia.add(c);
 
     	c=new Compagnia("Procida Lines");
@@ -1204,7 +1209,8 @@ public class OrariProcida2011Activity extends Activity {
         if (!(portoPartenza.equals(getString(R.string.tutti)))){
         	int mese=aggiornamentoOrariIS.get(Calendar.MONTH);
         	if (mese==0) mese=12;
-			Toast.makeText(getApplicationContext(), getString(R.string.secondoMeVuoiPartireDa)+" "+portoPartenza+"\n"+getString(R.string.orariAggiornatiAl)+" "+aggiornamentoOrariIS.get(Calendar.DATE)+"/"+mese+"/"+aggiornamentoOrariIS.get(Calendar.YEAR)+"\n"+getString(R.string.updated)+" "+aggiornamentoMeteo.get(Calendar.DAY_OF_MONTH)+"/"+(1+aggiornamentoMeteo.get(Calendar.MONTH))+"/"+aggiornamentoMeteo.get(Calendar.YEAR)+" "+getString(R.string.ore)+" "+aggiornamentoMeteo.get(Calendar.HOUR_OF_DAY)+":"+aggiornamentoMeteo.get(Calendar.MINUTE), Toast.LENGTH_LONG).show();
+        	meteo.setWindBeaufort(meteo.getWindKmh());
+			Toast.makeText(getApplicationContext(), getString(R.string.secondoMeVuoiPartireDa)+" "+portoPartenza+"\n"+getString(R.string.orariAggiornatiAl)+" "+aggiornamentoOrariIS.get(Calendar.DATE)+"/"+mese+"/"+aggiornamentoOrariIS.get(Calendar.YEAR)+"\n"+getString(R.string.updated)+" "+aggiornamentoMeteo.get(Calendar.DAY_OF_MONTH)+"/"+(1+aggiornamentoMeteo.get(Calendar.MONTH))+"/"+aggiornamentoMeteo.get(Calendar.YEAR)+" "+getString(R.string.ore)+" "+aggiornamentoMeteo.get(Calendar.HOUR_OF_DAY)+":"+aggiornamentoMeteo.get(Calendar.MINUTE)+" "+getString(R.string.condimeteo)+meteo.getWindBeaufortString()+" ("+Double.valueOf(meteo.getWindKmh()).intValue()+" km/h) "+getString(R.string.da)+" "+meteo.getWindDirectionString()+"\n", Toast.LENGTH_LONG).show();
 			primoAvvio=false;
 //        	Toast.makeText(getApplicationContext(), getString(R.string.secondoMeVuoiPartireDa)+" "+portoPartenza, Toast.LENGTH_LONG).show();
         }
